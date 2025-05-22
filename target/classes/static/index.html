@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab. 30/06-MDPPrograma: "Bootstrap"</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+</head>
+<body>
+    <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary p-0">
+            <div class="container-fluid nav-container">
+                <a class="navbar-brand" href="#">
+                    <img src="Media/logopng.png" alt="">
+                </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Productos
+                            </a>
+                            <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Mangas</a></li>
+                            <li><a class="dropdown-item" href="#">Rodilleras</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Calzado</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Indoor
+                            </a>
+                            <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Pelotas</a></li>
+                            <li><a class="dropdown-item" href="#">Indumentaria</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Zapatillas</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Playa
+                            </a>
+                            <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Pelotas</a></li>
+                            <li><a class="dropdown-item" href="#">Indumentaria</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Gafas</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#info">Sobre Nosotros</a>
+                        </li>
+                    </ul>
+                    <div id="search" class="d-flex">
+                        <p class="m-0">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </p>
+                        <div>
+                            <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                            <div class="card card-body p-0 p-left-3 border-0" style="width: 300px;">
+                                <form class="d-flex" role="search">
+                                    <input class="form-control buscador" type="search" placeholder="Search" aria-label="Search">
+                                </form>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="carro">
+                    <button class="border-0 rounded-pill">
+                        <a class="btn btn-primary d-flex align-items-center border-0 p-0">
+                            Carrito/$0
+                            <i class="fa-solid fa-cart-shopping ps-2"></i>
+                        </a>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container-fluid">
+            <div id="redes-fixed">
+                <div class="redes-item">
+                    <a href="#">
+                        <i class="fa-brands fa-facebook" style="color: #cf57ff;"></i>
+                    </a>
+                </div>
+                <div class="redes-item">
+                    <a href="#">
+                        <i class="fa-brands fa-whatsapp" style="color: #cf57ff;"></i>                    
+                    </a>
+                </div>
+                <div class="redes-item">
+                    <a href="#">
+                        <i class="fa-brands fa-instagram" style="color: #cf57ff;"></i>
+                    </a>
+                </div>
+                <div class="redes-item">
+                    <a href="#">
+                        <i class="fa-brands fa-tiktok" style="color: #cf57ff;"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row productos-1">
+                <div class="col-5 carousel">
+                    <div id="carouselExampleIndicators" class="carousel slide">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="Media/camiseta1.jpeg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                    <img src="Media/camiseta2.jpeg" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                    <img src="Media/camiseta3.jpeg" class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                            <i class="fa-solid fa-chevron-left fa-2xl" style="color: #ba47e9;"></i>                              
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                            <i class="fa-solid fa-chevron-right fa-2xl" style="color: #ba47e9;"></i>                              
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                          </div>
+                        <div class="carousel-ver-mas">
+                            <button class="btn btn-primary rounded-pill">Ver más</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-7 productos">
+                    <div class="row">
+                        <div class="col-4 producto-1-item">
+                            <img src="Media/pelota1.png" alt="" style="width: 100%;">
+                            <button type="button" class="btn btn-primary modalButton rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Click para ver
+                            </button>
+                            <div id="modal">
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5 titles" id="exampleModalLabel">Mikasa V200w</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <img src="Media/pelota1.png" alt="">
+                                                    </div>
+                                                    <div class="col-7">
+                                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga magni adipisci impedit molestias minima iusto molestiae similique, nihil, dicta suscipit minus tempore expedita, totam eligendi alias fugit optio omnis consequuntur.</p>
+                                                        <h6 class="titles">Precio</h6>
+                                                        <p>$29.999</p>
+                                                        <div id="modal-buttons">
+                                                            <button type="button" class="btn btn-secondary modal-agregar" data-bs-dismiss="modal">
+                                                                Agregar al Carrito
+                                                                <i class="fa-solid fa-cart-shopping" style="color: #ba47e9;"></i>
+                                                            </button>
+                                                            <label for="heart-input" id="modal-heart">
+                                                                    <input type="checkbox" name="" id="heart-input">
+                                                                    <span id="heart-span">
+                                                                        <i class="fa-regular fa-heart" style="color: #ba47e9;"></i>
+                                                                    </span>
+                                                                    <span id="heart-fav">
+                                                                        <i class="fa-solid fa-heart" style="color: #ba47e9;"></i>
+                                                                    </span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4 producto-1-item">
+                            <img src="Media/pelota2.png" alt="" style="width: 100%;">
+                            <button type="button" class="btn btn-primary modalButton rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Click para ver
+                            </button>
+                        </div>
+                        <div class="col-4 producto-1-item">
+                            <img src="Media/pelota3.png" alt="" style="width: 100%;">
+                            <button type="button" class="btn btn-primary modalButton rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Click para ver
+                            </button>
+                        </div>
+                        <div class="col-4 producto-1-item">
+                            <img src="Media/pelota4.png" alt="" style="width: 100%;">
+                            <button type="button" class="btn btn-primary modalButton rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Click para ver
+                            </button>
+                        </div>
+                        <div class="col-4 producto-1-item">
+                            <img src="Media/pelota5.png" alt="" style="width: 100%;">
+                            <button type="button" class="btn btn-primary modalButton rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Click para ver
+                            </button>
+                        </div>
+                        <div class="col-4 producto-1-item">
+                            <img src="Media/pelota6.png" alt="" style="width: 100%;">
+                            <button type="button" class="btn btn-primary modalButton rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Click para ver
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row info" id="info">
+                <div class="col-3 info-marcas">
+                    <div id="logo-info">
+                        <i class="fa-sharp fa-solid fa-users-between-lines fa-2xl" style="color: #47e4e9;"></i>
+                    </div>
+                    <div id="texto-info">
+                        <h2>Marcas</h2>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime rerum, eaque ipsa minus omnis non perspiciatis quae inventore nam quis voluptatibus! Quaerat, optio? Eius odit asperiores non aliquam officiis distinctio.</p>
+                    </div>
+                </div>
+                <div class="col-3 info-pago">
+                    <div id="logo-info">
+                        <i class="fa-solid fa-credit-card fa-2xl" style="color: #47e4e9;"></i>
+                    </div>
+                    <div id="texto-info">
+                        <h2>Metodos de Pago</h2>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime rerum, eaque ipsa minus omnis non perspiciatis quae inventore nam quis voluptatibus! Quaerat, optio? Eius odit asperiores non aliquam officiis distinctio.</p>
+                    </div>
+                </div>
+                <div class="col-3 info-variedad">
+                    <div id="logo-info">
+                        <i class="fa-solid fa-volleyball fa-2xl" style="color: #4ef9ff;"></i>
+                    </div>
+                    <div id="texto-info">
+                        <h2>Variedad</h2>
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime rerum, eaque ipsa minus omnis non perspiciatis quae inventore nam quis voluptatibus! Quaerat, optio? Eius odit asperiores non aliquam officiis distinctio.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row productos-2">
+                <div id="productos-2-title">
+                    <h2>Revisa nuestros últimos productos</h2>
+                </div>
+                <div id="productos-2-cards">
+                    <div class="col-1">
+                        <div class="card product-card">
+                            <img src="Media/zapatilla1.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Asics Sky Elite FF MT Tokio</h5>
+                                <p class="card-text">$50.000</p>
+                            </div>
+                            <button type="button" class="btn btn-primary modalButtonCard rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Click para ver
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="card product-card">
+                            <img src="Media/zapatilla2.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Asics Gel-Task MT</h5>
+                                <br>
+                                <p class="card-text">$29.999</p>
+                            </div>
+                            <button type="button" class="btn btn-primary modalButtonCard rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Click para ver
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="card product-card">
+                            <img src="Media/zapatilla3.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Asics Gel Backhand (Black/Black)</h5>
+                                <p class="card-text">$40.999</p>
+                            </div>
+                            <button type="button" class="btn btn-primary modalButtonCard rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Click para ver
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="card product-card">
+                            <img src="Media/zapatilla4.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Asics Gel Rebound (Periwinckle)</h5>
+                                <p class="card-text">$34.999</p>
+                            </div>
+                            <button type="button" class="btn btn-primary modalButtonCard rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Click para ver
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="card product-card">
+                            <img src="Media/zapatilla5.png" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Asics Sky Elite FF MT L.E</h5>
+                                <p class="card-text">$32.999</p>
+                            </div>
+                            <div id="card-modal">
+                            </div>
+                            <button type="button" class="btn btn-primary modalButtonCard rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Click para ver
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row instagram">
+                <div id="instagram-title">
+                    <h2>¡Síguenos en instagram!</h2>
+                </div>
+                <div class="col-12 instagram-content">
+                    <div class="col-3 d-flex instagram-1">
+                        <div id="logo-ig">
+                            <img src="Media/logoig.jpeg" alt="">
+                        </div>
+                        <div id="instagram-name">
+                            <h4>@asics</h4>
+                        </div>
+                        <div id="instagram-info">
+                            <button class="btn rounded-pill instagram-button"><a href="https://www.instagram.com/asics/" target="_blank">Seguir</a></button>
+                            <h6>
+                                ASICS
+                                Discover what movement will do for your mind.
+                                <span>#SoundMindSoundBody</span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="col-8 instagram-2">
+                        <div class="row">
+                            <div class="col-3 instagram-pic">
+                                <img src="Media/asics1.jpeg" alt="">
+                            </div>
+                            <div class="col-3 instagram-pic">
+                                <img src="Media/asics2.jpeg" alt="">
+                            </div>
+                            <div class="col-3 instagram-pic">
+                                <img src="Media/asics3.jpeg" alt="">
+                            </div>
+                            <div class="col-3 instagram-pic">
+                                <img src="Media/asics4.jpeg" alt="">
+                            </div>
+                            <div class="col-3 instagram-pic">
+                                <img src="Media/asics5.jpeg" alt="">
+                            </div>
+                            <div class="col-3 instagram-pic">
+                            <img src="Media/asics6.jpeg" alt="">
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div id="footer-marcas">
+            <img src="Media/marcas.png" alt="">
+        </div>
+        <div id="footer-info">
+            <a href="#" class="footer-info-item">Sobre la tienda</a>
+            <a href="#" class="footer-info-item">Formas de entrega frente al covid-19</a>
+            <a href="#" class="footer-info-item">Términos y condiciones</a>
+        </div>
+        <div id="footer-derechos">
+            <p>Accesorios Voley® Todos los derechos reservados 2023
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
