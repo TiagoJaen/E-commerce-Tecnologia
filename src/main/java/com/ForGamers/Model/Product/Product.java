@@ -1,4 +1,4 @@
-package com.ForGamers.Model;
+package com.ForGamers.Model.Product;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
