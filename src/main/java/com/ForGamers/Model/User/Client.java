@@ -3,6 +3,7 @@ package com.ForGamers.Model.User;
 import com.ForGamers.Model.Product.Product;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.Valid;
@@ -12,6 +13,7 @@ import java.util.LinkedHashSet;
 
 
 @Entity
+@DiscriminatorValue("CLIENT")
 @Getter
 @Schema(description = "Clase que representa a los clientes.")
 public class Client extends User {
