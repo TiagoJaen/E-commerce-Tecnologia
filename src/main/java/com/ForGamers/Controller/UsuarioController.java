@@ -1,6 +1,6 @@
 package com.ForGamers.Controller;
 
-import com.ForGamers.Model.User;
+import com.ForGamers.Model.User.User;
 import com.ForGamers.Repository.UsuarioRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

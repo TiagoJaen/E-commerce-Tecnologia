@@ -1,6 +1,6 @@
 package com.ForGamers.Controller;
 
-import com.ForGamers.Model.Product;
+import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

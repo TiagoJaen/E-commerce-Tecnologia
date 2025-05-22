@@ -1,6 +1,6 @@
 package com.ForGamers.Service;
 
-import com.ForGamers.Model.Product;
+import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Repository.ProductRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
