@@ -49,6 +49,4 @@ public class ProductController {
     public ResponseEntity<Void> modifyProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
         return productService.modifyProduct(id, updatedProduct);
     }
-
-
 }
