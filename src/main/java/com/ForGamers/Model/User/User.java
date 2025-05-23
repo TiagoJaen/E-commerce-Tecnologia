@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @ToString
-@Builder
+@SuperBuilder
 @Schema(description = "Clase que representa a los usuarios del sistema.")
 public abstract class User {
     @Id
