@@ -4,6 +4,7 @@ import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Model.User.User;
 import com.ForGamers.Repository.UserRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,14 +12,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 @Getter
 @Schema(description = "Servicio generico para todos los tipos de usuarios.")
 public class UserService<T extends User,R extends UserRepository<T>> {
     protected final R repository;
-
-    public UserService(R repository) {
-        this.repository = repository;
-    }
 
     public T add(T t) {
         return repository.save(t);
