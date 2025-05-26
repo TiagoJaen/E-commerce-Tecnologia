@@ -1,8 +1,7 @@
-package com.ForGamers.Service;
+package com.ForGamers.Service.User;
 
 import com.ForGamers.Model.User.Client;
-import com.ForGamers.Repository.ClientRepository;
-import com.ForGamers.Repository.UserRepository;
+import com.ForGamers.Repository.User.ClientRepository;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,4 +1,4 @@
-package com.ForGamers.Repository;
+package com.ForGamers.Repository.Product;
 
 import com.ForGamers.Model.Product.Product;
 import org.springframework.data.jpa.repository.JpaRepository;

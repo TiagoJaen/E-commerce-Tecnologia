@@ -1,7 +1,7 @@
-package com.ForGamers.Controller;
+package com.ForGamers.Controller.Product;
 
 import com.ForGamers.Model.Product.Product;
-import com.ForGamers.Service.ProductService;
+import com.ForGamers.Service.Product.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;

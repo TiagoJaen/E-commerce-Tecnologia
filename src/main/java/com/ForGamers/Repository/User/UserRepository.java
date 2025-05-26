@@ -1,4 +1,4 @@
-package com.ForGamers.Repository;
+package com.ForGamers.Repository.User;
 
 import com.ForGamers.Model.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;

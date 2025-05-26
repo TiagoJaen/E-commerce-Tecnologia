@@ -1,8 +1,7 @@
-package com.ForGamers.Service;
+package com.ForGamers.Service.User;
 
-import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Model.User.User;
-import com.ForGamers.Repository.UserRepository;
+import com.ForGamers.Repository.User.UserRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

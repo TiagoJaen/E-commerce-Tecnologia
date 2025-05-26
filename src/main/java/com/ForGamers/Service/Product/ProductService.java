@@ -1,7 +1,7 @@
-package com.ForGamers.Service;
+package com.ForGamers.Service.Product;
 
 import com.ForGamers.Model.Product.Product;
-import com.ForGamers.Repository.ProductRepository;
+import com.ForGamers.Repository.Product.ProductRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 

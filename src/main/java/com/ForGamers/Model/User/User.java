@@ -40,6 +40,7 @@ public abstract class User {
     @Schema(example = "Gomez")
     private String lastname;
 
+    @Column(unique = true)
     @Size(max = 50)
     @Setter
     @Email(message = "El email no es valido.")
@@ -52,6 +53,7 @@ public abstract class User {
     @Schema(example = "2235203475")
     private String phone;
 
+    @Column(unique = true)
     @NotBlank(message = "El nombre de usuario no puede estar vacio.")
     @Size(max = 20)
     @Setter
