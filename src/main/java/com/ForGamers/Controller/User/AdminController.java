@@ -1,7 +1,7 @@
-package com.ForGamers.Controller;
+package com.ForGamers.Controller.User;
 
 import com.ForGamers.Model.User.Admin;
-import com.ForGamers.Service.AdminService;
+import com.ForGamers.Service.User.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
