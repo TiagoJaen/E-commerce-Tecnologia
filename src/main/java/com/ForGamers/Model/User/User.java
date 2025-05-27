@@ -1,12 +1,10 @@
 package com.ForGamers.Model.User;
 
+import com.ForGamers.Model.User.Enum.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -26,46 +24,50 @@ public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(example = "1")
-    private Long id;
+    protected Long id;
 
     @NotBlank(message = "El nombre no puede estar vacio")
     @Size(max = 50)
     @Setter
     @Schema(example = "pepito")
-    private String name;
+    protected String name;
 
     @NotBlank(message = "El apellido no puede estra vacio.")
     @Size(max = 50)
     @Setter
     @Schema(example = "Gomez")
-    private String lastname;
+    protected String lastname;
 
     @Column(unique = true)
     @Size(max = 50)
     @Setter
     @Email(message = "El email no es valido.")
     @Schema(example = "example@gmail.com")
-    private String email;
+    protected String email;
 
     //Numeros Nacionales de Argentina
     @Pattern(regexp = "^[0-9]{10}$", message = "Numero invalido.")
     @Setter
     @Schema(example = "2235203475")
-    private String phone;
+    protected String phone;
 
     @Column(unique = true)
     @NotBlank(message = "El nombre de usuario no puede estar vacio.")
     @Size(max = 20)
     @Setter
     @Schema(example = "rivato")
-    private String username;
+    protected String username;
 
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$")
     @NotBlank(message = "La clave no puede estar vacia.")
     @Size(max = 20)
     @Setter
     @Schema(example = "rivato")
-    private String password;
+    protected String password;
+
+    @NotNull(message = "Campo Obligatorio")
+    @Schema(example = "ADMIN")
+    protected Role role;
 
     public User(@Valid String name, @Valid String lastname, @Valid String email, @Valid String phone, @Valid String username, @Valid String password) {
         this.name = name;

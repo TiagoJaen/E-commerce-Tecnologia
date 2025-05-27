@@ -1,16 +1,11 @@
 package com.ForGamers.Model.User;
 
-import com.ForGamers.Model.Product.Product;
+import com.ForGamers.Model.User.Enum.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.Valid;
-import lombok.Builder;
 import lombok.Getter;
-
-import java.util.LinkedHashSet;
 
 
 @Entity
@@ -23,6 +18,7 @@ public class Client extends User {
 
     public Client(@Valid String name, @Valid String lastname, @Valid String email, @Valid String phone, @Valid String username, @Valid String password) {
         super(name, lastname, email, phone, username, password);
+        this.role = Role.CLIENT;
         //this.cart = new LinkedHashSet<>();
     }
 }
