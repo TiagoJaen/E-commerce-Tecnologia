@@ -6,14 +6,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Getter
 @Schema(description = "Servicio generico para todos los tipos de usuarios.")
-public class UserService<T extends User,R extends UserRepository<T>> {
+public class UserService<T extends User,R extends UserRepository<T>> implements UserDetailsService {
     protected final R repository;
 
     public T add(T t) {
@@ -50,5 +53,21 @@ public class UserService<T extends User,R extends UserRepository<T>> {
 
     public T getById(Long id){
         return repository.getReferenceById(id);
+    }
+
+    public Optional<T> getByUsername(String username) {
+        return repository.getByUsername(username);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        T t = getByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(t.getUsername())
+                .password(t.getPassword())
+                .roles(t.getRole().toString())
+                .build();
     }
 }
