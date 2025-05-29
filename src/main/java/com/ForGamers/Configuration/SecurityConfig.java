@@ -1,6 +1,7 @@
 package com.ForGamers.Configuration;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,20 +32,44 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login").permitAll()
+                        .requestMatchers(
+                                //Static
+                                "/login.html",
+                                "/index.html",
+                                "/style.css",
+                                "/script.js",
+                                "/Media/**",
+                                "/docs",
+
+                                // Swagger UI
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**"
+                        ).permitAll()
                         .requestMatchers("/client").hasAuthority("CLIENT")
+                        .requestMatchers(
+                                "/admin",
+
+                                        // Swagger UI
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui.html",
+                                        "/swagger-ui/**"
+
+                        ).hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .formLogin(Customizer.withDefaults())
-                .logout(Customizer.withDefaults());
+                .formLogin(formLogin ->
+                        formLogin
+                                .loginPage("/login.html")
+                                .permitAll()
+                )
+                .logout(logout ->
+                        logout
+                                .permitAll()
+                );
 
         return http.build();
 
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService(DataSource data) {
-        return new JdbcUserDetailsManager(data);
     }
 
     @Bean
