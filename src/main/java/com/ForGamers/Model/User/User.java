@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
