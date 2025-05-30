@@ -35,6 +35,7 @@ public class ProductController {
     @Operation(summary = "Eliminar un producto por id.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id){
+
         return productService.deleteProduct(id);
     }
 

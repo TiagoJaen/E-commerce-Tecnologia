@@ -46,6 +46,6 @@ public class ProductService {
     }
 
     public Product getById(Long id){
-        return productRepository.getReferenceById(id);
+        return productRepository.getById(id);
     }
 }

@@ -1,6 +1,7 @@
 package com.ForGamers.Configuration;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +34,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/",
+
                                 //Static
                                 "/login.html",
                                 "/index.html",
@@ -41,22 +44,27 @@ public class SecurityConfig {
                                 "/Media/**",
                                 "/docs",
 
-                                // Swagger UI
+                                // Swagger
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html",
-                                "/swagger-ui/**"
+                                "/swagger-ui/**",
+
+                                //Endpoints
+                                "/products",
+                                //Estos endpoints junto con los de Swagger, se tienen que pasar a rol de Admin
+                                //cuando el login funcione
+                                "/managers",
+                                "/admins",
+                                "/clients",
+                                "/login"
+
                         ).permitAll()
                         .requestMatchers("/client").hasAuthority("CLIENT")
                         .requestMatchers(
-                                "/admin",
-
-                                        // Swagger UI
-                                        "/v3/api-docs/**",
-                                        "/swagger-ui.html",
-                                        "/swagger-ui/**"
-
+                                "/admin"
                         ).hasAuthority("ADMIN")
                         .anyRequest().authenticated()
+
                 )
                 .formLogin(formLogin ->
                         formLogin
@@ -87,13 +95,13 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public UserDetailsService createUser(PasswordEncoder encoder) {
-        var user = User.withUsername("admin")
-                .password(encoder.encode("1234"))
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(user);
-    }
+//    @Bean
+//    public UserDetailsService createUser(PasswordEncoder encoder) {
+//        var user = User.withUsername("admin")
+//                .password(encoder.encode("1234"))
+//                .roles("ADMIN")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user);
+//    }
 }
