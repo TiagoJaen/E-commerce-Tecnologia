@@ -20,7 +20,7 @@ import java.util.Objects;
 @ToString
 @SuperBuilder
 @Schema(description = "Clase que representa a los usuarios del sistema.")
-public abstract class User {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(example = "1")
@@ -58,14 +58,15 @@ public abstract class User {
     @Schema(example = "rivato")
     protected String username;
 
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$")
+    //@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$")
+    //@Size(max = 20)
     @NotBlank(message = "La clave no puede estar vacia.")
-    @Size(max = 20)
     @Setter
     @Schema(example = "rivato")
     protected String password;
 
     @NotNull(message = "Campo Obligatorio")
+    @Enumerated(EnumType.STRING)
     @Schema(example = "ADMIN")
     protected Role role;
 

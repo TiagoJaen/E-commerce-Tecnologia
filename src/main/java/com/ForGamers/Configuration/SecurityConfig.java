@@ -1,6 +1,7 @@
 package com.ForGamers.Configuration;
 
 import com.ForGamers.Component.UserAuthentication;
+import com.ForGamers.Service.User.GeneralUserService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,10 +15,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -26,6 +24,9 @@ import javax.sql.DataSource;
 public class SecurityConfig {
     @Autowired
     private UserAuthentication auth;
+
+    @Autowired
+    private GeneralUserService service;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -68,13 +69,13 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(auth)
                 )
-                /*.formLogin(formLogin ->
+                .formLogin(formLogin ->
                         formLogin
                                 .loginPage("/login.html")
                                 .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll
-                )*/;
+                );
 
         return http.build();
 
@@ -86,22 +87,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource data) {
-        return new JdbcUserDetailsManager(data);
-    }
-
-    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//    @Bean
-//    public UserDetailsService createUser(PasswordEncoder encoder) {
-//        var user = User.withUsername("admin")
-//                .password(encoder.encode("1234"))
-//                .roles("ADMIN")
-//                .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
 }
