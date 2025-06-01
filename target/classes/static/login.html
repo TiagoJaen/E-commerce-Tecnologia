@@ -61,16 +61,14 @@
         <section id="login" class="d-flex justify-content-center align-items-center vh-100">
             <div id="login-container">
                 <div id="login-front">
-                    <form class="login-form d-flex align-content-between justify-content-evenly flex-column" id="sign-in-form" method="post" novalidate>
+                    <form class="needs-validation login-form d-flex align-content-between flex-column" id="sign-in-form" action = "/login" method="post">
                         <div>
-                            <input type="text" class="form-control" placeholder="Usuario" required>
+                            <input type="text" class="form-control" placeholder="Usuario" name="username" required>
                         </div>
                         <div>
-                            <input type="text" class="form-control" placeholder="Contraseña" required>
+                            <input type="password" class="form-control" placeholder="Contraseña" name="password" required>
                         </div>
-                        <div>
-                                    <button class="btn btn-primary" type="submit">Submit form</button>
-                        </div>
+                        <input class="btn btn-primary" type="submit" value="Iniciar sesión"></input>
                     </form>
                 </div>
                 <!-- <div id="login-back" class="login-form"">

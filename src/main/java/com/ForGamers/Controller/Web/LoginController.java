@@ -1,4 +1,4 @@
-package com.ForGamers.Controller.User;
+package com.ForGamers.Controller.Web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,5 +28,10 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }
         return ResponseEntity.ok("Inicio Exitoso.");
+    }
+
+    @GetMapping("/login")
+    String login() {
+        return "login";
     }
 }

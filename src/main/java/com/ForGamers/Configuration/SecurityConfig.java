@@ -45,11 +45,6 @@ public class SecurityConfig {
                                 "/Media/**",
                                 "/docs",
 
-                                // Swagger
-                                "/v3/api-docs/**",
-                                "/swagger-ui.html",
-                                "/swagger-ui/**",
-
                                 //Endpoints
                                 "/products"
 
@@ -63,7 +58,12 @@ public class SecurityConfig {
                                 "/admins",
                                 "/clients",
                                 "/login",
-                                "/admin"
+                                "/admin",
+
+                                // Swagger solo para admins
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**"
                         ).hasAuthority("ADMIN")
                         .anyRequest().authenticated()
 
