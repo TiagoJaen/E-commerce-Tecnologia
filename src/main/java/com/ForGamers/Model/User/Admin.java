@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Schema(description = "Clase que representa a los admins.")
 public class Admin extends User {
-    public Admin(@Valid String name, @Valid String lastname, @Valid String email, @Valid String phone, @Valid String username, @Valid String password) {
-        super(name, lastname, email, phone, username, password);
+    public Admin(@Valid AdminDTO dto) {
+        super(dto);
         this.role = Role.ADMIN;
     }
 }

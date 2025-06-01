@@ -1,6 +1,7 @@
 package com.ForGamers.Component;
 
 import com.ForGamers.Model.User.Admin;
+import com.ForGamers.Model.User.AdminDTO;
 import com.ForGamers.Service.User.AdminService;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -19,15 +20,17 @@ public class UserInit {
     @PostConstruct
     public void createSuperUser() {
         Optional<Admin> op = repository.getByUsername("jefe_maestro");
+        AdminDTO dto = new AdminDTO(
+                "Jefe",
+                "Maestro",
+                "jefemaestro@gmail.com",
+                "2237984567",
+                "jefe_maestro",
+                "Admin123!"
+        );
         if(op.isEmpty()) {
-            Admin admin = new Admin(
-                    "Jefe",
-                    "Maestro",
-                    "jefemaestro@gmail.com",
-                    "2237984567",
-                    "jefe_maestro",
-                    encoder.encode("Admin123!")
-            );
+            Admin admin = new Admin(dto);
+            admin.setPassword(encoder.encode(admin.getPassword()));
             repository.add(admin);
         }
     }
