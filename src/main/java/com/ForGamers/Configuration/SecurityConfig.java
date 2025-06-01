@@ -32,6 +32,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                //PERMISOS
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
@@ -50,28 +51,31 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
 
                                 //Endpoints
-                                "/products",
+                                "/products"
+
+
+                        ).permitAll()
+                        .requestMatchers("/client").hasAuthority("CLIENT")
+                        .requestMatchers(
                                 //Estos endpoints junto con los de Swagger, se tienen que pasar a rol de Admin
                                 //cuando el login funcione
                                 "/managers",
                                 "/admins",
                                 "/clients",
-                                "/login"
-
-                        ).permitAll()
-                        .requestMatchers("/client").hasAuthority("CLIENT")
-                        .requestMatchers(
+                                "/login",
                                 "/admin"
                         ).hasAuthority("ADMIN")
                         .anyRequest().authenticated()
 
                 )
+                //EXCEPTIONS
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(auth)
                 )
+                //FORM
                 .formLogin(formLogin ->
                         formLogin
-                                .loginPage("/login.html")
+                                .loginPage("/login")
                                 .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll
