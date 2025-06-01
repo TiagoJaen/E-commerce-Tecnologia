@@ -10,8 +10,8 @@ import jakarta.validation.Valid;
 @DiscriminatorValue("MANAGER")
 @Schema(description = "Clase que representa a los gestores.")
 public class Manager extends User {
-    public Manager(@Valid String name, @Valid String lastname, @Valid String email, @Valid String phone, @Valid String username, @Valid String password) {
-        super(name, lastname, email, phone, username, password);
+    public Manager(@Valid ManagerDTO dto) {
+        super(dto);
         this.role = Role.MANAGER;
     }
 }

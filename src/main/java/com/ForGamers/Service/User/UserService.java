@@ -1,5 +1,6 @@
 package com.ForGamers.Service.User;
 
+import com.ForGamers.Model.User.Admin;
 import com.ForGamers.Model.User.User;
 import com.ForGamers.Repository.User.UserRepository;
 import io.swagger.v3.oas.annotations.media.Schema;

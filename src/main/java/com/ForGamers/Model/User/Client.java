@@ -16,8 +16,8 @@ public class Client extends User {
     /*@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     LinkedHashSet<Product> cart;*/
 
-    public Client(@Valid String name, @Valid String lastname, @Valid String email, @Valid String phone, @Valid String username, @Valid String password) {
-        super(name, lastname, email, phone, username, password);
+    public Client(@Valid ClientDTO dto) {
+        super(dto);
         this.role = Role.CLIENT;
         //this.cart = new LinkedHashSet<>();
     }
