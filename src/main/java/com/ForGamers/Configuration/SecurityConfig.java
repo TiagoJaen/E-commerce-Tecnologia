@@ -36,6 +36,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
+                                "/login",
+                                "/logout",
 
                                 //Static
                                 "/login.html",
@@ -43,28 +45,23 @@ public class SecurityConfig {
                                 "/style.css",
                                 "/script.js",
                                 "/Media/**",
-                                "/docs",
 
                                 //Endpoints
                                 "/products"
-
-
                         ).permitAll()
-                        .requestMatchers("/client").hasAuthority("CLIENT")
+                        .requestMatchers("/client").hasRole("CLIENT")
+                        .requestMatchers("/manager").hasRole("MANAGER")
                         .requestMatchers(
-                                //Estos endpoints junto con los de Swagger, se tienen que pasar a rol de Admin
-                                //cuando el login funcione
                                 "/managers",
                                 "/admins",
                                 "/clients",
-                                "/login",
                                 "/admin",
 
                                 // Swagger solo para admins
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html",
                                 "/swagger-ui/**"
-                        ).hasAuthority("ADMIN")
+                        ).hasRole("ADMIN")
                         .anyRequest().authenticated()
 
                 )
@@ -72,13 +69,20 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(auth)
                 )
-                //FORM
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/login")
-                                .permitAll()
+                .formLogin(form -> form
+                        .loginPage("/login.html")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/login.html?error")
+                        .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .deleteCookies("JSESSIONID")
+                        .logoutSuccessUrl("/")
+                        .clearAuthentication(true)
+                        .invalidateHttpSession(true)
+                        .permitAll()
                 );
 
         return http.build();

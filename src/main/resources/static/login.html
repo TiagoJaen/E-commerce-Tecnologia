@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
     <header>
         <nav>
             <div class="fixed-top container-fluid nav-container p-0 d-flex justify-content-center align-items-center">
@@ -35,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="index.html" id="logo-container" >
+                <a href="/" id="logo-container" >
                     <h1 id="title">FOR GAMERS</h1>
                     <i class="fa-duotone fa-solid fa-gamepad" id="logo"></i>
                 </a>
@@ -59,8 +58,9 @@
     </header>
     <main>
         <section id="login" class="d-flex justify-content-center align-items-center vh-100">
-            <div id="login-container">
+            <div id="login-container" class="d-flex justify-content-center align-items-center">
                 <div id="login-front">
+                    <div id="login-error">Usuario o contraseña incorrectos</div>
                     <form class="needs-validation login-form d-flex align-content-between flex-column" id="sign-in-form" action = "/login" method="post">
                         <div>
                             <input type="text" class="form-control" placeholder="Usuario" name="username" required>
@@ -139,8 +139,14 @@
                         </div>
                     </form>
                 </div> -->
-                
         </section>
-    </main>
+    </main> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+    <script>
+        const loginParam = new URLSearchParams(window.location.search);
+        if (loginParam.has('error')) {
+            document.getElementById('login-error').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
