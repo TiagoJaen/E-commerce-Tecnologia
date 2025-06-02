@@ -32,9 +32,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                //PERMISOS
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/",
+                                "/login",
+                                "/logout",
 
                                 //Static
                                 "/login.html",
@@ -42,39 +45,44 @@ public class SecurityConfig {
                                 "/style.css",
                                 "/script.js",
                                 "/Media/**",
-                                "/docs",
-
-                                // Swagger
-                                "/v3/api-docs/**",
-                                "/swagger-ui.html",
-                                "/swagger-ui/**",
 
                                 //Endpoints
-                                "/products",
-                                //Estos endpoints junto con los de Swagger, se tienen que pasar a rol de Admin
-                                //cuando el login funcione
+                                "/products"
+                        ).permitAll()
+                        .requestMatchers("/client").hasRole("CLIENT")
+                        .requestMatchers("/manager").hasRole("MANAGER")
+                        .requestMatchers(
                                 "/managers",
                                 "/admins",
                                 "/clients",
-                                "/login"
+                                "/admin",
 
-                        ).permitAll()
-                        .requestMatchers("/client").hasAuthority("CLIENT")
-                        .requestMatchers(
-                                "/admin"
-                        ).hasAuthority("ADMIN")
+                                // Swagger solo para admins
+                                "/v3/api-docs/**",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**"
+                        ).hasRole("ADMIN")
                         .anyRequest().authenticated()
 
                 )
+                //EXCEPTIONS
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(auth)
                 )
-                .formLogin(formLogin ->
-                        formLogin
-                                .loginPage("/login.html")
-                                .permitAll()
+                .formLogin(form -> form
+                        .loginPage("/login.html")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/login.html?error")
+                        .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .deleteCookies("JSESSIONID")
+                        .logoutSuccessUrl("/")
+                        .clearAuthentication(true)
+                        .invalidateHttpSession(true)
+                        .permitAll()
                 );
 
         return http.build();

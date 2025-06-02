@@ -14,6 +14,6 @@ public class UserAuthentication implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write("Credenciales inválidas o acceso no autorizado");
+        response.getWriter().write("Acceso no autorizado");
     }
 }

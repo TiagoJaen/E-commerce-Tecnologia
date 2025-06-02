@@ -61,6 +61,7 @@ public class User {
         this.phone = dto.getPhone();
         this.username = dto.getUsername();
         this.password = dto.getPassword();
+        this.role = dto.getRole();
     }
 
     @Override

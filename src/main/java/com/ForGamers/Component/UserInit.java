@@ -33,5 +33,6 @@ public class UserInit {
             admin.setPassword(encoder.encode(admin.getPassword()));
             repository.add(admin);
         }
+        System.out.println(dto);
     }
 }

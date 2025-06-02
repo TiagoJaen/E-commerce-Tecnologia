@@ -165,10 +165,30 @@ color: var(--title-color-1);
 }
 
 /* --------------------LOGIN PAGE------------------- */
-.login-form{
+#login-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50vw;
+    height: 50vh;
+}
+
+#login-container > *{
     border-radius: 35px;
     background-color: var(--background-color-1);
     box-shadow: 0 0 10px 5px var(--light-color);
-    width: 50vw;
-    height: 50vh;
+    width: 80%;
+    height: 100%;
+}
+
+.login-form{
+
+}
+
+#login-error{
+    color: red;
+    font-family: var(--main-font-family);
+    font-weight: 900;
+    text-align: center;
+    display: none;
 }
