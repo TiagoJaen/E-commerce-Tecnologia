@@ -22,7 +22,6 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue
-    @Schema(example = "1")
     protected Long id;
 
     @Setter
@@ -47,11 +46,10 @@ public class User {
     protected String username;
 
     @Setter
-    @Schema(example = "rivato")
+    @Schema(example = "1234")
     protected String password;
 
     @Enumerated(EnumType.STRING)
-    @Schema(example = "ADMIN")
     protected Role role;
 
     public User(@Valid UserDTO dto) {
