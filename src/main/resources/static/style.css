@@ -166,26 +166,83 @@ color: var(--title-color-1);
 
 /* --------------------LOGIN PAGE------------------- */
 #login-container{
-    width: 50vw;
-    height: 50vh;
+    min-width: 50vw;
+    height: 60%;
+    perspective: 1000px;
 }
 
 #login-container > *{
     border-radius: 35px;
-    background-color: var(--background-color-1);
-    box-shadow: 0 0 10px 5px var(--light-color);
+    padding: 3em;
     width: 100%;
     height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: .8s;
 }
 
-.login-form{
+/* LOGIN FRONT */
+#login-front{
+    background-color: var(--background-color-1);
+    transform: rotateY(0deg);
+}
 
+#login-front h2{
+    margin-bottom: 1.2em;
+    color: var(--primary-color);
+    text-shadow: 0 0 6px var(--light-color);
+    font-family: var(--main-font-family);
+    font-weight: 900;
 }
 
 #login-error{
     color: red;
     font-family: var(--main-font-family);
-    font-weight: 900;
+    font-weight: 700;
     text-align: center;
     display: none;
+}
+
+.login-form-control{
+    border-radius: 10px;
+    padding: .8em;
+    margin: .3em 0;
+    height: 2.3em;
+    background-color: var(--title-color-1);
+    border: 2px solid var(--primary-color);
+    outline: none;
+    color: white;
+    transition: .3s;
+}
+.login-form-control:focus{
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 0 7px 2px var(--primary-color);
+}
+.login-form-control::placeholder{
+    color: rgba(255, 255, 255, 0.466);
+    font-family: var(--main-font-family);
+}
+
+#login-buttons > *{
+    margin-top: 1.5em;
+    width: 12em;
+    height: 2.5em;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    background-color: var(--primary-color);
+    transition: .3s;
+}
+
+#login-buttons > *:hover{
+    background-color: var(--background-color-1);
+    color: var(--primary-color);
+    box-shadow: 0 0 10px 5px var(--primary-color);
+}
+
+/* REGISTER BACK */
+#login-back{
+    background-color: var(--primary-color);
+    box-shadow: 0 0 10px 5px var(--light-color);
+    transform: rotateY(180deg);
 }
