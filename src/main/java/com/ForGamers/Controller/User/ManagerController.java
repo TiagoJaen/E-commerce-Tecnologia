@@ -33,19 +33,19 @@ public class ManagerController {
         return services.add(manager);
     }
 
-    @Operation(summary = "Eliminar un manager por id.")
+    @Operation(summary = "Eliminar un gestor por id.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteManager(@PathVariable Long id){
         return services.delete(id);
     }
 
-    @Operation(summary = "Obtener manager por id.")
+    @Operation(summary = "Obtener un gestor por id.")
     @GetMapping("/{id}")
     public Manager getById(@PathVariable Long id){
         return services.getById(id);
     }
 
-    @Operation(summary = "Editar un manager.")
+    @Operation(summary = "Editar un gestor.")
     @PutMapping("/{id}")
     public ResponseEntity<Void> modifyManager(@PathVariable Long id, @RequestBody Manager updatedManager) {
         return services.modify(id, updatedManager);

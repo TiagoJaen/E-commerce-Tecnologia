@@ -20,7 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@Schema(description = "Configuracion de seguridad.")
+@Schema(description = "Configuración de seguridad.")
 public class SecurityConfig {
     @Autowired
     private UserAuthentication auth;

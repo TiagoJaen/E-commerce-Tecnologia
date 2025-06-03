@@ -12,8 +12,8 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("🚀 ForGamers E-Commerce API") // Título principal
-                        .version("1.0.0")                    // Versión
-                        .description("Documentación oficial de la API de ForGamers E-Commerce")); // Descripción
+                        .title("🚀 ForGamers E-Commerce API")
+                        .version("1.0.0")
+                        .description("Documentación oficial de la API de ForGamers E-Commerce"));
     }
 }

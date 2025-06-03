@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Getter
-@Schema(description = "Servicio generico para todos los tipos de usuarios.")
+@Schema(description = "Servicio genérico para todos los tipos de usuarios.")
 public class UserService<T extends User,R extends UserRepository<T>>{
     protected final R repository;
 

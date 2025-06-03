@@ -39,7 +39,7 @@ public class ProductController {
         return productService.deleteProduct(id);
     }
 
-    @Operation(summary = "Obtener producto por id.")
+    @Operation(summary = "Obtener un producto por id.")
     @GetMapping("/{id}")
     public Product getById(@PathVariable Long id){
         return productService.getById(id);

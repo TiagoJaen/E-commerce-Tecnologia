@@ -39,7 +39,7 @@ public class AdminController {
         return services.delete(id);
     }
 
-    @Operation(summary = "Obtener admin por id.")
+    @Operation(summary = "Obtener un admin por id.")
     @GetMapping("/{id}")
     public Admin getById(@PathVariable Long id){
         return services.getById(id);

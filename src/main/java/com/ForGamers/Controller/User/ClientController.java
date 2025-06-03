@@ -39,7 +39,7 @@ public class ClientController {
         return services.delete(id);
     }
 
-    @Operation(summary = "Obtener cliente por id.")
+    @Operation(summary = "Obtener un cliente por id.")
     @GetMapping("/{id}")
     public Client getById(@PathVariable Long id){
         return services.getById(id);

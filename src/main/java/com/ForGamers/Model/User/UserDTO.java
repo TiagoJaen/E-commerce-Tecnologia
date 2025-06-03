@@ -12,34 +12,34 @@ import lombok.experimental.SuperBuilder;
 public abstract class UserDTO {
     protected Long id;
 
-    @NotBlank(message = "El nombre no puede estar vacio")
+    @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max = 50)
     protected String name;
 
-    @NotBlank(message = "El apellido no puede estra vacio.")
+    @NotBlank(message = "El apellido no puede estar vacío.")
     @Size(max = 50)
     protected String lastname;
 
     @Column(unique = true)
     @Size(max = 50)
-    @Email(message = "El email no es valido.")
+    @Email(message = "El email no es válido.")
     protected String email;
 
     //Numeros Nacionales de Argentina
-    @Pattern(regexp = "^[0-9]{10}$", message = "Numero invalido.")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Número inválido.")
     protected String phone;
 
     @Column(unique = true)
-    @NotBlank(message = "El nombre de usuario no puede estar vacio.")
+    @NotBlank(message = "El nombre de usuario no puede estar vacío.")
     @Size(max = 20)
     protected String username;
 
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$")
     @Size(max = 20)
-    @NotBlank(message = "La clave no puede estar vacia.")
+    @NotBlank(message = "La clave no puede estar vacía.")
     protected String password;
 
-    @NotNull(message = "Campo Obligatorio")
+    @NotNull(message = "Campo obligatorio.")
     @Enumerated(EnumType.STRING)
     protected Role role;
 
