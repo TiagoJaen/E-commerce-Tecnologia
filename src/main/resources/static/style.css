@@ -17,6 +17,9 @@ body{
     background-color: var(--background-color-2) !important;
 }
 
+input[type="number"]::-webkit-inner-spin-button{
+    appearance: none;
+}
 /* --------------------HEADER------------------- */
 .nav-container{
     background-color: var(--background-color-1);
