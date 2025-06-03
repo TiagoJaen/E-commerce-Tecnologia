@@ -11,11 +11,11 @@ import java.util.Objects;
 
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @ToString
 @SuperBuilder
 @Schema(description = "Clase que representa a los usuarios del sistema.")
@@ -24,31 +24,31 @@ public class User {
     @GeneratedValue
     protected Long id;
 
-    @Setter
+    // @Setter
     @Schema(example = "pepito")
     protected String name;
 
-    @Setter
     @Schema(example = "Gomez")
     protected String lastname;
 
-    @Setter
+    // @Setter
     @Schema(example = "example@gmail.com")
     protected String email;
 
     //Numeros Nacionales de Argentina
-    @Setter
+    // @Setter
     @Schema(example = "2235203475")
     protected String phone;
 
-    @Setter
+    // @Setter
     @Schema(example = "rivato")
     protected String username;
 
-    @Setter
+    // @Setter
     @Schema(example = "1234")
     protected String password;
 
+    // @Setter
     @Enumerated(EnumType.STRING)
     protected Role role;
 
