@@ -14,12 +14,12 @@ import java.util.Optional;
 @Component
 @AllArgsConstructor
 public class UserInit {
-    private final AdminService repository;
+    private final AdminService adminService;
     private final PasswordEncoder encoder;
 
     @PostConstruct
     public void createSuperUser() {
-        Optional<Admin> op = repository.getByUsername("jefe_maestro");
+        Optional<Admin> op = adminService.getByUsername("jefe_maestro");
         AdminDTO dto = new AdminDTO(
                 "Jefe",
                 "Maestro",
@@ -30,8 +30,7 @@ public class UserInit {
         );
         if(op.isEmpty()) {
             Admin admin = new Admin(dto);
-            admin.setPassword(encoder.encode(admin.getPassword()));
-            repository.add(admin);
+            adminService.add(admin);
         }
         System.out.println(dto);
     }

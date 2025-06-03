@@ -1,6 +1,7 @@
 package com.ForGamers.Controller.User;
 
 import com.ForGamers.Model.User.Admin;
+import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Service.User.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,6 +29,7 @@ public class AdminController {
     @Operation(summary = "Agregar un admin.", description = "No incluir id al agregar un admin.")
     @PostMapping
     public Admin addAdmin(@RequestBody Admin admin) {
+        admin.setRole(Role.ADMIN);
         return services.add(admin);
     }
 

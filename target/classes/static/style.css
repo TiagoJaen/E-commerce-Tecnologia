@@ -208,6 +208,7 @@ color: var(--title-color-1);
     padding: .8em;
     margin: .3em 0;
     height: 2.3em;
+    width: 100%;
     background-color: var(--title-color-1);
     border: 2px solid var(--primary-color);
     outline: none;
@@ -225,7 +226,7 @@ color: var(--title-color-1);
 
 #login-buttons > *{
     margin-top: 1.5em;
-    width: 12em;
+    width: 35%;
     height: 2.5em;
     border-radius: 15px;
     outline: none;

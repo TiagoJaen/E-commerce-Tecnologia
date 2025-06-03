@@ -1,5 +1,6 @@
 package com.ForGamers.Service.User;
 
+import com.ForGamers.Configuration.SecurityConfig;
 import com.ForGamers.Model.User.Admin;
 import com.ForGamers.Model.User.User;
 import com.ForGamers.Repository.User.UserRepository;
@@ -22,6 +23,7 @@ public class UserService<T extends User,R extends UserRepository<T>>{
     protected final R repository;
 
     public T add(T t) {
+        t.setPassword(SecurityConfig.passwordEncoder().encode(t.getPassword()));
         return repository.save(t);
     }
 

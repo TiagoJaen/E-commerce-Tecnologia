@@ -1,5 +1,6 @@
 package com.ForGamers.Controller.User;
 
+import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Model.User.Manager;
 import com.ForGamers.Service.User.ManagerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,6 +29,7 @@ public class ManagerController {
     @Operation(summary = "Agregar un gestor.", description = "No incluir id al agregar un gestor.")
     @PostMapping
     public Manager addManager(@RequestBody Manager manager) {
+        manager.setRole(Role.MANAGER);
         return services.add(manager);
     }
 

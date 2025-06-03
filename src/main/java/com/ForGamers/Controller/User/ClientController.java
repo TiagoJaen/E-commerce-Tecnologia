@@ -1,6 +1,7 @@
 package com.ForGamers.Controller.User;
 
 import com.ForGamers.Model.User.Client;
+import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Service.User.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,6 +29,7 @@ public class ClientController {
     @Operation(summary = "Agregar un cliente.", description = "No incluir id al agregar un cliente.")
     @PostMapping
     public Client addClient(@RequestBody Client client) {
+        client.setRole(Role.CLIENT);
         return services.add(client);
     }
 
