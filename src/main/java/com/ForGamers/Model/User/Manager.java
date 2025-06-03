@@ -5,9 +5,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.validation.Valid;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 
 @Entity
-@DiscriminatorValue("MANAGER")
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@SuperBuilder
 @Schema(description = "Clase que representa a los gestores.")
 public class Manager extends User {
     public Manager(@Valid ManagerDTO dto) {
