@@ -73,15 +73,15 @@
                 </div>
                 <div id="login-back" class="d-flex flex-column justify-content-center align-items-center">
                     <h2>Registrarse</h2>
-                    <form class="row g-3 needs-validation login-form" id="register-form" novalidate>
+                    <form class="row g-3 needs-validation login-form" id="register-form">
                         <div class="row justify-content-center">
                             <div class="col-md-5">
                                 <label for="validationCustom01" class="form-label">Nombre</label>
-                                <input type="text" class="register-form-control" id="validationCustom01" placeholder="Nombre" name="name" required validate>
+                                <input type="text" class="register-form-control" id="validationCustom01" placeholder="Nombre" name="name" required>
                             </div>
                             <div class="col-md-5">
                                 <label for="validationCustom02" class="form-label">Apellido</label>
-                                <input type="text" class="register-form-control" id="validationCustom02" placeholder="Apellido" name="lastname" required validate>
+                                <input type="text" class="register-form-control" id="validationCustom02" placeholder="Apellido" name="lastname" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="validationCustom04" class="form-label">Correo electrónico</label>
@@ -92,14 +92,14 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="validationCustom03" class="form-label">Teléfono</label>
-                                <input type="text" pattern="[0-9]{10}" class="register-form-control" id="validationCustom03" placeholder="2238452914" name="phone" required validate>
+                                <input type="text" pattern="[0-9]{10}" title="Formato Argentina(10 números)." class="register-form-control" id="validationCustom03" placeholder="2238452914" name="phone" required>
                                 <div class="invalid-phone">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="validationCustomUsername" class="form-label">Usuario</label>
                                 <div class="input-group has-validation">
-                                    <input type="text" class="register-form-control" id="validationCustomUsername" placeholder="Usuario" name="username" aria-describedby="inputGroupPrepend" required validate>
+                                    <input type="text" class="register-form-control" id="validationCustomUsername" placeholder="Usuario" name="username" aria-describedby="inputGroupPrepend" required>
                                     <div class="invalid-feedback">
                                     <!-- Mensaje de error para el usuario. -->
                                     </div>
@@ -107,13 +107,13 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="validationCustom05" class="form-label">Contraseña</label>
-                                <input type="password" class="register-form-control" id="validationCustom05" placeholder="••••••••••••" name="password" required validate>
+                                <input type="password" class="register-form-control" id="validationCustom05" placeholder="••••••••••••" name="password" required>
                                 <div id="invalid-password">
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-check register-form-check">
-                                    <input class="form-check-input register-check-input" type="checkbox" value="" id="invalidCheck" required validate>
+                                    <input class="form-check-input register-check-input" type="checkbox" value="" id="invalidCheck" required>
                                     <label class="form-check-terms-label" for="invalidCheck">
                                         Acepto los <a href="#" onclick="alert('Términos y condiciones:\nPromocionar a los integrantes de este proyecto😛')">términos y condiciones.</a>
                                     </label>
