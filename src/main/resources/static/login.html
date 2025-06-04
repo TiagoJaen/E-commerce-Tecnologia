@@ -62,43 +62,44 @@
                 <div id="login-front" class="text-center">
                     <h2>Iniciar Sesión</h2>
                     <div id="login-error">Usuario o contraseña incorrectos</div>
-                    <form class="needs-validation login-form d-flex row gap-2 justify-content-center" id="sign-in-form" action = "/login" method="post">
+                    <form class="needs-validation login-form d-flex row gap-2 justify-content-center" id="sign-in-form" method="post" action="/login">
                         <input type="text" class="login-form-control" placeholder="Usuario" name="username" required>
                         <input type="password" class="login-form-control" placeholder="Contraseña" name="password" required>
                         <div id="login-buttons" class="d-flex flex-row justify-content-around align-items-center">
-                            <button id="register-button" type="button">Registrarse</button>
+                            <button id="change-register-button" type="button">Registrarse</button>
                             <input class="btn login-btn" type="submit" value="Iniciar sesión"></input>
                         </div>
                     </form>
                 </div>
                 <div id="login-back" class="d-flex flex-column justify-content-center align-items-center">
+                    <h2>Registrarse</h2>
                     <form class="row g-3 needs-validation login-form" id="register-form" novalidate>
                         <div class="row justify-content-center">
                             <div class="col-md-5">
                                 <label for="validationCustom01" class="form-label">Nombre</label>
-                                <input type="text" class="register-form-control" id="validationCustom01" placeholder="Nombre" name="name" required>
+                                <input type="text" class="register-form-control" id="validationCustom01" placeholder="Nombre" name="name" required validate>
                             </div>
                             <div class="col-md-5">
                                 <label for="validationCustom02" class="form-label">Apellido</label>
-                                <input type="text" class="register-form-control" id="validationCustom02" placeholder="Apellido" name="lastname" required>
+                                <input type="text" class="register-form-control" id="validationCustom02" placeholder="Apellido" name="lastname" required validate>
                             </div>
                             <div class="col-md-6">
                                 <label for="validationCustom04" class="form-label">Correo electrónico</label>
-                                <input type="email" class="register-form-control" id="validationCustomUsername" placeholder="Email" name="email" aria-describedby="inputGroupPrepend" required>
+                                <input type="email" class="register-form-control" id="validationCustomEmail" placeholder="Email" name="email" aria-describedby="inputGroupPrepend" required>
                                 <div class="invalid-feedback">
                                 Por favor ingrese un correo electrónico válido.
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="validationCustom03" class="form-label">Teléfono</label>
-                                <input type="number" class="register-form-control" id="validationCustom03" placeholder="2238452914" name="phone" required>
+                                <input type="text" pattern="[0-9]{10}" class="register-form-control" id="validationCustom03" placeholder="2238452914" name="phone" required validate>
                                 <div class="invalid-phone">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="validationCustomUsername" class="form-label">Usuario</label>
                                 <div class="input-group has-validation">
-                                    <input type="text" class="register-form-control" id="validationCustomUsername" placeholder="Usuario" name="username" aria-describedby="inputGroupPrepend" required>
+                                    <input type="text" class="register-form-control" id="validationCustomUsername" placeholder="Usuario" name="username" aria-describedby="inputGroupPrepend" required validate>
                                     <div class="invalid-feedback">
                                     <!-- Mensaje de error para el usuario. -->
                                     </div>
@@ -106,14 +107,14 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="validationCustom05" class="form-label">Contraseña</label>
-                                <input type="password" class="register-form-control" id="validationCustom05" placeholder="••••••••••••" name="password" required>
+                                <input type="password" class="register-form-control" id="validationCustom05" placeholder="••••••••••••" name="password" required validate>
                                 <div id="invalid-password">
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-check register-form-check">
-                                    <input class="form-check-input register-check-input" type="checkbox" value="" id="invalidCheck" required>
-                                    <label class="form-check-label" for="invalidCheck">
+                                    <input class="form-check-input register-check-input" type="checkbox" value="" id="invalidCheck" required validate>
+                                    <label class="form-check-terms-label" for="invalidCheck">
                                         Acepto los <a href="#" onclick="alert('Términos y condiciones:\nPromocionar a los integrantes de este proyecto😛')">términos y condiciones.</a>
                                     </label>
                                     <div class="invalid-feedback">
@@ -121,8 +122,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary" id="submit-register-button" type="submit">Submit form</button>
+                            <div id="register-buttons" class=" col-12 d-flex flex-row justify-content-around align-items-center">
+                                <button type="button" id="change-login-button">Iniciar sesión</button>
+                                <input class="btn" type="submit" value="Registrarse"></input>
                             </div>
                         </div>
                     </form>

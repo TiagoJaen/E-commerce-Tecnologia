@@ -38,7 +38,6 @@ public abstract class UserDTO {
     @NotBlank(message = "La contraseña debe tener entre 8 y 15 caracteres, al menos una mayuscula, una minuscula y un caracter especial(@$!%*?&).")
     protected String password;
 
-    @NotNull(message = "Campo Obligatorio")
     @Enumerated(EnumType.STRING)
     protected Role role;
 

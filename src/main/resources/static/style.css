@@ -238,6 +238,7 @@ color: var(--title-color-1);
 #login-buttons > *{
     margin-top: 1.5em;
     width: 35%;
+    color: var(--background-color-1);
     height: 2.5em;
     border-radius: 15px;
     outline: none;
@@ -257,6 +258,14 @@ color: var(--title-color-1);
     background-color: rgb(227 227 227);
     box-shadow: 0 0 10px 5px var(--background-color-1);
     transform: rotateY(180deg);
+}
+
+#login-back h2{
+    /* margin-bottom: 1.2em; */
+    color: var(--background-color-1);
+    text-shadow: 0 0 5px var(--background-color-1);
+    font-family: var(--main-font-family);
+    font-weight: 900;
 }
 
 .register-form-control{
@@ -280,10 +289,15 @@ color: var(--title-color-1);
 }
 
 .form-label, .form-check-label{
+    margin: .5em 0 0 !important;
+    color: var(--background-color-1);
+}
+.form-check-terms-label{
     color: var(--background-color-1);
 }
 
-#submit-register-button{
+#register-buttons > *{
+    color: var(--primary-color);
     width: 35%;
     height: 2.5em;
     border-radius: 15px;
@@ -293,7 +307,7 @@ color: var(--title-color-1);
     transition: .3s;
 }
 
-#submit-register-button:hover{
+#register-buttons > *:hover{
     background-color: var(--primary-color);
     color: var(--background-color-1);
     box-shadow: 0 0 10px 5px var(--background-color-1);
