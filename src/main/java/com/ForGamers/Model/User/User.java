@@ -22,6 +22,7 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue
+    @SequenceGenerator(name = "user_seq", sequenceName = "user_sequence", allocationSize = 1)
     protected Long id;
 
     // @Setter
