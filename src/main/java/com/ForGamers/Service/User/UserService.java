@@ -1,10 +1,13 @@
 package com.ForGamers.Service.User;
 
 import com.ForGamers.Configuration.SecurityConfig;
+import com.ForGamers.Exception.ExistentEmailException;
+import com.ForGamers.Exception.ExistentUsernameException;
 import com.ForGamers.Model.User.Admin;
 import com.ForGamers.Model.User.User;
 import com.ForGamers.Repository.User.UserRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,11 @@ public class UserService<T extends User,R extends UserRepository<T>>{
     protected final R repository;
 
     public T add(T t) {
+        if (repository.getByUsername(t.getUsername()).isPresent()) {
+            throw new ExistentUsernameException();
+        }else if(repository.getByEmail(t.getEmail()).isPresent()) {
+            throw new ExistentEmailException();
+        }
         t.setPassword(SecurityConfig.passwordEncoder().encode(t.getPassword()));
         return repository.save(t);
     }

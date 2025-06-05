@@ -26,7 +26,8 @@ public abstract class UserDTO {
     protected String email;
 
     //Numeros Nacionales de Argentina
-    @Pattern(regexp = "^[0-9]{10}$", message = "Número inválido.")
+    @Pattern(regexp = "^[0-9]{10}$",
+            message = "Por favor ingrese un número de teléfono válido..")
     protected String phone;
 
     @Column(unique = true)
@@ -34,12 +35,12 @@ public abstract class UserDTO {
     @Size(max = 20)
     protected String username;
 
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$")
-    @Size(max = 20)
-    @NotBlank(message = "La clave no puede estar vacía.")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.])[A-Za-z\\d@$!%*?&.]{8,15}$",
+             message = "La contraseña debe tener entre 8 y 15 caracteres, al menos una mayuscula, " +
+                     "una minuscula y un caracter especial(@$!%*?&.).")
+    @NotBlank(message = "La contraseña no puede ser nula.")
     protected String password;
 
-    @NotNull(message = "Campo obligatorio.")
     @Enumerated(EnumType.STRING)
     protected Role role;
 

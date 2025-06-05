@@ -38,6 +38,7 @@ public class SecurityConfig {
                                 "/",
                                 "/login",
                                 "/logout",
+                                "/clients",
 
                                 //Static
                                 "/login.html",
@@ -54,7 +55,6 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/managers",
                                 "/admins",
-                                "/clients",
                                 "/admin",
 
                                 // Swagger solo para admins
