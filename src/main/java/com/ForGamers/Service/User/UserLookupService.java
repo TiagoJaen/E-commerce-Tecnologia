@@ -44,4 +44,14 @@ public class UserLookupService {
 
         return adminRepository.getByUsername(username);
     }
+
+    public Optional<? extends User> findByEmail(String email) {
+        Optional<Client> client = clientRepository.getByEmail(email);
+        if (client.isPresent()) return client;
+
+        Optional<Manager> manager = managerRepository.getByEmail(email);
+        if (manager.isPresent()) return manager;
+
+        return adminRepository.getByEmail(email);
+    }
 }
