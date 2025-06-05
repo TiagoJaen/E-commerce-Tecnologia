@@ -177,7 +177,7 @@ color: var(--title-color-1);
 /* --------------------LOGIN PAGE------------------- */
 #login-container{
     min-width: 50vw;
-    height: 60%;
+    height: 65%;
     perspective: 1000px;
 }
 
@@ -193,6 +193,7 @@ color: var(--title-color-1);
 
 /* LOGIN FRONT */
 #login-front{
+    padding: 4em;
     background-color: var(--background-color-1);
     box-shadow: 0 0 10px 5px var(--primary-color);
     transform: rotateY(0deg);
@@ -207,6 +208,7 @@ color: var(--title-color-1);
 }
 
 #login-error{
+    margin-top: 2em;
     color: red;
     font-family: var(--main-font-family);
     font-weight: 700;

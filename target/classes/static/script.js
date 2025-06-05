@@ -4,18 +4,19 @@ const loginBack = document.getElementById('login-back');
 const loginButton = document.getElementById('change-login-button');
 const registerButton = document.getElementById('change-register-button');
 const registerForm = document.getElementById('register-form');
-
-loginButton.addEventListener('click', (event) => {
-    event.preventDefault();
-    loginFront.style.transform = 'rotateY(0deg)';
-    loginBack.style.transform = 'rotateY(180deg)';
-});
+const toastRegister = document.getElementById('fail-regiser-toast')
+const toastRegisterBody = document.getElementById('fail-register-toast-body')
 
 registerButton.addEventListener('click', (event) => {
     event.preventDefault();
     loginFront.style.transform = 'rotateY(-180deg)';
     loginBack.style.transform = 'rotateY(0deg)';
+});
 
+loginButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    loginFront.style.transform = 'rotateY(0deg)';
+    loginBack.style.transform = 'rotateY(180deg)';
 });
 
 //REGISTRAR
@@ -31,23 +32,18 @@ registerForm.addEventListener('submit', async (event) => {
         password: formData.get('password')
     };
 
-    try {
-        const response = await fetch('/clients', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(clientData)
-        });
+    console.log(JSON.stringify(clientData))
 
-        if (response.ok) {
-            alert('✅ Registro exitoso');
-            registerForm.reset();
-            console.log('Registro exitoso:', clientData);
-        } else {
-            const error = await response.text();
-            alert('⚠️ ' + error);
-        }
-    } catch (err) {
-        alert('❌ Error de conexión');
-        console.error(err);
+    const response = await fetch('/clients', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(clientData)
+    });
+
+    if (response.ok) {
+        alert('Usuario registrado correctamente');
+    } else {
+        const errorData = await response.json();
+        console.error('Error al registrar el usuario:', errorData);
     }
 });
