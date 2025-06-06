@@ -25,7 +25,6 @@ import java.util.Optional;
 @Schema(description = "Servicio genérico para todos los tipos de usuarios.")
 public class UserService<T extends User,R extends UserRepository<T>>{
     protected final R repository;
-    @Autowired
     protected final UserLookupService userLookupService;
 
     public T add(T t) {

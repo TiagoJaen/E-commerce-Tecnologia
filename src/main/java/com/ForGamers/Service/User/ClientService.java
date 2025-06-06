@@ -6,8 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ClientService extends UserService<Client, ClientRepository> {
-
-    public ClientService(ClientRepository rep) {
-        super(rep);
+    public ClientService(ClientRepository rep, UserLookupService userLookupService) {
+        super(rep, userLookupService);
     }
 }

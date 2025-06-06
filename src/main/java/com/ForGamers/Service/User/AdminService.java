@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Service
 public class AdminService extends UserService<Admin, AdminRepository> {
-    public AdminService(AdminRepository rep) {
-        super(rep);
+    public AdminService(AdminRepository rep, UserLookupService userLookupService) {
+        super(rep, userLookupService);
     }
 }
