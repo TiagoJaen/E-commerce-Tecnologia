@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,11 +25,13 @@ import java.util.Optional;
 @Schema(description = "Servicio genérico para todos los tipos de usuarios.")
 public class UserService<T extends User,R extends UserRepository<T>>{
     protected final R repository;
+    @Autowired
+    protected final UserLookupService userLookupService;
 
     public T add(T t) {
-        if (repository.getByUsername(t.getUsername()).isPresent()) {
+        if (userLookupService.findByUsername(t.getUsername()).isPresent()) {
             throw new ExistentUsernameException();
-        }else if(repository.getByEmail(t.getEmail()).isPresent()) {
+        }else if(userLookupService.findByEmail(t.getEmail()).isPresent()) {
             throw new ExistentEmailException();
         }
         t.setPassword(SecurityConfig.passwordEncoder().encode(t.getPassword()));
