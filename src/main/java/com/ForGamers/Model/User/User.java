@@ -52,7 +52,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     protected Role role;
 
-    public User(@Valid UserDTO dto) {
+    public User(UserDTO dto) {
         this.name = dto.getName();
         this.lastname = dto.getLastname();
         this.email = dto.getEmail();

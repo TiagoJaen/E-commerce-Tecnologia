@@ -11,5 +11,5 @@ public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
     Optional<T> getByUsername(String username);
 
     @Query("SELECT u FROM #{#entityName} u WHERE u.email = :email")
-    Optional<T> getByEmail(String username);
+    Optional<T> getByEmail(String email);
 }

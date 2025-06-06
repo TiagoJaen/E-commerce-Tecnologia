@@ -52,4 +52,13 @@ public abstract class UserDTO {
         this.username = username;
         this.password = password;
     }
+
+    public UserDTO(UserDTO dto) {
+        this.name = dto.getName();
+        this.lastname = dto.getLastname();
+        this.email = dto.getEmail();
+        this.phone = dto.getPhone();
+        this.username = dto.getUsername();
+        this.password = dto.getPassword();
+    }
 }
