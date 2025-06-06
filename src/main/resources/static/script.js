@@ -4,8 +4,9 @@ const loginBack = document.getElementById('login-back');
 const loginButton = document.getElementById('change-login-button');
 const registerButton = document.getElementById('change-register-button');
 const registerForm = document.getElementById('register-form');
-const toastRegister = document.getElementById('fail-regiser-toast')
-const toastRegisterBody = document.getElementById('fail-register-toast-body')
+const toastRegisterFail = document.getElementById('fail-regiser-toast');
+const toastRegisterBody = document.getElementById('fail-register-toast-body');
+const toastRegisterSuccess = document.getElementById('success-register-toast');
 
 registerButton.addEventListener('click', (event) => {
     event.preventDefault();
@@ -32,20 +33,28 @@ registerForm.addEventListener('submit', async (event) => {
         password: formData.get('password')
     };
 
-    console.log(JSON.stringify(clientData))
-
     const response = await fetch('/clients', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(clientData)
-    });
+    })
+    .then(async response => {
+        if(!response.ok){
+            toastRegisterFail.classList.remove('show');
 
-    if (response.ok) {
-        alert('Usuario registrado correctamente');
-    } else {
-        const errorData = await response.json();
-        console.error('Error al registrar el usuario:', errorData);
-    }
+            const responseBody = await response.text();
+            toastRegisterBody.innerText = responseBody;
+            
+            toastRegisterSuccess.classList.remove('show');
+            toastRegisterFail.classList.add('show');
+        }else{
+            toastRegisterFail.classList.remove('show');
+            toastRegisterSuccess.classList.remove('show');
+            toastRegisterSuccess.classList.add('show');
+            loginFront.style.transform = 'rotateY(0deg)';
+            loginBack.style.transform = 'rotateY(180deg)';
+        }
+    })
 });
 
 

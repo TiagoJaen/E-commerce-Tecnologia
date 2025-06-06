@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Schema(description = "Clase que representa a los gestores.")
 public class Manager extends User {
-    public Manager(@Valid ManagerDTO dto) {
+    public Manager(ManagerDTO dto) {
         super(dto);
         this.role = Role.MANAGER;
     }

@@ -15,7 +15,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserInit {
     private final AdminService adminService;
-    private final PasswordEncoder encoder;
 
     @PostConstruct
     public void createSuperUser() {
@@ -32,6 +31,5 @@ public class UserInit {
             Admin admin = new Admin(dto);
             adminService.add(admin);
         }
-        System.out.println(dto);
     }
 }
