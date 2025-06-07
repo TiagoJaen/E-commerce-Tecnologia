@@ -19,7 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/clients")
@@ -38,16 +37,12 @@ public class ClientController {
 
     @Operation(summary = "Agregar un cliente.", description = "No incluir id al agregar un cliente.")
     @PostMapping
-    public ResponseEntity<?>  addClient(@RequestBody @Valid ClientDTO dto, BindingResult BindingResult) {
+    public ResponseEntity<?>  addClient(@RequestBody ClientDTO dto) {
         try {
             Client client = new Client(dto);
             client.setRole(Role.CLIENT);
             Client saved = services.add(client);
             return ResponseEntity.ok(saved);
-        }catch (ConstraintViolationException e){
-            return ResponseEntity.badRequest().body(
-                    e.getConstraintViolations().stream().toString()
-            );
         }catch (ExistentEmailException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }catch (ExistentUsernameException e) {

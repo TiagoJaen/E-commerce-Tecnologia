@@ -1,6 +1,10 @@
 package com.ForGamers.Controller.User;
 
+import com.ForGamers.Exception.ExistentEmailException;
+import com.ForGamers.Exception.ExistentUsernameException;
 import com.ForGamers.Model.User.Admin;
+import com.ForGamers.Model.User.AdminDTO;
+import com.ForGamers.Model.User.Client;
 import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Service.User.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,9 +32,17 @@ public class AdminController {
 
     @Operation(summary = "Agregar un admin.", description = "No incluir id al agregar un admin.")
     @PostMapping
-    public Admin addAdmin(@RequestBody Admin admin) {
-        admin.setRole(Role.ADMIN);
-        return services.add(admin);
+    public ResponseEntity<?> addAdmin(@RequestBody AdminDTO dto) {
+        try {
+            Admin admin = new Admin(dto);
+            admin.setRole(Role.ADMIN);
+            Admin saved = services.add(admin);
+            return ResponseEntity.ok(saved);
+        }catch (ExistentEmailException e) {
+            return ResponseEntity.badRequest().body((e.getMessage()));
+        }catch (ExistentUsernameException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @Operation(summary = "Eliminar un admin por id.")
