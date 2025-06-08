@@ -41,10 +41,12 @@ public class SecurityConfig {
                                 "/clients",
 
                                 //Static
+                                "/static/**",
                                 "/login.html",
                                 "/index.html",
                                 "/style.css",
                                 "/script.js",
+                                "login-script.js",
                                 "/Media/**",
 
                                 //Endpoints

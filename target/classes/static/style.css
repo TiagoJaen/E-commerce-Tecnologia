@@ -148,44 +148,7 @@ input[type="number"]::-webkit-inner-spin-button{
     left: 0;
     transition: .5s;   
 }
-/* --------------------INDEX------------------- */
 
-/* --------------------PRODUCTOS------------------- */
-/* --------CAROUSEL-------- */
-#carousel{
-    margin-top: 10vh;
-}
-.carousel-item{
-    height: 60vh;
-}
-.carousel-item img{
-    height: 100%;
-    object-fit: cover;
-}
-.carousel-indicators button{
-    background-color: var(--primary-color) !important;
-}
-.carousel-arrow{
-    color: var(--primary-color) !important;
-}
-
-/* ---------------------------------------------- */
-#products-title{
-text-align: center;
-font-family: var(--main-font-family);
-font-weight: 900;
-margin: 2em;
-color: var(--title-color-1);
-}
-.card-body{
-    padding: .5em 1em !important;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.card-body a{
-    color: black;
-}
 
 /* --------------------LOGIN PAGE------------------- */
 #login-container{
@@ -276,7 +239,6 @@ color: var(--title-color-1);
 }
 
 #login-back h2{
-    /* margin-bottom: 1.2em; */
     color: var(--background-color-1);
     text-shadow: 0 0 5px var(--background-color-1);
     font-family: var(--main-font-family);
@@ -336,3 +298,82 @@ color: var(--title-color-1);
     filter: drop-shadow(0 0 2px var(--background-color-1));
 }
 
+
+/* --------------------INDEX------------------- */
+/* --------CAROUSEL-------- */
+#carousel{
+    margin-top: 10vh;
+}
+.carousel-item{
+    height: 60vh;
+}
+.carousel-item img{
+    height: 100%;
+    object-fit: cover;
+}
+.carousel-indicators button{
+    background-color: var(--primary-color) !important;
+}
+.carousel-arrow{
+    color: var(--primary-color) !important;
+}
+
+/* --------------------PRODUCTOS------------------- */
+#products-title{
+text-align: center;
+font-family: var(--main-font-family);
+font-weight: 900;
+margin: 2em;
+color: var(--title-color-1);
+}
+.card-body{
+    padding: .5em 1em !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.card-body a{
+    color: black;
+}
+
+/* --------------------MODAL PRODUCTOS------------------- */
+.modal-content{
+    width: 600px !important;
+}
+.modal-agregar{
+    background-color: var(--background-color-1) !important;
+    border: none !important;
+}
+
+#modal-heart{
+    margin-left: 1em;
+}
+#modal-heart > input{
+    display: none;
+}
+#heart-span{
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    font-size: 1.5em;
+    transition: .6s;
+}
+#heart-span:hover{
+    transition-timing-function: ease-in-out;
+    transform: scale(1.2);
+}
+#heart-fav{
+    transition: .6s;
+    cursor: pointer;
+    display: none;
+    font-size: 1.5em;
+}
+#heart-fav:hover{
+    transform: scale(1.2);
+}
+#modal-heart input:checked ~ #heart-span{
+    display: none !important;
+}
+#modal-heart input:checked ~ #heart-fav{
+    display: block !important;
+}
