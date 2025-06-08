@@ -8,14 +8,16 @@
     --background-color-1: #004346;
     --background-color-2: #8eb3ae;
     --title-color-1: #006154;
+    --light-title-color-1: #bffff6;
     --main-font-family: "Electrolize", sans-serif;
 }
 a{
     text-decoration-line: none !important;
 }
 body{
-    background-color: var(--background-color-2) !important;
+    background: linear-gradient(to bottom, var(--background-color-1), var(--background-color-2)) !important;
 }
+
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -170,7 +172,7 @@ input[type="number"]::-webkit-inner-spin-button{
 /* LOGIN FRONT */
 #login-front{
     padding: 4em;
-    background-color: var(--background-color-1);
+    background: linear-gradient(to top, var(--background-color-1), #62737057);
     box-shadow: 0 0 10px 5px var(--primary-color);
     transform: rotateY(0deg);
 }
@@ -233,14 +235,15 @@ input[type="number"]::-webkit-inner-spin-button{
 
 /* REGISTER BACK */
 #login-back{
-    background-color: rgb(227 227 227);
-    box-shadow: 0 0 10px 5px var(--background-color-1);
+    background: linear-gradient(to bottom, var(--background-color-2), #beffc400);
+    box-shadow: 0 0 10px 5px var(--primary-color);
     transform: rotateY(180deg);
 }
 
 #login-back h2{
-    color: var(--background-color-1);
+    color: var(--primary-color);
     text-shadow: 0 0 5px var(--background-color-1);
+    filter: drop-shadow(0 0 4px var(--background-color-1));
     font-family: var(--main-font-family);
     font-weight: 900;
 }
@@ -258,7 +261,8 @@ input[type="number"]::-webkit-inner-spin-button{
     transition: .3s;
 }
 .register-form-control:focus{
-    box-shadow: 0 0 7px 2px var(--background-color-1);
+    box-shadow: 0 0 7px 2px var(--primary-color);
+    filter: drop-shadow(0 0 4px var(--primary-color));
 }
 .register-form-control::placeholder{
     color: #00434683;
@@ -303,6 +307,7 @@ input[type="number"]::-webkit-inner-spin-button{
 /* --------CAROUSEL-------- */
 #carousel{
     margin-top: 10vh;
+    box-shadow: 0 0 10px 2px var(--background-color-1);
 }
 .carousel-item{
     height: 60vh;
@@ -319,21 +324,69 @@ input[type="number"]::-webkit-inner-spin-button{
 }
 
 /* --------------------PRODUCTOS------------------- */
+#products-display{
+    display: grid;
+    min-height: 70vh;
+    width: 100%;
+    padding: 2em;
+    gap: 3em;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
 #products-title{
 text-align: center;
+font-size: 4em;
 font-family: var(--main-font-family);
 font-weight: 900;
-margin: 2em;
-color: var(--title-color-1);
+margin: 2rem;
+color: var(--light-title-color-1);
+text-shadow: 0 0 5px var(--primary-color);
 }
-.card-body{
-    padding: .5em 1em !important;
+
+.product-item{
+    box-shadow: 0 0 10px 2px var(--background-color-1);
+    border-radius: 15px;
+    background-color: white;
+    height: 27rem;
+    padding: .5em;
+    position: relative;
+}
+.product-img{
+    height: 50%;
+    width: 100%;
+    object-fit: contain;
+}
+.product-body{
+    padding: .5em;
+    position: absolute;
+    bottom: .5em;
+}
+.product-title, .product-price{
+    color: var(--title-color-1);
+    font-size: 18px;
+    font-family: var(--main-font-family);
+    font-weight: 700;
+}
+.product-buttons{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
+    margin-top: 1em;
 }
-.card-body a{
-    color: black;
+.product-buttons button{
+    height: 2.5em;
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--background-color-1);
+    font-family: var(--main-font-family);
+    font-weight: 700;
+    transition: .3s;
+}
+.product-buttons button:hover{
+    background-color: var(--background-color-1);
+    color: var(--primary-color);
+    box-shadow: 0 0 10px 5px var(--primary-color);
 }
 
 /* --------------------MODAL PRODUCTOS------------------- */

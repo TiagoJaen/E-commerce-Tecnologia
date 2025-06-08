@@ -21,7 +21,16 @@ public class Product {
     @Column(columnDefinition = "TEXT")
     private String description;
     private String image;
+    private int stock;
 
+    public Product(Product product) {
+        this.id = product.getId();
+        this.name = product.getName();
+        this.price = product.getPrice();
+        this.description = product.getDescription();
+        this.image = product.getImage();
+        this.stock = product.getStock();
+    }
 
     @Override
     public String toString() {
@@ -31,6 +40,7 @@ public class Product {
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
+                ", stock=" + stock +
                 '}';
     }
 }
