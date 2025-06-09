@@ -50,7 +50,8 @@ public class SecurityConfig {
                                 "/",
                                 "/login",
                                 "/logout",
-                                "/clients"
+                                "/clients",
+                                "/cart"
                         ).permitAll()
                         .requestMatchers("/client").hasRole("CLIENT")
                         .requestMatchers("/manager").hasRole("MANAGER")

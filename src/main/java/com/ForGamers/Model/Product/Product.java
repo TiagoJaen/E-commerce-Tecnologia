@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.LinkedHashSet;
+
 @Entity
 @Getter
 @Setter
@@ -11,6 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(example = "")

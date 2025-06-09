@@ -24,4 +24,6 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
+
+    private int cantInCart;
 }
