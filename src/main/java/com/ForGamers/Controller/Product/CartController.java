@@ -1,5 +1,6 @@
 package com.ForGamers.Controller.Product;
 
+import com.ForGamers.Exception.ExistentProductException;
 import com.ForGamers.Model.Product.Cart;
 import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Repository.Product.CartRepository;
@@ -25,10 +26,28 @@ public class CartController {
 
     //METODOS
     @Operation(summary = "Obtener lista de productos en carrito")
-    @GetMapping("/{clientId}/productos")
+    @GetMapping("/{clientId}")
     public ResponseEntity<List<Product>> getProductsInCart(@PathVariable Long clientId) {
         List<Product> productos = cartService.getProductsInClientCart(clientId);
         return ResponseEntity.ok(productos);
+    }
+
+    @Operation(summary = "Agregar o un producto al carrito.", description = "No incluir id al agregar un producto al carrito.")
+    @PostMapping
+    public ResponseEntity<?> addProductToCart(@RequestBody Cart cart) {
+        try {
+            Cart saved = cartService.addProductToCart(cart);
+            return ResponseEntity.ok(saved);
+        }catch (ExistentProductException e) {
+            return ResponseEntity.badRequest().body((e.getMessage()));
+        }
+    }
+
+    @Operation(summary = "Eliminar un producto del carrito por id.")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProductFromCart(@PathVariable Long id){
+
+        return cartService.deleteProductFromCart(id);
     }
 
 }
