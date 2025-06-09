@@ -18,14 +18,14 @@ public class UserInit {
 
     @PostConstruct
     public void createSuperUser() {
-        Optional<Admin> op = adminService.getByUsername("jefe_maestro");
+        Optional<Admin> op = adminService.getByUsername("admin");
         AdminDTO dto = new AdminDTO(
                 "Jefe",
                 "Maestro",
-                "jefemaestro@gmail.com",
+                "admin@gmail.com",
                 "2237984567",
-                "jefe_maestro",
-                "Admin123!"
+                "admin",
+                "123"
         );
         if(op.isEmpty()) {
             Admin admin = new Admin(dto);
