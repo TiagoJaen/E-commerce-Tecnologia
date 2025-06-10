@@ -6,6 +6,7 @@ import com.ForGamers.Model.User.User;
 import com.ForGamers.Repository.User.AdminRepository;
 import com.ForGamers.Repository.User.ClientRepository;
 import com.ForGamers.Repository.User.ManagerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -43,5 +44,15 @@ public class UserLookupService {
         if (manager.isPresent()) return manager;
 
         return adminRepository.getByUsername(username);
+    }
+
+    public Optional<? extends User> findByEmail(String email) {
+        Optional<Client> client = clientRepository.getByEmail(email);
+        if (client.isPresent()) return client;
+
+        Optional<Manager> manager = managerRepository.getByEmail(email);
+        if (manager.isPresent()) return manager;
+
+        return adminRepository.getByEmail(email);
     }
 }

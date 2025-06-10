@@ -1,6 +1,10 @@
 package com.ForGamers.Controller.Product;
 
+import com.ForGamers.Exception.ExistentEmailException;
+import com.ForGamers.Exception.ExistentProductException;
 import com.ForGamers.Model.Product.Product;
+import com.ForGamers.Model.User.Client;
+import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Service.Product.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,8 +32,13 @@ public class ProductController {
 
     @Operation(summary = "Agregar un producto.", description = "No incluir id al agregar un producto.")
     @PostMapping
-    public Product addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
+    public ResponseEntity<?> addProduct(@RequestBody Product product) {
+        try {
+            Product saved = productService.addProduct(product);
+            return ResponseEntity.ok(saved);
+        }catch (ExistentProductException e) {
+            return ResponseEntity.badRequest().body((e.getMessage()));
+        }
     }
 
     @Operation(summary = "Eliminar un producto por id.")

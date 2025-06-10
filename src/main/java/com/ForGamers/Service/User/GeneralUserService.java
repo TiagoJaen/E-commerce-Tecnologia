@@ -11,13 +11,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class GeneralUserService extends UserService<User, UserRepository<User>> implements UserDetailsService {
-    @Autowired
-    private final UserLookupService userLookupService;
 
     public GeneralUserService(UserRepository<User> repository,
                               UserLookupService userLookupService) {
-        super(repository);
-        this.userLookupService = userLookupService;
+        super(repository, userLookupService);
     }
 
     @Override

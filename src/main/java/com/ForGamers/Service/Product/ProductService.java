@@ -1,5 +1,8 @@
 package com.ForGamers.Service.Product;
 
+import com.ForGamers.Exception.ExistentEmailException;
+import com.ForGamers.Exception.ExistentProductException;
+import com.ForGamers.Exception.ExistentUsernameException;
 import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Repository.Product.ProductRepository;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,9 @@ public class ProductService {
     }
 
     public Product addProduct(Product product) {
+        if (productRepository.getByName(product.getName()).isPresent()) {
+            throw new ExistentProductException();
+        }
         return productRepository.save(product);
     }
 

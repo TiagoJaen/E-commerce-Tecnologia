@@ -1,9 +1,9 @@
 package com.ForGamers.Repository.User;
 
 import com.ForGamers.Model.User.User;
-import com.ForGamers.Model.User.UserDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
 import java.util.Optional;
 
 public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
@@ -11,5 +11,5 @@ public interface UserRepository<T extends User> extends JpaRepository<T, Long> {
     Optional<T> getByUsername(String username);
 
     @Query("SELECT u FROM #{#entityName} u WHERE u.email = :email")
-    Optional<T> getByEmail(String username);
+    Optional<T> getByEmail(String email);
 }

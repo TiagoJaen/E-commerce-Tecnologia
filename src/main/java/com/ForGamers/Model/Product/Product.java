@@ -1,11 +1,10 @@
 package com.ForGamers.Model.Product;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.LinkedHashSet;
 
 @Entity
 @Getter
@@ -14,6 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(example = "")
@@ -21,9 +21,19 @@ public class Product {
 
     private String name;
     private double price;
+    @Column(columnDefinition = "TEXT")
     private String description;
     private String image;
+    private int stock;
 
+    public Product(Product product) {
+        this.id = product.getId();
+        this.name = product.getName();
+        this.price = product.getPrice();
+        this.description = product.getDescription();
+        this.image = product.getImage();
+        this.stock = product.getStock();
+    }
 
     @Override
     public String toString() {
@@ -33,6 +43,7 @@ public class Product {
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
+                ", stock=" + stock +
                 '}';
     }
 }

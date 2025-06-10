@@ -44,20 +44,29 @@ public class SecurityConfig {
                 //PERMISOS
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/",
-                                "/login",
-                                "/logout",
-                                "/clients",
 
                                 //Static
+                                "/static/**",
                                 "/login.html",
                                 "/index.html",
-                                "/style.css",
-                                "/script.js",
+                                "/products.html",
+                                "/css/**",
+                                "/css/style.css",
+                                "/css/products-style.css",
+                                "/css/login-style.css",
+                                "/js/**",
+                                "/js/script.js",
+                                "/js/login-script.js",
+                                "/js/products-script.js",
                                 "/Media/**",
 
                                 //Endpoints
-                                "/products"
+                                "/",
+                                "/products",
+                                "/login",
+                                "/logout",
+                                "/clients",
+                                "/cart"
                         ).permitAll()
                         .requestMatchers("/client").hasRole("CLIENT")
                         .requestMatchers("/manager").hasRole("MANAGER")

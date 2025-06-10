@@ -1,10 +1,15 @@
 package com.ForGamers.Controller.User;
 
+import com.ForGamers.Exception.ExistentEmailException;
+import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Model.User.Client;
 import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Model.User.Manager;
+import com.ForGamers.Model.User.ManagerDTO;
 import com.ForGamers.Service.User.ManagerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +33,17 @@ public class ManagerController {
 
     @Operation(summary = "Agregar un gestor.", description = "No incluir id al agregar un gestor.")
     @PostMapping
-    public Manager addManager(@RequestBody Manager manager) {
-        manager.setRole(Role.MANAGER);
-        return services.add(manager);
+    public ResponseEntity<?> addManager(@RequestBody ManagerDTO dto) {
+        try {
+            Manager manager = new Manager(dto);
+            manager.setRole(Role.MANAGER);
+            Manager saved = services.add(manager);
+            return ResponseEntity.ok(saved);
+        }catch (ExistentEmailException e) {
+            return ResponseEntity.badRequest().body((e.getMessage()));
+        }catch (ExistentUsernameException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @Operation(summary = "Eliminar un gestor por id.")
