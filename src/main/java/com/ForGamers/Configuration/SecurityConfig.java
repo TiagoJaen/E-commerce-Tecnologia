@@ -36,8 +36,11 @@ public class SecurityConfig {
     @Autowired
     private GeneralUserService service;
 
+    @Autowired
+    private JwtAuthFilter jwtAuthFilter;
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -63,10 +66,11 @@ public class SecurityConfig {
                                 //Endpoints
                                 "/",
                                 "/products",
-                                "/login",
                                 "/logout",
                                 "/clients",
-                                "/cart"
+                                "/cart",
+                                "/auth/**"
+
                         ).permitAll()
                         .requestMatchers("/client").hasRole("CLIENT")
                         .requestMatchers("/manager").hasRole("MANAGER")
@@ -76,21 +80,23 @@ public class SecurityConfig {
                                 "/admin",
 
                                 // Swagger solo para admins
+                                "/docs",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html",
                                 "/swagger-ui/**"
+
                         ).hasRole("ADMIN")
                         .anyRequest().authenticated()
 
                 )
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
                 //EXCEPTIONS
                 /*.exceptionHandling(exception -> exception
                         .authenticationEntryPoint(auth)
                 )*/
                 //LOGIN Y LOGOUT
-                .formLogin(form -> form
+                /*.formLogin(form -> form
                         .loginPage("/login.html")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/", true)
@@ -104,7 +110,10 @@ public class SecurityConfig {
                         .clearAuthentication(true)
                         .invalidateHttpSession(true)
                         .permitAll()
-                );
+                );*/
+                // Disable form login
+                http.formLogin(AbstractHttpConfigurer::disable);
+                http.logout(LogoutConfigurer::disable);
 
         return http.build();
 

@@ -8,6 +8,10 @@ const toastRegisterFail = document.getElementById('fail-regiser-toast');
 const toastRegisterBody = document.getElementById('fail-register-toast-body');
 const toastRegisterSuccess = document.getElementById('success-register-toast');
 
+// New: Get the login form and error display element
+const loginForm = document.getElementById('sign-in-form');
+const loginErrorDiv = document.getElementById('login-error'); // Assuming this is for displaying login errors
+
 registerButton.addEventListener('click', (event) => {
     event.preventDefault();
     loginFront.style.transform = 'rotateY(-180deg)';
@@ -57,6 +61,63 @@ registerForm.addEventListener('submit', async (event) => {
     })
 });
 
+// --- NEW LOGIN LOGIC ---
+if (loginForm) {
+    loginForm.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Stop the default form submission!
+
+        const usernameInput = loginForm.querySelector('input[name="username"]');
+        const passwordInput = loginForm.querySelector('input[name="password"]');
+
+        const username = usernameInput.value;
+        const password = passwordInput.value;
+
+        try {
+            const response = await fetch('/auth/login', { // Your JWT login endpoint
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' // Crucial: send as JSON
+                },
+                body: JSON.stringify({ // Convert data to JSON string
+                    username: username,
+                    password: password
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const jwtToken = data.token;
+                console.log('JWT Token recibido:', jwtToken);
+                console.log('Login successful! JWT Token:', jwtToken);
+
+                // Store the token (e.g., in localStorage) for future authenticated requests
+                localStorage.setItem('jwtToken', jwtToken);
+
+                // Hide error message if it was visible
+                if (loginErrorDiv) {
+                    loginErrorDiv.style.display = 'none';
+                }
+
+                // Redirect to a protected page, or update the UI to show logged-in state
+                window.location.href = '/'; // Example: redirect to homepage
+            } else {
+                // Login failed (e.g., 401 Unauthorized, 403 Forbidden, etc.)
+                const errorData = await response.json().catch(() => ({ message: 'Error de autenticación' }));
+                console.error('Login failed:', errorData);
+                if (loginErrorDiv) {
+                    loginErrorDiv.textContent = errorData.message || 'Usuario o contraseña incorrectos';
+                    loginErrorDiv.style.display = 'block';
+                }
+            }
+        } catch (error) {
+            console.error('Network or unexpected error during login:', error);
+            if (loginErrorDiv) {
+                loginErrorDiv.textContent = 'Ocurrió un error de conexión. Inténtalo de nuevo.';
+                loginErrorDiv.style.display = 'block';
+            }
+        }
+    });
+}
 
 (() => {
   'use strict'

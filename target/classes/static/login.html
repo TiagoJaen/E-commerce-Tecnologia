@@ -35,12 +35,12 @@
             <div id="login-container">
                 <div id="login-front" class="text-center">
                     <h2>Iniciar Sesión</h2>
-                    <form class="needs-validation login-form d-flex row gap-2 justify-content-center" id="sign-in-form" method="post" action="/login">
+                    <form class="needs-validation login-form d-flex row gap-2 justify-content-center" id="sign-in-form" method="post" action="/auth/login">
                         <input type="text" class="login-form-control" placeholder="Usuario" name="username" required>
                         <input type="password" class="login-form-control" placeholder="Contraseña" name="password" required>
                         <div id="login-buttons" class="d-flex flex-row justify-content-around align-items-center">
                             <button id="change-register-button" type="button" class="btn-style-1">Registrarse</button>
-                            <input class="btn-style-1" type="submit" value="Iniciar sesión"></input>
+                            <button class="btn-style-1" type="submit" id="loginSubmitBtn">Iniciar sesión</button>
                         </div>
                     </form>
                     <div id="login-error">Usuario o contraseña incorrectos</div>
