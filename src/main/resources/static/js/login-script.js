@@ -4,7 +4,7 @@ const loginBack = document.getElementById('login-back');
 const loginButton = document.getElementById('change-login-button');
 const registerButton = document.getElementById('change-register-button');
 const registerForm = document.getElementById('register-form');
-const toastRegisterFail = document.getElementById('fail-regiser-toast');
+const toastRegisterFail = document.getElementById('fail-register-toast');
 const toastRegisterBody = document.getElementById('fail-register-toast-body');
 const toastRegisterSuccess = document.getElementById('success-register-toast');
 
