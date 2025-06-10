@@ -11,6 +11,7 @@ import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,7 +24,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Getter
 @Schema(description = "Servicio genérico para todos los tipos de usuarios.")
-public class UserService<T extends User,R extends UserRepository<T>>{
+public class UserService<T extends User,R extends UserRepository<T> & JpaRepository<T, Long>> {
     protected final R repository;
     protected final UserLookupService userLookupService;
 

@@ -7,13 +7,16 @@ import com.ForGamers.Repository.User.AdminRepository;
 import com.ForGamers.Repository.User.ClientRepository;
 import com.ForGamers.Repository.User.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 // Servicio de búsqueda en todas las tablas de usuario (clientes, administradores y gestores)
 @Service
-public class UserLookupService {
+public class UserLookupService implements UserDetailsService {
     private final ClientRepository clientRepository;
     private final ManagerRepository managerRepository;
     private final AdminRepository adminRepository;
@@ -54,5 +57,16 @@ public class UserLookupService {
         if (manager.isPresent()) return manager;
 
         return adminRepository.getByEmail(email);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User u = findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+        return org.springframework.security.core.userdetails.User
+                .withUsername(u.getUsername())
+                .password(u.getPassword())
+                .roles(u.getRole().toString())
+                .build();
     }
 }

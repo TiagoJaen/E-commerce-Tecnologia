@@ -1,11 +1,16 @@
 package com.ForGamers.Configuration;
 
 import com.ForGamers.Component.UserAuthentication;
-import com.ForGamers.Service.User.GeneralUserService;
+//import com.ForGamers.Service.User.GeneralUserService;
+import com.ForGamers.Model.User.User;
+import com.ForGamers.Repository.User.UserRepository;
+import com.ForGamers.Service.User.UserLookupService;
+import com.ForGamers.Service.User.UserService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -26,7 +31,7 @@ public class SecurityConfig {
     private UserAuthentication auth;
 
     @Autowired
-    private GeneralUserService service;
+    private UserLookupService service;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
