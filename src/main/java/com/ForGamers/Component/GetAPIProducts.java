@@ -36,8 +36,8 @@ public class GetAPIProducts {
                 .toList();
 
         for (APIProduct a : APIProducts) {
-            boolean yaExiste = productRepository.getByName(a.getTitle()).isPresent();
-            if (!yaExiste) {
+            boolean exists = productRepository.getByName(a.getTitle()).isPresent();
+            if (!exists) {
                 Product newProduct = new Product();
                 newProduct.setName(a.getTitle());
                 newProduct.setPrice(a.getPrice());

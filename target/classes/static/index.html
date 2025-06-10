@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ForGamers</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/shared-style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.css" integrity="sha512-GmZYQ9SKTnOea030Tbiat0Y+jhnYLIpsGAe6QTnToi8hI2nNbVMETHeK4wm4MuYMQdrc38x+sX77+kVD01eNsQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,22 +14,35 @@
 </head>
  <!-- <i class="fa-duotone fa-solid fa-gamepad" id="logo"></i> -->
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
     <header>
         <nav>
-            <div class="fixed-top container-fluid nav-container p-0 d-flex justify-content-center align-items-center">
-                 <div id="login" class="position-absolute start-0 ms-4">
-                    <button class="btn btn-login btn-primary d-flex align-items-center justify-content-center p-0 border-0 rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasLogin" aria-controls="offcanvasLogin">
-                        <div id="login-icon">
+            <!-- header sin logear
+            <div class="fixed-top container-fluid nav-container unlogged-nav p-0 d-flex justify-content-center align-items-center">
+                <div id="login-nav" class="position-absolute start-0 ms-4">
+                    <a href="login.html" id="btn-unlogged" class="btn-style-1 d-flex align-items-center justify-content-center border-0 rounded-pill" type="button">
                         <i class="fa-solid fa-user"></i>
-                    </div>
+                        <span class="text-button">Iniciar Sesión</span>
+                    </a>
+                </div>
+                <a href="/" id="logo-container" >
+                    <h1 id="title">FOR GAMERS</h1>
+                    <i class="fa-duotone fa-solid fa-gamepad" id="logo"></i>
+                </a>
+            </div> -->
+            <!-- header logeado -->
+            <div class="fixed-top container-fluid nav-container logged-nav p-0 d-flex justify-content-center align-items-center">
+                <div id="profile" class="position-absolute start-0 ms-4">
+                    <button id="btn-offcanvas-logged" class="btn-style-1 d-flex align-items-center justify-content-center p-0 border-0 rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasProfile" aria-controls="offcanvasProfile">
+                        <div id="login-icon">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
                     </button>
-                    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasLogin" aria-labelledby="offcanvasLoginLabel">
-                        <div class="offcanvas-header unlogged">
-                            <a href="login.html" class="btn btn-unlogged btn-primary d-flex align-items-center justify-content-center ps-1 border-0 rounded-pill" type="button">
-                                <i class="fa-solid fa-user"></i>
-                                <span id="text-cart">Iniciar Sesión</span>
+                    <!-- offcanvas -->
+                    <div class="offcanvas offcanvas-start offcanvas-admin" tabindex="-1" id="offcanvasProfile" aria-labelledby="offcanvasProfileLabel">
+                        <div class="offcanvas-header logged">
+                            <a href="login.html" id="btn-profile" class="btn-style-1 d-flex align-items-center ps-1 border-0 rounded-pill" type="button">
+                                <i class="fa-solid fa-user ms-2"></i>
+                                <span class="text-button ms-1">Perfil</span>
                             </a>
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
@@ -37,22 +51,24 @@
                         </div>
                     </div>
                 </div>
-                <a href="index.html" id="logo-container" >
+                <a href="/" id="logo-container" >
                     <h1 id="title">FOR GAMERS</h1>
                     <i class="fa-duotone fa-solid fa-gamepad" id="logo"></i>
                 </a>
+
+                <!-- para admins y gestores display:none; -->
                 <div id="cart" class="position-absolute end-0 me-4">
-                    <button class="btn btn-cart btn-primary d-flex align-items-center justify-content-center p-0 border-0 rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+                    <button class="btn-cart btn-style-1 d-flex align-items-center justify-content-center p-0 border-0 rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                         <i class="fa-solid fa-cart-shopping ps-2 nav-cart"></i>
-                        <span id="text-cart">CARRITO</span>
+                        <span class="text-button">CARRITO</span>
                     </button>
-                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
                         <div class="offcanvas-header">
                             <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
-                            ...
+                            CARRITO
                         </div>
                     </div>
                 </div>
@@ -96,5 +112,7 @@
         </section>
     </main>
     <footer></footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
