@@ -19,7 +19,6 @@ public class UserController {
 
     @PutMapping("/me")
     public ResponseEntity<?> updateCurrentUser(@RequestBody User updatedUser) {
-        // Actualizar datos del usuario autenticado
         userService.modify(updatedUser.getId(), updatedUser);
         return ResponseEntity.ok("Datos actualizados");
     }

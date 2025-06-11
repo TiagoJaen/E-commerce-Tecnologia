@@ -66,8 +66,8 @@ public class UserService<T extends User,R extends UserRepository<T> & JpaReposit
         return ResponseEntity.notFound().build();
     }
 
-    public T getById(Long id){
-        return repository.getReferenceById(id);
+    public Optional<T> getById(Long id){
+        return repository.findById(id);
     }
 
     public Optional<T> getByUsername(String username) {
