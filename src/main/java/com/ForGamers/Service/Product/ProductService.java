@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -51,7 +52,11 @@ public class ProductService {
         return ResponseEntity.notFound().build();
     }
 
-    public Product getById(Long id){
-        return productRepository.getById(id);
+    public Optional<Product> getById(Long id){
+        return productRepository.findById(id);
+    }
+
+    public List<Product> getByNameIgnoringCase(String name) {
+        return productRepository.getByNameContainingIgnoreCase(name);
     }
 }

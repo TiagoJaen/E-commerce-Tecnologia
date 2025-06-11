@@ -57,7 +57,8 @@ public class SecurityConfig {
                                 "/login",
                                 "/logout",
                                 "/clients",
-                                "/cart"
+                                "/cart",
+                                "/favicon.ico"
                         ).permitAll()
                         .requestMatchers("/client").hasRole("CLIENT")
                         .requestMatchers("/manager").hasRole("MANAGER")

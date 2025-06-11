@@ -45,9 +45,13 @@
         </nav>
     </header>
     <main>
-        <section id="products-management" class="d-flex justify-content-center align-items-center vh-100">
+        <section id="products-management" class="d-flex justify-content-center">
             <div id="products-management-container">
                 <h3 class="products-title">Productos</h3>
+                <div class="w-100 d-flex justify-content-between mb-3">
+                    <input type="text" id="products-search-bar" placeholder="Buscar producto...">
+                    <button id="add-product-btn">Agregar producto</button>
+                </div>
                 <table id="products-table" >
                     <thead>
                         <tr class="text-center">
@@ -57,6 +61,7 @@
                             <th scope="col">Imagen</th>
                             <th scope="col">Stock</th>
                             <th scope="col">Precio</th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody id="products-table-body">
@@ -114,7 +119,7 @@
                             
                         <tr class="product-table-item">
                             <th scope="row">5</th>
-                            <td class="product-table-name">Acer SB220Q bi 21.5 inches Full HD (1920 x 1080) IPS Ultra-Thin</td>
+                            <td class="product-table-name" alt="asdasdasdas">Acer SB220Q bi 21.5 inches Full HD (1920 x 1080) IPS Ultra-Thin</td>
                             <td class="product-table-description">21. 5 inches Full HD (1920 x 1080) widescreen IPS display And Radeon free Sync technology. No compatibility for VESA Mount Refresh Rate: 75Hz - Using HDMI port Zero-frame design | ultra-thin | 4ms response time | IPS panel Aspect ratio - 16: 9. Color Supported - 16. 7 million colors. Brightness - 250 nit Tilt angle -5 degree to 15 degree. Horizontal viewing angle-178 degree. Vertical viewing angle-178 degree 75 hertz</td>
                             <td class="product-table-image"><a href="https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg" target="_blank">Imagen</a></td>
                             <td class="product-table-stock">40</td>
@@ -139,9 +144,6 @@
                         </tr> -->
                     </tbody>
                 </table>
-                <div class="w-100 d-flex justify-content-center">
-                    <button id="add-product-btn">Agregar producto</button>
-                </div>
             </div>
             <!-- <div class="toast position-absolute bottom-0 end-0 m-4" style="box-shadow: 0 0 5px 1px #004346;" id="fail-regiser-toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
