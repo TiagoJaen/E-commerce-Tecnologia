@@ -52,8 +52,8 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Obtener un admin por id.")
-    @GetMapping(params = "id")
-    public ResponseEntity<?> getById(@RequestParam Long id){
+    @GetMapping(value = "/id", params = "id")
+    public ResponseEntity<?> getById(@RequestParam(name = "id") Long id){
         Optional<Admin> admin = services.getById(id);
         if (admin.isPresent()) {
             return ResponseEntity.ok(admin.get());
@@ -64,8 +64,8 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Obtener un admin por user.")
-    @GetMapping(params = "username")
-    public ResponseEntity<?> getByUserame(@RequestParam String username){
+    @GetMapping(value = "/name", params = "username")
+    public ResponseEntity<?> getByUserame(@RequestParam(name = "name") String username){
         Optional<Admin> admin = services.getByUsername(username);
         if (admin.isPresent()) {
             return ResponseEntity.ok(admin.get());

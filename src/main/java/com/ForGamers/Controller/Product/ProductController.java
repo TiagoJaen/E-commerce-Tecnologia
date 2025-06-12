@@ -44,15 +44,15 @@ public class ProductController {
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Eliminar un producto por id.")
     @DeleteMapping(params = "id")
-    public ResponseEntity<Void> deleteProduct(@RequestParam Long id){
+    public ResponseEntity<Void> deleteProduct(@RequestParam(name = "id") Long id){
         return services.deleteProduct(id);
     }
 
     //BUSCAR POR ID
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Obtener un producto por id.")
-    @GetMapping(params = "id")
-    public ResponseEntity<?> getById(@RequestParam(required = false) Long id){
+    @GetMapping(value = "/id", params = "id")
+    public ResponseEntity<?> getById(@RequestParam(name = "id", required = false) Long id){
         Optional<Product> product = services.getById(id);
         if (product.isPresent()) {
             return ResponseEntity.ok(product.get());
@@ -61,8 +61,8 @@ public class ProductController {
         }
     }
     //BUSCAR POR NOMBRE
-    @GetMapping(params = "name")
-    public List<Product> getByName(@RequestParam (required = false) String name) {
+    @GetMapping(value = "/name", params = "name")
+    public List<Product> getByName(@RequestParam(name = "name", required = false) String name) {
         if (name == null || name.isEmpty()) {
             return listProducts();
         } else {

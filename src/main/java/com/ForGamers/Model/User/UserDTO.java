@@ -5,10 +5,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 
 @Getter
+@NoArgsConstructor
 public abstract class UserDTO {
     protected Long id;
 
