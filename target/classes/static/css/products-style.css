@@ -95,6 +95,8 @@
     font-family: var(--main-font-family);
     padding: 0 .5em;
     max-width: calc(75vw / 6);
+}
+.product-table-name, .product-table-description{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

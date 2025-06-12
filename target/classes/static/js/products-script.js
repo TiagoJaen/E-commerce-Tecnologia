@@ -1,4 +1,5 @@
 const productTableBody = document.getElementById('products-table-body');
+const 
 let timeout = null;
 
 // Cargar productos a la tabla
@@ -11,6 +12,7 @@ function cargarProductos() {
         if (products.length === 0) {
             productTableBody.innerHTML = `<tr><td class="text-center" colspan="6">No se ha encontrado ningun producto.</td></tr>`;
         }else{
+            if(products.length <= 3)
             productTableBody.innerHTML = "";
             products.forEach(p => {
                 imprimirProducto(p);
