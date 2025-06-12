@@ -3,6 +3,10 @@ fetch('/products')
   .then(data => {
     const contenedor = document.getElementById("products-display");
     data.forEach(p => {
+        let priceARS = (p.price).toLocaleString('es-AR', {style: 'currency',
+            currency: 'ARS',
+            maximumFractionDigits: 0
+        });
         const stockHtml = p.stock > 0
         ? `<i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>`
         : `<i class="fa-solid fa-circle-xmark me-2" style="color: #ff4444; font-size: .9em;">  Sin stock</i>`;
@@ -13,7 +17,7 @@ fetch('/products')
             <div class="product-body">
                 <h5 class="product-title text-center mb-3">${p.name}</h5>
                 <div class="product-price-stock d-flex justify-content-between align-items-center">
-                    <h3 class="product-price fs-5 ms-2 mb-0">U$D${p.price}</h3>
+                    <h3 class="product-price fs-5 ms-2 mb-0">${priceARS}</h3>
                     ${stockHtml}
                 </div>
                 <div class="product-buttons d-flex justify-content-around">
@@ -43,7 +47,7 @@ fetch('/products')
                                         <p>${p.description}</p>
                                         <div class="modal-bottom">
                                             <h6 class="titles">Precio</h6>
-                                            <p>U$D${p.price}</p>
+                                            <p>${priceARS}</p>
                                             <div id="modal-buttons">
                                                 <button type="button" class="btn btn-secondary modal-agregar" data-bs-dismiss="modal">
                                                     Agregar al Carrito

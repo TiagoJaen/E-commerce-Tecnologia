@@ -4,7 +4,6 @@ import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
 import com.ForGamers.Model.User.Admin;
 import com.ForGamers.Model.User.AdminDTO;
-import com.ForGamers.Model.User.Client;
 import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Service.User.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,9 +11,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/admins")
@@ -38,28 +39,44 @@ public class AdminController {
             admin.setRole(Role.ADMIN);
             Admin saved = services.add(admin);
             return ResponseEntity.ok(saved);
-        }catch (ExistentEmailException e) {
+        }catch (ExistentEmailException | ExistentUsernameException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
-        }catch (ExistentUsernameException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @Operation(summary = "Eliminar un admin por id.")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAdmin(@PathVariable Long id){
+    @DeleteMapping(params = "id")
+    public ResponseEntity<Void> deleteAdmin(@RequestParam Long id){
         return services.delete(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Obtener un admin por id.")
-    @GetMapping("/{id}")
-    public Admin getById(@PathVariable Long id){
-        return services.getById(id);
+    @GetMapping(params = "id")
+    public ResponseEntity<?> getById(@RequestParam Long id){
+        Optional<Admin> admin = services.getById(id);
+        if (admin.isPresent()) {
+            return ResponseEntity.ok(admin.get());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Obtener un admin por user.")
+    @GetMapping(params = "username")
+    public ResponseEntity<?> getByUserame(@RequestParam String username){
+        Optional<Admin> admin = services.getByUsername(username);
+        if (admin.isPresent()) {
+            return ResponseEntity.ok(admin.get());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation(summary = "Editar un admin.")
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> modifyAdmin(@PathVariable Long id, @RequestBody Admin updatedAdmin) {
-        return services.modify(id, updatedAdmin);
+    @PutMapping
+    public ResponseEntity<Void> modifyAdmin(@RequestBody Admin updatedAdmin) {
+        return services.modify(updatedAdmin.getId(), updatedAdmin);
     }
 }

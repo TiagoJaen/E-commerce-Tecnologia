@@ -27,8 +27,6 @@
     gap: 3em;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
-
-
 .product-item{
     box-shadow: 0 0 10px 2px var(--background-color-1);
     border-radius: 15px;

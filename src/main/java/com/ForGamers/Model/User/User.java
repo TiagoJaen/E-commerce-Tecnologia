@@ -10,8 +10,9 @@ import lombok.experimental.SuperBuilder;
 import java.util.Objects;
 
 
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+//@Entity
+//@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

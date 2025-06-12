@@ -1,4 +1,4 @@
-package com.ForGamers.Service.User;
+/*package com.ForGamers.Service.User;
 
 import com.ForGamers.Model.User.User;
 import com.ForGamers.Repository.User.UserRepository;
@@ -28,3 +28,4 @@ public class GeneralUserService extends UserService<User, UserRepository<User>> 
                 .build();
     }
 }
+*/
