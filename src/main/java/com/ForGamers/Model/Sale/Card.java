@@ -30,7 +30,7 @@ public class Card {
     private String number;
 
     @Schema(example = "05/27")
-    private String fecha;
+    private String expirationDate;
 
     @Schema(example = "123")
     private String cvv;
@@ -54,7 +54,7 @@ public class Card {
                 "id=" + id +
                 ", holder='" + holder + '\'' +
                 ", number='" + number + '\'' +
-                ", fecha='" + fecha + '\'' +
+                ", fecha='" + expirationDate + '\'' +
                 ", cvv='" + cvv + '\'' +
                 '}';
     }

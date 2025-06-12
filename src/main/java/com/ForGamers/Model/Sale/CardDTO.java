@@ -3,8 +3,7 @@ package com.ForGamers.Model.Sale;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +22,10 @@ public class CardDTO {
     @Pattern(regexp = "\\d{16}", message = "El numero de tarjeta debe ser de 16 numeros")
     private String number;
 
-    private LocalDate fecha;
+    private LocalDate expirationDate;
 
-    @Size(min = 3, max = 3, message = "El codigo de seguridad debe ser de 3 numeros enteros")
+    @Min(value = 100, message = "El codigo de seguridad debe ser de 3 digitos")
+    @Max(value = 999, message = "El codigo de seguridad debe ser de 3 digitos")
+    @Positive(message = "El codigo de seguridad debe ser positivo")
     private Integer cvv;
 }
