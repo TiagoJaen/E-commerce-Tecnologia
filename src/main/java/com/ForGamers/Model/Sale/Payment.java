@@ -30,7 +30,6 @@ public class Payment {
     @OneToMany(mappedBy = "payment")
     private List<Order> orders;
 
-    @PositiveOrZero
     private Double total;
 
     @Schema(example = "2025/10/26")

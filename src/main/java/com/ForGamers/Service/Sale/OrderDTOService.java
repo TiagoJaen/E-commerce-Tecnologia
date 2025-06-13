@@ -21,16 +21,11 @@ public class OrderDTOService {
                 orElseThrow(() -> new NoSuchElementException("No existe el producto"));
     }
 
-    private Payment getPayment(Long id) throws NoSuchElementException{
-        return paymentService.getById(id).
-                orElseThrow(() -> new NoSuchElementException("No existe el pago"));
-    }
-
-    public Order DTOtoOrder(OrderDTO dto) throws NoSuchElementException {
+    public Order DTOtoOrder(OrderDTO dto, Payment payment) throws NoSuchElementException {
         return new Order(
                 dto.getId(),
                 getProduct(dto.getProductId()),
-                getPayment(dto.getPaymentId()),
+                payment,
                 dto.getCant(),
                 dto.getCost()
         );

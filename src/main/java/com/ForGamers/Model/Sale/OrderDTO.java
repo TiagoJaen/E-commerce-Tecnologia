@@ -9,10 +9,7 @@ import lombok.Getter;
 @Getter
 public class OrderDTO {
     private Long id;
-
     private Long productId;
-
-    private Long paymentId;
 
     @PositiveOrZero
     private Integer cant;
