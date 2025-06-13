@@ -3,26 +3,25 @@ package com.ForGamers.Controller.Sale;
 import com.ForGamers.Exception.ExistentCardException;
 import com.ForGamers.Model.Sale.Card;
 import com.ForGamers.Model.Sale.CardDTO;
-import com.ForGamers.Service.Sale.CardService;
+import com.ForGamers.Service.Sale.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/card")
+@RequestMapping("/order")
 @AllArgsConstructor
-@Tag(name = "cards", description = "Controladora de tarjetas")
-public class CardController {
-    private final CardService services;
+public class OrderController {
+    private final OrderService services;
 
-    @Operation(summary = "Obtener listado de tarjetas.", description = "Devuelve una lista de todas las tarjetas.")
-    @GetMapping
+    @Operation(summary = "Obtener listado de ordenes.", description = "Devuelve una lista de todas las ordenes.")
+    @GetMapping("/all")
     public List<Card> listCards() {
         return services.listCards();
     }
@@ -40,7 +39,7 @@ public class CardController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Eliminar una tarjeta por id.")
-    @DeleteMapping(value = "", params = "id")
+    @DeleteMapping(params = "id")
     public ResponseEntity<Void> deleteCard(@RequestParam(name = "id") Long id){
         return services.deleteCard(id);
     }

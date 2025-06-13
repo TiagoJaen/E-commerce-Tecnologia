@@ -65,7 +65,7 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Obtener un admin por user.")
     @GetMapping(params = "username")
-    public ResponseEntity<?> getByUserame(@RequestParam String username){
+    public ResponseEntity<?> getByUsername(@RequestParam String username){
         Optional<Admin> admin = services.getByUsername(username);
         if (admin.isPresent()) {
             return ResponseEntity.ok(admin.get());
