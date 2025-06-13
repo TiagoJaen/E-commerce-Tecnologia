@@ -4,7 +4,6 @@ import com.ForGamers.Exception.ExistentOrderException;
 import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Service.Sale.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,7 +35,6 @@ public class OrderController {
         }
     }
 
-
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Obtener una orden por id.")
     @GetMapping(value = "/id", params = "id")
@@ -44,6 +42,17 @@ public class OrderController {
         Optional<Order> card = services.getById(id);
         if (card.isPresent()) {
             return ResponseEntity.ok(card.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @Operation(summary = "Obtener una orden por id del pago.")
+    @GetMapping(value = "/payment", params = "payment_id")
+    public ResponseEntity<?> findByPaymentId(@RequestParam(name = "payment_id", required = false) Long paymentId){
+        Optional<List<Order>> payment = services.findByPaymentId(paymentId);
+        if (payment.isPresent()) {
+            return ResponseEntity.ok(payment.get());
         }
         return ResponseEntity.notFound().build();
     }

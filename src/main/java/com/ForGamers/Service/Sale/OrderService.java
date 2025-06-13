@@ -27,4 +27,8 @@ public class OrderService {
     public Optional<Order> getById(Long id){
         return orderRepository.findById(id);
     }
+
+    public Optional<List<Order>> findByPaymentId(Long paymentId) {
+        return orderRepository.findByPaymentId(paymentId);
+    }
 }

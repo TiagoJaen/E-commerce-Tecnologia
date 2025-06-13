@@ -1,0 +1,60 @@
+package com.ForGamers.Controller.Sale;
+
+import com.ForGamers.Exception.ExistentPaymentException;
+import com.ForGamers.Model.Sale.Payment;
+import com.ForGamers.Service.Sale.PaymentService;
+import io.swagger.v3.oas.annotations.Operation;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/payment")
+@AllArgsConstructor
+public class PaymentController {
+    private final PaymentService services;
+
+    @Operation(summary = "Obtener listado de pagos.", description = "Devuelve una lista de todos los pagos.")
+    @GetMapping
+    public List<Payment> listPayments() {
+        return services.listPayments();
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @Operation(summary = "Agregar un pago.", description = "No incluir id al agregar el pago.")
+    @PostMapping
+    public ResponseEntity<?> addPayment(@RequestBody Payment payment) {
+        try {
+            return ResponseEntity.ok(services.addPayment(services.addPayment(payment)));
+        }catch (ExistentPaymentException e) {
+            return ResponseEntity.badRequest().body((e.getMessage()));
+        }
+    }
+
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @Operation(summary = "Obtener un pago por id.")
+    @GetMapping(value = "/id", params = "id")
+    public ResponseEntity<?> getById(@RequestParam(name = "id", required = false) Long id){
+        Optional<Payment> card = services.getById(id);
+        if (card.isPresent()) {
+            return ResponseEntity.ok(card.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @Operation(summary = "Obtener los pagos por el id del cliente.")
+    @GetMapping(value = "/client-historial", params = "client_id")
+    public ResponseEntity<?> findByClientId(@RequestParam(name = "client_id", required = false) Long clientId){
+        Optional<List<Payment>> payment = services.findByClientId(clientId);
+        if (payment.isPresent()) {
+            return ResponseEntity.ok(payment.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+}
