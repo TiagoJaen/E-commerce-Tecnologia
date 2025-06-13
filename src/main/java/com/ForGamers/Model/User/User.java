@@ -14,7 +14,6 @@ import java.util.Objects;
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @MappedSuperclass
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -54,14 +53,14 @@ public class User {
     @Enumerated(EnumType.STRING)
     protected Role role;
 
-    public User(UserDTO dto) {
-        this.name = dto.getName();
-        this.lastname = dto.getLastname();
-        this.email = dto.getEmail();
-        this.phone = dto.getPhone();
-        this.username = dto.getUsername();
-        this.password = dto.getPassword();
-        this.role = dto.getRole();
+    public User(Long id, String name, String lastname, String email, String phone, String username, String password) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.email = email;
+        this.phone = phone;
+        this.username = username;
+        this.password = password;
     }
 
     @Override

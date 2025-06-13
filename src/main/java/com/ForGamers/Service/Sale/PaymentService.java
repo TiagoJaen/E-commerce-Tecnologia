@@ -15,10 +15,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class PaymentService {
     private final PaymentRepository paymentRepository;
+    private final OrderService orderService;
 
     public Payment addPayment(Payment payment) {
         if (paymentRepository.findById(payment.getId()).isPresent()) {
             throw new ExistentPaymentException("Ya existe la orden.");
+        }
+        for(Order order: payment.getOrders()) {
+            orderService.addOrder(order);
         }
         return paymentRepository.save(payment);
     }

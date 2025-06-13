@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    @Query("SELECT o FROM Order o WHERE o.payment_id = :payment_id")
+    @Query("SELECT o FROM Order o WHERE o.payment.id = :payment_id")
     Optional<List<Order>> findByPaymentId(@Param("payment_id") Long paymentId);
 }

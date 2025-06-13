@@ -1,7 +1,9 @@
 package com.ForGamers.Controller.Sale;
 
 import com.ForGamers.Exception.ExistentPaymentException;
+import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Model.Sale.Payment;
+import com.ForGamers.Service.Sale.OrderService;
 import com.ForGamers.Service.Sale.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
@@ -16,12 +18,12 @@ import java.util.Optional;
 @RequestMapping("/payment")
 @AllArgsConstructor
 public class PaymentController {
-    private final PaymentService services;
+    private final PaymentService paymentServices;
 
     @Operation(summary = "Obtener listado de pagos.", description = "Devuelve una lista de todos los pagos.")
     @GetMapping
     public List<Payment> listPayments() {
-        return services.listPayments();
+        return paymentServices.listPayments();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
@@ -29,7 +31,7 @@ public class PaymentController {
     @PostMapping
     public ResponseEntity<?> addPayment(@RequestBody Payment payment) {
         try {
-            return ResponseEntity.ok(services.addPayment(services.addPayment(payment)));
+            return ResponseEntity.ok(paymentServices.addPayment(payment));
         }catch (ExistentPaymentException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
@@ -40,7 +42,7 @@ public class PaymentController {
     @Operation(summary = "Obtener un pago por id.")
     @GetMapping(value = "/id", params = "id")
     public ResponseEntity<?> getById(@RequestParam(name = "id", required = false) Long id){
-        Optional<Payment> card = services.getById(id);
+        Optional<Payment> card = paymentServices.getById(id);
         if (card.isPresent()) {
             return ResponseEntity.ok(card.get());
         }
@@ -51,7 +53,7 @@ public class PaymentController {
     @Operation(summary = "Obtener los pagos por el id del cliente.")
     @GetMapping(value = "/client-historial", params = "client_id")
     public ResponseEntity<?> findByClientId(@RequestParam(name = "client_id", required = false) Long clientId){
-        Optional<List<Payment>> payment = services.findByClientId(clientId);
+        Optional<List<Payment>> payment = paymentServices.findByClientId(clientId);
         if (payment.isPresent()) {
             return ResponseEntity.ok(payment.get());
         }

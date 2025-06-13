@@ -35,10 +35,7 @@ public class AdminController {
     @PostMapping
     public ResponseEntity<?> addAdmin(@RequestBody AdminDTO dto) {
         try {
-            Admin admin = new Admin(dto);
-            admin.setRole(Role.ADMIN);
-            Admin saved = services.add(admin);
-            return ResponseEntity.ok(saved);
+            return ResponseEntity.ok(services.add(services.DTOtoAdmin(dto)));
         }catch (ExistentEmailException | ExistentUsernameException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }

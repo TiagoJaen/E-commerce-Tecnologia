@@ -25,7 +25,6 @@ public class Payment {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
-    @Schema(example = "1")
     private Client client;
 
     @OneToMany(mappedBy = "payment")

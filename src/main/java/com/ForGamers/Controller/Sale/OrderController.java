@@ -24,16 +24,16 @@ public class OrderController {
         return services.listOrders();
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    /*@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Agregar una orden.", description = "No incluir id al agregar la orden.")
     @PostMapping
     public ResponseEntity<?> addOrder(@RequestBody Order order) {
         try {
-            return ResponseEntity.ok(services.addOrder(services.addOrder(order)));
+            return ResponseEntity.ok(services.addOrder(order)));
         }catch (ExistentOrderException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
-    }
+    }*/
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Obtener una orden por id.")

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.Objects;
 
 @Entity
+@Table(name = "orders")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -23,20 +24,16 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @Schema(example = "1")
     private Product product;
 
     @ManyToOne
     @JoinColumn(name = "payment_id")
-    @Schema(example = "1")
     private Payment payment;
 
     @Schema(example = "5")
-    @PositiveOrZero
     private Integer cant;
 
     @Schema(example = "155.07")
-    @PositiveOrZero
     private Double cost;
 
     @Override

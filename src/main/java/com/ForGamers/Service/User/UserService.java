@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,7 @@ import java.util.Optional;
 public class UserService<T extends User,R extends UserRepository<T> & JpaRepository<T, Long>> {
     protected final R repository;
     protected final UserLookupService userLookupService;
+    protected final PasswordEncoder encoder;
 
     public T add(T t) {
         if (userLookupService.findByUsername(t.getUsername()).isPresent()) {
@@ -34,7 +36,6 @@ public class UserService<T extends User,R extends UserRepository<T> & JpaReposit
         }else if(userLookupService.findByEmail(t.getEmail()).isPresent()) {
             throw new ExistentEmailException();
         }
-        t.setPassword(SecurityConfig.passwordEncoder().encode(t.getPassword()));
         return repository.save(t);
     }
 

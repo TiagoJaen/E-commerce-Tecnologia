@@ -35,10 +35,7 @@ public class ManagerController {
     @PostMapping
     public ResponseEntity<?> addManager(@RequestBody ManagerDTO dto) {
         try {
-            Manager manager = new Manager(dto);
-            manager.setRole(Role.MANAGER);
-            Manager saved = services.add(manager);
-            return ResponseEntity.ok(saved);
+            return ResponseEntity.ok(services.add(services.DTOtoManager(dto)));
         }catch (ExistentEmailException | ExistentUsernameException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }

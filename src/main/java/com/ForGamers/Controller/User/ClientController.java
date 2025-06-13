@@ -36,10 +36,7 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<?> addClient(@RequestBody ClientDTO dto) {
         try {
-            Client client = new Client(dto);
-            client.setRole(Role.CLIENT);
-            Client saved = services.add(client);
-            return ResponseEntity.ok(saved);
+            return ResponseEntity.ok(services.add(services.DTOtoClient(dto)));
         }catch (ExistentEmailException | ExistentUsernameException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }

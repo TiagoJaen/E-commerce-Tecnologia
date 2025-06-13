@@ -19,8 +19,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Schema(description = "Clase que representa a los admins.")
 public class Admin extends User {
-    public Admin(AdminDTO dto) {
-        super(dto);
+    public Admin(Long id, String name, String lastname, String email, String phone, String username, String password) {
+        super(id, name, lastname, email, phone, username, password);
         this.role = Role.ADMIN;
     }
 
