@@ -1,8 +1,7 @@
 package com.ForGamers.Controller.Sale;
 
-import com.ForGamers.Exception.ExistentCardException;
-import com.ForGamers.Model.Sale.Card;
-import com.ForGamers.Model.Sale.CardDTO;
+import com.ForGamers.Exception.ExistentOrderException;
+import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Service.Sale.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -21,35 +20,28 @@ public class OrderController {
     private final OrderService services;
 
     @Operation(summary = "Obtener listado de ordenes.", description = "Devuelve una lista de todas las ordenes.")
-    @GetMapping("/all")
-    public List<Card> listCards() {
-        return services.listCards();
+    @GetMapping
+    public List<Order> listOrders() {
+        return services.listOrders();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
-    @Operation(summary = "Agregar una tarjeta.", description = "No incluir id al agregar la tarjeta.")
+    @Operation(summary = "Agregar una orden.", description = "No incluir id al agregar la orden.")
     @PostMapping
-    public ResponseEntity<?> addCard(@RequestBody @Valid CardDTO dto) {
+    public ResponseEntity<?> addOrder(@RequestBody Order order) {
         try {
-            return ResponseEntity.ok(services.addCard(services.DTOtoCard(dto)));
-        }catch (ExistentCardException e) {
+            return ResponseEntity.ok(services.addOrder(services.addOrder(order)));
+        }catch (ExistentOrderException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
-    @Operation(summary = "Eliminar una tarjeta por id.")
-    @DeleteMapping(params = "id")
-    public ResponseEntity<Void> deleteCard(@RequestParam(name = "id") Long id){
-        return services.deleteCard(id);
-    }
 
-    //BUSCAR POR ID
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
-    @Operation(summary = "Obtener una tarjeta por id.")
-    @GetMapping(params = "id")
+    @Operation(summary = "Obtener una orden por id.")
+    @GetMapping(value = "/id", params = "id")
     public ResponseEntity<?> getById(@RequestParam(name = "id", required = false) Long id){
-        Optional<Card> card = services.getById(id);
+        Optional<Order> card = services.getById(id);
         if (card.isPresent()) {
             return ResponseEntity.ok(card.get());
         }
