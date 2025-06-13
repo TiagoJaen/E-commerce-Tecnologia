@@ -4,6 +4,7 @@ import com.ForGamers.Exception.ExistentOrderException;
 import com.ForGamers.Exception.ExistentPaymentException;
 import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Model.Sale.Payment;
+import com.ForGamers.Model.Sale.PaymentDTO;
 import com.ForGamers.Repository.Sale.PaymentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,16 +17,10 @@ import java.util.Optional;
 @AllArgsConstructor
 public class PaymentService {
     private final PaymentRepository paymentRepository;
-    private final OrderService orderService;
+    private final PaymentDTOService dtoService;
 
-    public Payment addPayment(Payment payment) throws ExistentPaymentException, NoSuchElementException {
-        if (paymentRepository.findById(payment.getId()).isPresent()) {
-            throw new ExistentPaymentException("Ya existe la orden.");
-        }
-        for(Order order: payment.getOrders()) {
-            orderService.addOrder(order);
-        }
-        return paymentRepository.save(payment);
+    public Payment addPayment(PaymentDTO dto) throws NoSuchElementException {
+        return paymentRepository.save(dtoService.DTOtoPayment(dto));
     }
 
     public List<Payment> listPayments() {

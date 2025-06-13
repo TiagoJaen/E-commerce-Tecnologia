@@ -1,9 +1,8 @@
 package com.ForGamers.Controller.Sale;
 
 import com.ForGamers.Exception.ExistentPaymentException;
-import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Model.Sale.Payment;
-import com.ForGamers.Service.Sale.OrderService;
+import com.ForGamers.Model.Sale.PaymentDTO;
 import com.ForGamers.Service.Sale.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
@@ -12,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -29,10 +29,10 @@ public class PaymentController {
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Agregar un pago.", description = "No incluir id al agregar el pago.")
     @PostMapping
-    public ResponseEntity<?> addPayment(@RequestBody Payment payment) {
+    public ResponseEntity<?> addPayment(@RequestBody PaymentDTO dto) {
         try {
-            return ResponseEntity.ok(paymentServices.addPayment(payment));
-        }catch (ExistentPaymentException e) {
+            return ResponseEntity.ok(paymentServices.addPayment(dto));
+        }catch (ExistentPaymentException | NoSuchElementException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }

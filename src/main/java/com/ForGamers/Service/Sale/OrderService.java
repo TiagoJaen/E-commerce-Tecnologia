@@ -18,13 +18,6 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderDTOService dtoService;
 
-    public Order addOrder(OrderDTO dto) throws ExistentPaymentException, NoSuchElementException {
-        if (orderRepository.findById(dto.getId()).isPresent()) {
-            throw new ExistentOrderException("Ya existe la orden.");
-        }
-        return orderRepository.save(dtoService.DTOtoOrder(dto));
-    }
-
     public List<Order> listOrders() {
         return orderRepository.findAll();
     }

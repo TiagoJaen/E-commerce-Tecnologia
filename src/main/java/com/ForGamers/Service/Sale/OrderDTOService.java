@@ -14,7 +14,6 @@ import java.util.NoSuchElementException;
 @AllArgsConstructor
 public class OrderDTOService {
     private final ProductService productService;
-    private final PaymentService paymentService;
 
     private Product getProduct(Long id) throws NoSuchElementException{
         return productService.getById(id).
