@@ -1,35 +1,27 @@
 package com.ForGamers.Configuration;
 
-import com.ForGamers.Component.UserAuthentication;
-//import com.ForGamers.Service.User.GeneralUserService;
-import com.ForGamers.Model.User.User;
-import com.ForGamers.Repository.User.UserRepository;
 import com.ForGamers.Service.User.UserLookupService;
-import com.ForGamers.Service.User.UserService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @Schema(description = "Configuración de seguridad.")
 public class SecurityConfig {
-    @Autowired
-    private UserAuthentication auth;
-
     @Autowired
     private UserLookupService service;
 
@@ -45,7 +37,6 @@ public class SecurityConfig {
                                 "/static/**",
                                 "/login.html",
                                 "/index.html",
-                                "/products.html",
                                 "/css/**",
                                 "/css/style.css",
                                 "/css/products-style.css",
@@ -58,10 +49,9 @@ public class SecurityConfig {
 
                                 //Endpoints
                                 "/",
-                                "/products",
+                                "/products/all",
                                 "/login",
                                 "/logout",
-                                "/clients",
                                 "/cart",
                                 "/favicon.ico"
                         ).permitAll()
@@ -77,12 +67,19 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/swagger-ui/**"
                         ).hasRole("ADMIN")
+                        .requestMatchers(
+                                "/products.html",
+                                "/clients",
+                                "/products"
+                                ).hasAnyRole("ADMIN", "MANAGER")
                         .anyRequest().authenticated()
-
                 )
                 //EXCEPTIONS
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(auth)
+                        //Reemplazé la clase de UserAuthentication por esta función lambda que redirige en lugar de devolver texto
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.sendRedirect("/");
+                        })
                 )
                 //LOGIN Y LOGOUT
                 .formLogin(form -> form

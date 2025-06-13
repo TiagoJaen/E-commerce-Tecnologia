@@ -5,6 +5,7 @@ import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Service.Product.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +25,16 @@ public class ProductController {
 
     //METODOS
     @Operation(summary = "Obtener listado de productos.", description = "Devuelve una lista de todos los productos.")
-    @GetMapping
+    @GetMapping("/all")
     public List<Product> listProducts() {
         return services.listProducts();
+    }
+
+    @Operation(summary = "Obtener listado de productos con paginación.")
+    @GetMapping(params = {"page", "size"})
+    public Page<Product> listProductsPagination(@RequestParam(defaultValue = "1") int page,
+                                                @RequestParam(defaultValue = "5") int size) {
+        return services.listProductsPagination(page, size);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")

@@ -1,10 +1,10 @@
 package com.ForGamers.Service.Product;
 
-import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentProductException;
-import com.ForGamers.Exception.ExistentUsernameException;
 import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Repository.Product.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class ProductService {
 
     public Product addProduct(Product product) {
         if (productRepository.getByName(product.getName()).isPresent()) {
-            throw new ExistentProductException();
+            throw new ExistentProductException("Este producto ya se encuentra registrado.");
         }
         return productRepository.save(product);
     }
@@ -38,6 +38,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public Page<Product> listProductsPagination(int page, int size) {
+        return productRepository.findAll(PageRequest.of(page, size));
+    }
+
     public ResponseEntity<Void> modifyProduct(Long id, Product product){
         if (productRepository.existsById(id)) {
             Product oldProduct = productRepository.getReferenceById(id);
@@ -45,6 +49,7 @@ public class ProductService {
             oldProduct.setPrice(product.getPrice());
             oldProduct.setDescription(product.getDescription());
             oldProduct.setImage(product.getImage());
+            oldProduct.setStock(product.getStock());
 
             productRepository.save(oldProduct);
             return ResponseEntity.ok().build();
