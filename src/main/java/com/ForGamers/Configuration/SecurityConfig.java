@@ -1,7 +1,6 @@
 package com.ForGamers.Configuration;
 
-import com.ForGamers.Component.UserAuthentication;
-import com.ForGamers.Service.User.GeneralUserService;
+import com.ForGamers.Service.User.UserLookupService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,10 +11,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -23,10 +23,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @Schema(description = "Configuración de seguridad.")
 public class SecurityConfig {
     @Autowired
-    private UserAuthentication auth;
-
-    @Autowired
-    private GeneralUserService service;
+    private UserLookupService service;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -40,7 +37,6 @@ public class SecurityConfig {
                                 "/static/**",
                                 "/login.html",
                                 "/index.html",
-                                "/products.html",
                                 "/css/**",
                                 "/css/style.css",
                                 "/css/products-style.css",
@@ -53,10 +49,9 @@ public class SecurityConfig {
 
                                 //Endpoints
                                 "/",
-                                "/products",
+                                "/products/all",
                                 "/login",
                                 "/logout",
-                                "/clients",
                                 "/cart",
                                 "/favicon.ico"
                         ).permitAll()
@@ -72,12 +67,19 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/swagger-ui/**"
                         ).hasRole("ADMIN")
+                        .requestMatchers(
+                                "/products.html",
+                                "/clients",
+                                "/products"
+                                ).hasAnyRole("ADMIN", "MANAGER")
                         .anyRequest().authenticated()
-
                 )
                 //EXCEPTIONS
                 .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(auth)
+                        //Reemplazé la clase de UserAuthentication por esta función lambda que redirige en lugar de devolver texto
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.sendRedirect("/");
+                        })
                 )
                 //LOGIN Y LOGOUT
                 .formLogin(form -> form

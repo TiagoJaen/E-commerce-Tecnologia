@@ -1,4 +1,4 @@
-fetch('/products')
+fetch('/products/all')
   .then(res => res.json())
   .then(data => {
     const contenedor = document.getElementById("products-display");
@@ -21,10 +21,10 @@ fetch('/products')
                     ${stockHtml}
                 </div>
                 <div class="product-buttons d-flex justify-content-around">
-                    <button type="button" class="btn btn-primary modalButton rounded-pill" data-bs-toggle="modal" data-bs-target="#modal-${p.id}">
+                    <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-${p.id}">
                         Ver detalles
                     </button>
-                    <button type="button" class="btn btn-primary modalButton rounded-pill" data-bs-toggle="modal" data-bs-target="#modal-${p.id}">
+                    <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-${p.id}">
                         Agregar
                         <i class="fa-solid fa-cart-shopping"></i>
                     </button>
@@ -48,17 +48,17 @@ fetch('/products')
                                         <div class="modal-bottom">
                                             <h6 class="titles">Precio</h6>
                                             <p>${priceARS}</p>
-                                            <div id="modal-buttons">
+                                            <div class="modal-buttons">
                                                 <button type="button" class="btn btn-secondary modal-agregar" data-bs-dismiss="modal">
                                                     Agregar al Carrito
                                                     <i class="fa-solid fa-cart-shopping" style="color: #84e98e;"></i>
                                                 </button>
-                                                <label for="heart-input" id="modal-heart">
-                                                    <input type="checkbox" name="" id="heart-input">
-                                                    <span id="heart-span">
+                                                <label for="heart-input" class="modal-heart">
+                                                    <input type="checkbox" class="heart-input">
+                                                    <span class="heart-span">
                                                         <i class="fa-regular fa-heart" style="color: #004346;"></i>
                                                     </span>
-                                                    <span id="heart-fav">
+                                                    <span class="heart-fav">
                                                         <i class="fa-solid fa-heart" style="color: #004346;"></i>
                                                     </span>
                                                 </label>
