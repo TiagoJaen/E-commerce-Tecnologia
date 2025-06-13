@@ -34,7 +34,7 @@ public class ClientController {
 
     @Operation(summary = "Agregar un cliente.", description = "No incluir id al agregar un cliente.")
     @PostMapping
-    public ResponseEntity<?>  addClient(@RequestBody ClientDTO dto) {
+    public ResponseEntity<?> addClient(@RequestBody ClientDTO dto) {
         try {
             Client client = new Client(dto);
             client.setRole(Role.CLIENT);
@@ -54,8 +54,8 @@ public class ClientController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Obtener un cliente por id.")
-    @GetMapping(params = "id")
-    public ResponseEntity<?> getById(@RequestParam Long id){
+    @GetMapping(value = "/id", params = "id")
+    public ResponseEntity<?> getById(@RequestParam(name = "id") Long id){
         Optional<Client> client = services.getById(id);
         if (client.isPresent()) {
             return ResponseEntity.ok(client.get());
@@ -66,8 +66,8 @@ public class ClientController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Obtener un cliente por nombre.")
-    @GetMapping(params = "username")
-    public ResponseEntity<?> getByUserame(@RequestParam String username){
+    @GetMapping(value = "/username", params = "username")
+    public ResponseEntity<?> getByUserame(@RequestParam(name = "username") String username){
         Optional<Client> client = services.getByUsername(username);
         if (client.isPresent()) {
             return ResponseEntity.ok(client.get());

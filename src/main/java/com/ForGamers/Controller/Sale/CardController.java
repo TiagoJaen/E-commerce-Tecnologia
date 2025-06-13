@@ -48,7 +48,7 @@ public class CardController {
     //BUSCAR POR ID
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Obtener una tarjeta por id.")
-    @GetMapping(params = "id")
+    @GetMapping(value = "/id", params = "id")
     public ResponseEntity<?> getById(@RequestParam(name = "id", required = false) Long id){
         Optional<Card> card = services.getById(id);
         if (card.isPresent()) {

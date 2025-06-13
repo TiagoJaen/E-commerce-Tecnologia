@@ -26,8 +26,8 @@ public class CartController {
 
     //METODOS
     @Operation(summary = "Obtener lista de productos en carrito")
-    @GetMapping(params = )
-    public ResponseEntity<List<Product>> getProductsInCart(@PathVariable Long clientId) {
+    @GetMapping(params = "client_id")
+    public ResponseEntity<List<Product>> getProductsInCart(@RequestParam(name = "client_id") Long clientId) {
         List<Product> productos = cartService.getProductsInClientCart(clientId);
         return ResponseEntity.ok(productos);
     }
@@ -44,10 +44,9 @@ public class CartController {
     }
 
     @Operation(summary = "Eliminar un producto del carrito por id.")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProductFromCart(@PathVariable Long id){
+    @DeleteMapping(params = "id")
+    public ResponseEntity<Void> deleteProductFromCart(@RequestParam(name = "id") Long id){
 
         return cartService.deleteProductFromCart(id);
     }
-
 }

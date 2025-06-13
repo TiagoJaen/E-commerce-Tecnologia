@@ -52,8 +52,8 @@ public class ManagerController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Obtener un gestor por id.")
-    @GetMapping(params = "id")
-    public ResponseEntity<?> getById(@RequestParam Long id){
+    @GetMapping(value = "/id", params = "id")
+    public ResponseEntity<?> getById(@RequestParam(name = "id") Long id){
         Optional<Manager> manager = services.getById(id);
         if (manager.isPresent()) {
             return ResponseEntity.ok(manager.get());
@@ -64,8 +64,8 @@ public class ManagerController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Obtener un gestor por user.")
-    @GetMapping(params = "username")
-    public ResponseEntity<?> getByUserame(@RequestParam String username){
+    @GetMapping(value = "/username", params = "username")
+    public ResponseEntity<?> getByUserame(@RequestParam(name = "username") String username){
         Optional<Manager> manager = services.getByUsername(username);
         if (manager.isPresent()) {
             return ResponseEntity.ok(manager.get());
