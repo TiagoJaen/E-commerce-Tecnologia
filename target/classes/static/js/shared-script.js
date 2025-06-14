@@ -41,7 +41,6 @@ async function getCurrentUser() {
         }
 
         const user = await response.json();
-        console.log(user);
         renderMenu(user.role);
 }
 
