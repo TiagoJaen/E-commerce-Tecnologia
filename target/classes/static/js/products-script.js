@@ -1,8 +1,7 @@
 const productTableBody = document.getElementById('products-table-body');
-const paginationContainer = document.querySelector(".pagination");
+const paginationContainer = document.querySelector(".pagination-container");
 const addProductForm = document.getElementById('add-product-form');
 const modifyProductForm = document.getElementById('modify-product-form');
-const successToastHeader = document.getElementById('success-product-toast-header');
 const successToastBody = document.getElementById('success-product-toast-body');
 const successToast = document.getElementById('success-product-toast');
 const failToastHeader = document.getElementById('fail-product-toast-header');
@@ -15,7 +14,7 @@ let pageSize = 5;
 cargarProductos();
 
 function cargarProductos(page = 0) {
-    fetch(`/products?page=${page}&size=${pageSize}`)
+    fetch(`/products/paginated?page=${page}&size=${pageSize}`)
     .then(res => res.json())
     .then(data => {
         if (!data.content || data.content.length === 0) {
@@ -42,7 +41,15 @@ function cargarProductos(page = 0) {
             paginationContainer.appendChild(prevBtn);
 
             // Botones de número de página
-            for (let i = 0; i < data.totalPages; i++) {
+            const maxButtons = 5;
+            let startPage = Math.max(0, page - 2);
+            let endPage = startPage + maxButtons;
+
+            if (endPage >= data.totalPages) {
+                endPage = data.totalPages;
+                startPage = Math.max(0, endPage - maxButtons);
+            }
+            for (let i = startPage;i < endPage ; i++) {
                 const li = document.createElement('li');
                 li.className = `page-item ${i === page ? 'active' : ''}`;
                 li.innerHTML = `<a class="page-link" href="#">${i + 1}</a>`;
@@ -77,14 +84,16 @@ document.getElementById('products-search-bar').addEventListener('input', functio
     clearTimeout(timeout);
     timeout = setTimeout(() => {
         const name = this.value.trim();
-        if (name.length === 0) {
+         // Regex: solo letras, números, espacios, tildes y ñ
+        const validName = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$/;
+        if (name.length === 0 || !validName.test(name)) {
           cargarProductos();
           return
         }
-        fetch(`/products?name=${encodeURIComponent(name)}`)
+        fetch(`/products/name/${encodeURIComponent(name)}`)
         .then(response => response.json())
         .then(products => {
-            if (products.length === 0) {
+            if (!products || products.length === 0) {
                 productTableBody.innerHTML = `<tr><td class="text-center" colspan="6">No se ha encontrado ningun producto.</td></tr>`;
             }else{
                 productTableBody.innerHTML = '';
@@ -108,17 +117,17 @@ function imprimirProducto(p){
     const tr = document.createElement('tr');
     tr.classList.add('product-table-item');
     tr.innerHTML = `<td class="product-table-image">
-            <img src="${p.image}" alt="Imagen" class="product-table-image">
-        </td>
-        <td class="product-table-id">${p.id}</td>
-        <td class="product-table-name">${p.name}</td>
-        <td class="product-table-description">${p.description}</td>
-        <td class="product-table-stock">${p.stock}</td>
-        <td class="product-table-price">${priceARS}</td>
-        <td class="products-table-actions">
-            <button class="modify-product-btn" data-bs-toggle="modal" data-bs-target="#modal-modify-product"">Modificar</button>
-            <button class="delete-product-btn" data-id="${p.id}">Eliminar</button>
-        </td>`;
+                        <img src="${p.image}" alt="Imagen" class="product-table-image">
+                    </td>
+                    <td class="product-table-id">${p.id}</td>
+                    <td class="product-table-name">${p.name}</td>
+                    <td class="product-table-description">${p.description}</td>
+                    <td class="product-table-stock">${p.stock}</td>
+                    <td class="product-table-price">${priceARS}</td>
+                    <td class="products-table-actions">
+                        <button class="modify-product-btn" data-bs-toggle="modal" data-bs-target="#modal-modify-product">Modificar</button>
+                        <button class="delete-product-btn" data-id="${p.id}">Eliminar</button>
+                    </td>`;
     productTableBody.appendChild(tr);
 }
 
@@ -135,20 +144,21 @@ productTableBody.addEventListener('click', (e) => {
         document.getElementById('product-stock-input').value = row.querySelector('.product-table-stock').innerText;
         document.getElementById('product-price-input').value = row.querySelector('.product-table-price').innerText.replace(/[^\d]/g, '');
         document.getElementById('product-image-input').value = row.querySelector('img').src;
+        document.getElementById('product-image-source').src = row.querySelector('img').src;
     }
 
     //Boton de eliminar
     if (btn.classList.contains('delete-product-btn')) {
         const id = btn.dataset.id;
         if (confirm("¿Estás seguro de que querés eliminar este producto?")) {
-            fetch(`/products?id=${id}`, { method: 'DELETE' })
+            fetch(`/products/${id}`, { method: 'DELETE' })
             .then(async response => {
                 if (!response.ok) {
                     toastFail("Error al eliminar producto", await response.text());
                 } else {
                     addProductForm.reset();
-                    const urlParamas = new URLSearchParams(window.location.search);
-                    const currentPage = urlParamas.get('page');
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const currentPage = urlParams.get('page') || 0;
                     cargarProductos(currentPage);
                     toastSuccess("Producto eliminado correctamente");
                 }
@@ -163,14 +173,14 @@ modifyProductForm.addEventListener('submit', async(e)=>{
     e.preventDefault();
     const formData = new FormData(modifyProductForm);
     const productData = {
-        "id": parseInt(formData.get('id')),
+        "id": parseInt(document.getElementById('product-id-input').value),
         "name": formData.get('name'),
         "price": parseFloat(formData.get('price')),
         "description": formData.get('description'),
         "image": formData.get('image'),
         "stock": parseInt(formData.get('stock'))
     };
-    console.log(productData);
+
     fetch('/products', {
         method : 'PUT',
         headers: {'Content-Type': 'application/json'},
@@ -180,11 +190,11 @@ modifyProductForm.addEventListener('submit', async(e)=>{
         if(!response.ok){
             toastFail("  Error al modificar el producto", await response.text());
         }else{
-            const urlParamas = new URLSearchParams(window.location.search);
-            const currentPage = urlParamas.get('page');
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentPage = urlParams.get('page') || 0;
             let modal = document.getElementById('modal-modify-product');
             bootstrap.Modal.getInstance(modal).hide();
-            
+
             cargarProductos(currentPage);
             toastSuccess("Producto modificado correctamente");
         }
@@ -222,7 +232,7 @@ addProductForm.addEventListener('submit', async (e) => {
 });
 //Funcion para toast
 function toastSuccess(msg){
-    successToastHeader.innerText = msg;
+    successToastBody.innerText = msg;
     failToast.classList.remove('show');
     successToast.classList.remove('show');
     successToast.classList.add('show');

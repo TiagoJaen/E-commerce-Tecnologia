@@ -17,8 +17,8 @@ a{
 body{
     background: linear-gradient(to bottom, var(--background-color-1), var(--background-color-2)) !important;
 }
-textearea{
-    resize: none;
+textarea{
+    resize: none !important;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -172,5 +172,39 @@ input[type="number"]::-webkit-inner-spin-button{
     color: var(--light-title-color-1);
     text-shadow: 0 0 5px var(--primary-color);
 }
-
+/* ----PAGINACION----- */
+.pagination-container{
+    display: flex;
+    list-style: none;
+    padding: 1em 0;
+    margin: 0;
+    justify-content: center;
+    background-color: var(--background-color-1);
+}
+.page-item{
+    font-family: var(--main-font-family);
+    display: flex;
+    align-items: center;
+    height: 2em;
+    padding: 0 14px;
+    border-right: solid 2px #198754;
+    background-color: var(--primary-color);
+    box-shadow: 0 0 4px 1px var(--primary-color);
+}
+.page-item:first-child{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;}
+.page-item:first-child, .page-item:last-child, .active{
+    color: white;
+    background-color: var(--title-color-1);
+}
+.disabled{
+    opacity: .7;
+}
+.page-item:last-child{
+    border-right: none;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+/* ---------PRODUCTOS---------- */
 /* -----FORMS----- */

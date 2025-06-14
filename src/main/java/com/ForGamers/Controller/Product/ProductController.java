@@ -23,21 +23,45 @@ public class ProductController {
         this.services = productService;
     }
 
-    //METODOS
+    //GET
+    //Listado
     @Operation(summary = "Obtener listado de productos.", description = "Devuelve una lista de todos los productos.")
     @GetMapping("/all")
     public List<Product> listProducts() {
         return services.listProducts();
     }
 
+    //Paginación
     @Operation(summary = "Obtener listado de productos con paginación.")
-    @GetMapping(params = {"page", "size"})
-    public Page<Product> listProductsPagination(@RequestParam(defaultValue = "1") int page,
-                                                @RequestParam(defaultValue = "5") int size) {
+    @GetMapping("/paginated")
+    public Page<Product> listProductsPagination(@RequestParam(name = "page") int page,
+                                                @RequestParam(name = "size") int size) {
         return services.listProductsPagination(page, size);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    //BUSCAR POR ID
+    @Operation(summary = "Obtener un producto por id.")
+    @GetMapping("/id/{id}")
+    public ResponseEntity<?> getById(@PathVariable(name = "id", required = false) Long id){
+        Optional<Product> product = services.getById(id);
+        if (product.isPresent()) {
+            return ResponseEntity.ok(product.get());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+    //BUSCAR POR NOMBRE
+    @Operation(summary = "Obtener un producto por nombre.")
+    @GetMapping("/name/{name}")
+    public List<Product> getByName(@PathVariable(name = "name", required = false) String name) {
+        if (name == null || name.isEmpty()) {
+            return listProducts();
+        } else {
+            return services.getByNameIgnoringCase(name);
+        }
+    }
+
+    //POST
     @Operation(summary = "Agregar un producto.", description = "No incluir id al agregar un producto.")
     @PostMapping
     public ResponseEntity<?> addProduct(@RequestBody Product product) {
@@ -49,39 +73,22 @@ public class ProductController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    //DELETE
     @Operation(summary = "Eliminar un producto por id.")
-    @DeleteMapping(params = "id")
-    public ResponseEntity<Void> deleteProduct(@RequestParam Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable(name = "id") Long id){
         return services.deleteProduct(id);
     }
 
-    //BUSCAR POR ID
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
-    @Operation(summary = "Obtener un producto por id.")
-    @GetMapping(params = "id")
-    public ResponseEntity<?> getById(@RequestParam(required = false) Long id){
-        Optional<Product> product = services.getById(id);
-        if (product.isPresent()) {
-            return ResponseEntity.ok(product.get());
-        }else{
-            return ResponseEntity.notFound().build();
-        }
-    }
-    //BUSCAR POR NOMBRE
-    @GetMapping(params = "name")
-    public List<Product> getByName(@RequestParam (required = false) String name) {
-        if (name == null || name.isEmpty()) {
-            return listProducts();
-        } else {
-            return services.getByNameIgnoringCase(name);
-        }
-    }
-
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    //PUT
     @Operation(summary = "Editar un producto.")
     @PutMapping
-    public ResponseEntity<Void> modifyProduct(@RequestBody Product updatedProduct) {
-        return services.modifyProduct(updatedProduct.getId(), updatedProduct);
+    public ResponseEntity<?> modifyProduct(@RequestBody Product updatedProduct) {
+        try{
+            services.modifyProduct(updatedProduct.getId(), updatedProduct);
+            return ResponseEntity.ok().build();
+        }catch (ExistentProductException e) {
+            return ResponseEntity.badRequest().body((e.getMessage()));
+        }
     }
 }

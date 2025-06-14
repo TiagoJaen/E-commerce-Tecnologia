@@ -47,6 +47,7 @@
 #products-table{
     width: 100%;
     min-height: 50vh;
+    margin-bottom: 1em;
     background-color: var(--light-title-color-1);
     box-shadow: 0 0 10px 4px var(--background-color-1);
     border-radius: 15px;
@@ -88,7 +89,7 @@
     box-shadow: 0 0 5px 1px var(--light-title-color-1);
 }
 .product-table-item{
-    max-height: 2em;
+    max-height: 1.8em;
 }
 .product-table-item > *{
     font-family: var(--main-font-family);
@@ -117,13 +118,46 @@
     box-shadow: 0 0 5px 1px #c90000;
 }
 .product-table-image{
-    height: 4em;
+    height: 3.7em;
     object-fit: cover;
-}
-.product-form-control{
-    width: 100%;
 }
 
 .toast{
     z-index: 1056;
+}
+
+/* -----MODAL----- */
+.modal-dialog{
+    min-width: 50vw;
+}
+.modal-header{
+    border: none !important;
+    z-index: 10;
+    background-color: var(--background-color-1);
+    color: var(--primary-color);
+}
+.modal-body{
+    color: white;
+    background: linear-gradient(to top, var(--background-color-1), #014747cf);
+}
+.modal-content{
+    min-height: 70vh;
+}
+.textarea-description{
+    height: 8em !important;
+}
+.form-control{
+    height: 2em;
+}
+.form-control:focus{
+    box-shadow: 0 0 6px 1px var(--primary-color)!important;
+    outline: none !important;
+    border: none !important;
+}
+.product-form-buttons > *{
+    padding: .2em .8em;
+}
+.modal-product-img{
+    max-height: 20em;
+    max-width: 100%;
 }
