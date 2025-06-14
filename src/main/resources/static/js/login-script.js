@@ -8,21 +8,21 @@ const toastRegisterFail = document.getElementById('fail-register-toast');
 const toastRegisterBody = document.getElementById('fail-register-toast-body');
 const toastRegisterSuccess = document.getElementById('success-register-toast');
 
-registerButton.addEventListener('click', (event) => {
-    event.preventDefault();
+registerButton.addEventListener('click', (e) => {
+    e.preventDefault();
     loginFront.style.transform = 'rotateY(-180deg)';
     loginBack.style.transform = 'rotateY(0deg)';
 });
 
-loginButton.addEventListener('click', (event) => {
-    event.preventDefault();
+loginButton.addEventListener('click', (e) => {
+    e.preventDefault();
     loginFront.style.transform = 'rotateY(0deg)';
     loginBack.style.transform = 'rotateY(180deg)';
 });
 
 //REGISTRAR
-registerForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
+registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
     const formData = new FormData(registerForm);
     const clientData = {
         name: formData.get('name'),

@@ -41,6 +41,7 @@
     object-fit: contain;
 }
 .product-body{
+    width: 100%;
     padding: .5em;
     position: absolute;
     bottom: .5em;
@@ -58,22 +59,9 @@
     margin-top: 1em;
 }
 .product-buttons button{
-    height: 2.5em;
-    border-radius: 15px;
-    outline: none;
-    border: none;
-    background-color: var(--primary-color);
-    color: var(--background-color-1);
-    font-family: var(--main-font-family);
-    font-weight: 700;
-    transition: .3s;
+    padding: 0 .8em;
+    height: 2em;
 }
-.product-buttons button:hover{
-    background-color: var(--background-color-1);
-    color: var(--primary-color);
-    box-shadow: 0 0 10px 5px var(--primary-color);
-}
-
 /* --------------------MODAL PRODUCTOS------------------- */
 .modal-content{
     width: 600px !important;
@@ -83,35 +71,35 @@
     border: none !important;
 }
 
-#modal-heart{
+.modal-heart{
     margin-left: 1em;
 }
-#modal-heart > input{
+.modal-heart > input{
     display: none;
 }
-#heart-span{
+.heart-span{
     cursor: pointer;
     display: inline-block;
     position: relative;
     font-size: 1.5em;
     transition: .6s;
 }
-#heart-span:hover{
+.heart-span:hover{
     transition-timing-function: ease-in-out;
     transform: scale(1.2);
 }
-#heart-fav{
+.heart-fav{
     transition: .6s;
     cursor: pointer;
     display: none;
     font-size: 1.5em;
 }
-#heart-fav:hover{
+.heart-fav:hover{
     transform: scale(1.2);
 }
-#modal-heart input:checked ~ #heart-span{
+.modal-heart input:checked ~ .heart-span{
     display: none !important;
 }
-#modal-heart input:checked ~ #heart-fav{
+.modal-heart input:checked ~ .heart-fav{
     display: block !important;
 }

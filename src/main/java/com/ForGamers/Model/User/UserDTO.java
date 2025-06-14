@@ -1,14 +1,13 @@
 package com.ForGamers.Model.User;
 
 import com.ForGamers.Model.User.Enum.Role;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
-
+@AllArgsConstructor
 @Getter
 @NoArgsConstructor
 public abstract class UserDTO {
