@@ -41,6 +41,7 @@
     object-fit: contain;
 }
 .product-body{
+    width: 100%;
     padding: .5em;
     position: absolute;
     bottom: .5em;

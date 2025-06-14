@@ -5,6 +5,7 @@ import com.ForGamers.Exception.ExistentUsernameException;
 import com.ForGamers.Model.User.Client;
 import com.ForGamers.Model.User.ClientDTO;
 import com.ForGamers.Model.User.Enum.Role;
+import com.ForGamers.Model.User.User;
 import com.ForGamers.Service.User.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,6 +13,8 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -76,5 +79,36 @@ public class ClientController {
     @DeleteMapping(params = "id")
     public ResponseEntity<Void> deleteClient(@RequestParam Long id){
         return services.delete(id);
+    }
+
+    //PUT
+    @Operation(summary = "Modificar un cliente.")
+    @PutMapping
+    public ResponseEntity<?> updateClient(@RequestBody Client updatedUser) {
+        try {
+            services.modify(updatedUser.getId(), updatedUser);
+            return ResponseEntity.ok(updatedUser);
+        }catch (ExistentEmailException | ExistentUsernameException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    //Peticiones del usuario de la sesión
+    //GET
+    @GetMapping("/me")
+    public User getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+        return services.getByUsername(userDetails.getUsername()).get();
+    }
+
+    //PUT todavia no sé si funciona
+    @PutMapping("/me/update")
+    public ResponseEntity<?> updateCurrentUser(@AuthenticationPrincipal UserDetails userDetails,
+                                               @RequestBody Client updatedUser) {
+        try {
+            Client currentClient = services.getByUsername(userDetails.getUsername()).get();
+            services.modify(currentClient.getId(), updatedUser);
+            return ResponseEntity.ok(updatedUser);
+        }catch (ExistentEmailException | ExistentUsernameException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

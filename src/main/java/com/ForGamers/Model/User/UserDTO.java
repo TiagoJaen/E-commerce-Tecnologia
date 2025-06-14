@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @NoArgsConstructor
 public abstract class UserDTO {
