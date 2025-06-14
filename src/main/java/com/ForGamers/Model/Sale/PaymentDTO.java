@@ -7,18 +7,23 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class PaymentDTO {
     private Long id;
     private Long clientId;
+    private CardDTO card;
     private List<OrderDTO> orders;
-
-    @PositiveOrZero
-    private Double total;
-
     private LocalDateTime date;
+
+    public PaymentDTO(Long id, Long clientId, CardDTO card, LocalDateTime date) {
+        this.id = id;
+        this.clientId = clientId;
+        this.card = card;
+        this.orders = new LinkedList<>();
+        this.date = date;
+    }
 }

@@ -9,11 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Schema(description = "Clase que representa a los pagos")
@@ -27,6 +27,10 @@ public class Payment {
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @OneToMany
+    @JoinColumn(name = "card_id")
+    private Card card;
+
     @OneToMany(mappedBy = "payment")
     private List<Order> orders;
 
@@ -34,6 +38,15 @@ public class Payment {
 
     @Schema(example = "2025/10/26")
     private LocalDateTime date;
+
+    public Payment(Long id, Client client, Card card, Double total, LocalDateTime date) {
+        this.id = id;
+        this.client = client;
+        this.card = card;
+        this.orders = new LinkedList<>();
+        this.total = total;
+        this.date = date;
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -15,18 +15,17 @@ import java.util.NoSuchElementException;
 public class OrderDTOService {
     private final ProductService productService;
 
-    private Product getProduct(Long id) throws NoSuchElementException{
-        return productService.getById(id).
+    public Product getProduct(OrderDTO dto) throws NoSuchElementException{
+        return productService.getById(dto.getProductId()).
                 orElseThrow(() -> new NoSuchElementException("No existe el producto"));
     }
 
     public Order DTOtoOrder(OrderDTO dto, Payment payment) throws NoSuchElementException {
         return new Order(
                 dto.getId(),
-                getProduct(dto.getProductId()),
+                getProduct(dto),
                 payment,
-                dto.getCant(),
-                dto.getCost()
-        );
+                dto.getCant()
+                );
     }
 }

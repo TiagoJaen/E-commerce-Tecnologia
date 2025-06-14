@@ -12,7 +12,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "orders")
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Schema(description = "Clase que representa cada orden que se hace en un pago.")
@@ -35,6 +34,14 @@ public class Order {
 
     @Schema(example = "155.07")
     private Double cost;
+
+    public Order(Long id, Product product, Payment payment, Integer cant) {
+        this.id = id;
+        this.product = product;
+        this.payment = payment;
+        this.cant = cant;
+        this.cost = product.getPrice() * cant;
+    }
 
     @Override
     public boolean equals(Object o) {
