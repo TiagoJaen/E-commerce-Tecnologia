@@ -43,19 +43,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         // Extraemos el token sin el prefijo "Bearer "
         String token = authHeader.substring(7);
-        logger.debug("Token extraído: " + token);
+
         // Obtenemos el nombre de usuario desde el token
         String username = jwtService.extractUsername(token);
-        logger.debug("Username extraído: " + username);
+
         // Si obtenemos un username y no hay autenticación en contexto, validamos el token
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             // Cargamos los datos del usuario desde base de datos
             UserDetails userDetails = service.loadUserByUsername(username);
-            logger.debug("User details cargados: " + userDetails.getUsername());
+
             // Verificamos si el token es válido
             if (jwtService.isTokenValid(token, userDetails)) {
-                logger.debug("Token Valido para " + username);
+
                 // Creamos el token de autenticación de Spring
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(

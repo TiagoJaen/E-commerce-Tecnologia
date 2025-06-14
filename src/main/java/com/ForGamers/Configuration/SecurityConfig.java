@@ -33,14 +33,8 @@ public class SecurityConfig {
     @Autowired
     private UserAuthentication auth;
 
-    @Autowired
-    private GeneralUserService service;
-
-    @Autowired
-    private JwtAuthFilter jwtAuthFilter;
-
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter, GeneralUserService service) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -62,6 +56,7 @@ public class SecurityConfig {
                                 "/js/login-script.js",
                                 "/js/products-script.js",
                                 "/Media/**",
+                                "/docs.html",
 
                                 //Endpoints
                                 "/",
@@ -70,7 +65,6 @@ public class SecurityConfig {
                                 "/clients",
                                 "/cart",
                                 "/auth/**"
-
                         ).permitAll()
                         .requestMatchers("/client").hasRole("CLIENT")
                         .requestMatchers("/manager").hasRole("MANAGER")
@@ -80,37 +74,19 @@ public class SecurityConfig {
                                 "/admin",
 
                                 // Swagger solo para admins
-                                "/docs",
+                                "/docs/**",
                                 "/v3/api-docs/**",
                                 "/swagger-ui.html",
                                 "/swagger-ui/**"
-
                         ).hasRole("ADMIN")
                         .anyRequest().authenticated()
-
                 )
-                .authenticationProvider(authenticationProvider())
+                .authenticationProvider(authenticationProvider(service))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
                 //EXCEPTIONS
-                /*.exceptionHandling(exception -> exception
+                http.exceptionHandling(exception -> exception
                         .authenticationEntryPoint(auth)
-                )*/
-                //LOGIN Y LOGOUT
-                /*.formLogin(form -> form
-                        .loginPage("/login.html")
-                        .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/", true)
-                        .failureUrl("/login.html?error")
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .deleteCookies("JSESSIONID")
-                        .logoutSuccessUrl("/")
-                        .clearAuthentication(true)
-                        .invalidateHttpSession(true)
-                        .permitAll()
-                );*/
+                );
                 // Disable form login
                 http.formLogin(AbstractHttpConfigurer::disable);
                 http.logout(LogoutConfigurer::disable);
@@ -120,7 +96,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider() {
+    public AuthenticationProvider authenticationProvider(GeneralUserService service) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(service);
         provider.setPasswordEncoder(passwordEncoder());
