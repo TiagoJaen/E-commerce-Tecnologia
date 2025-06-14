@@ -1,62 +1,93 @@
 package com.ForGamers.Controller.Product;
 
-import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentProductException;
 import com.ForGamers.Model.Product.Product;
-import com.ForGamers.Model.User.Client;
-import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Service.Product.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
 @Tag(name = "products", description = "Operaciones relacionadas a los productos.")
 public class ProductController {
-    private ProductService productService;
+    private ProductService services;
 
     public ProductController(ProductService productService) {
-        this.productService = productService;
+        this.services = productService;
     }
 
-    //METODOS
+    //GET
+    //Listado
     @Operation(summary = "Obtener listado de productos.", description = "Devuelve una lista de todos los productos.")
-    @GetMapping
+    @GetMapping("/all")
     public List<Product> listProducts() {
-        return productService.listProducts();
+        return services.listProducts();
     }
 
+    //Paginación
+    @Operation(summary = "Obtener listado de productos con paginación.")
+    @GetMapping("/paginated")
+    public Page<Product> listProductsPaginated(@RequestParam(name = "page") int page,
+                                                @RequestParam(name = "size") int size) {
+        return services.listProductsPaginated(page, size);
+    }
+
+    //BUSCAR POR ID
+    @Operation(summary = "Obtener un producto por id.")
+    @GetMapping("/id/{id}")
+    public ResponseEntity<?> getById(@PathVariable(name = "id", required = false) Long id){
+        Optional<Product> product = services.getById(id);
+        if (product.isPresent()) {
+            return ResponseEntity.ok(product.get());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+    //BUSCAR POR NOMBRE
+    @Operation(summary = "Obtener un producto por nombre.")
+    @GetMapping("/name/{name}")
+    public List<Product> getByName(@PathVariable(name = "name", required = false) String name) {
+        if (name == null || name.isEmpty()) {
+            return listProducts();
+        } else {
+            return services.getByNameIgnoringCase(name);
+        }
+    }
+
+    //POST
     @Operation(summary = "Agregar un producto.", description = "No incluir id al agregar un producto.")
     @PostMapping
     public ResponseEntity<?> addProduct(@RequestBody Product product) {
         try {
-            Product saved = productService.addProduct(product);
+            Product saved = services.addProduct(product);
             return ResponseEntity.ok(saved);
         }catch (ExistentProductException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }
 
+    //DELETE
     @Operation(summary = "Eliminar un producto por id.")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id){
-
-        return productService.deleteProduct(id);
+    public ResponseEntity<Void> deleteProduct(@PathVariable(name = "id") Long id){
+        return services.deleteProduct(id);
     }
 
-    @Operation(summary = "Obtener un producto por id.")
-    @GetMapping("/{id}")
-    public Product getById(@PathVariable Long id){
-        return productService.getById(id);
-    }
-
+    //PUT
     @Operation(summary = "Editar un producto.")
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> modifyProduct(@PathVariable Long id, @RequestBody Product updatedProduct) {
-        return productService.modifyProduct(id, updatedProduct);
+    @PutMapping
+    public ResponseEntity<?> modifyProduct(@RequestBody Product updatedProduct) {
+        try{
+            services.modifyProduct(updatedProduct.getId(), updatedProduct);
+            return ResponseEntity.ok().build();
+        }catch (ExistentProductException e) {
+            return ResponseEntity.badRequest().body((e.getMessage()));
+        }
     }
 }

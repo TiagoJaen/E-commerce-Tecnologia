@@ -1,7 +1,6 @@
 package com.ForGamers.Configuration;
 
-import com.ForGamers.Component.UserAuthentication;
-import com.ForGamers.Service.User.GeneralUserService;
+import com.ForGamers.Service.User.UserLookupService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +23,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -31,10 +32,10 @@ import javax.sql.DataSource;
 @Schema(description = "Configuración de seguridad.")
 public class SecurityConfig {
     @Autowired
-    private UserAuthentication auth;
+    private UserLookupService service;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter, GeneralUserService service) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter, UserLookupService service) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -46,7 +47,6 @@ public class SecurityConfig {
                                 "/static/**",
                                 "/login.html",
                                 "/index.html",
-                                "/products.html",
                                 "/css/**",
                                 "/css/style.css",
                                 "/css/products-style.css",
@@ -60,18 +60,24 @@ public class SecurityConfig {
 
                                 //Endpoints
                                 "/",
-                                "/products",
+                                "/user",
+                                "/products/all",
+                                "/products/paginated",
+                                "/clients",
                                 "/logout",
                                 "/clients",
                                 "/cart",
-                                "/auth/**"
+                                "/auth/**",
+                                "/favicon.ico"
                         ).permitAll()
                         .requestMatchers("/client").hasRole("CLIENT")
-                        .requestMatchers("/manager").hasRole("MANAGER")
+                        .requestMatchers("/manager",
+                                "/clients/update").hasRole("MANAGER")
                         .requestMatchers(
                                 "/managers",
                                 "/admins",
                                 "/admin",
+                                "/user/update/any",
 
                                 // Swagger solo para admins
                                 "/docs/**",
@@ -79,13 +85,26 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/swagger-ui/**"
                         ).hasRole("ADMIN")
+                        .requestMatchers(
+                                "/products.html",
+                                "/clients/all",
+                                "/clients/id/",
+                                "/clients/username/",
+                                "/products"
+                                ).hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers(
+                                "/user/update"
+                        ).hasAnyRole("ADMIN", "MANAGER", "CLIENT")
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider(service))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
                 //EXCEPTIONS
                 http.exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(auth)
+                        //Reemplazé la clase de UserAuthentication por esta función lambda que redirige en lugar de devolver texto
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.sendRedirect("/");
+                        })
                 );
                 // Disable form login
                 http.formLogin(AbstractHttpConfigurer::disable);
@@ -96,7 +115,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(GeneralUserService service) {
+    public AuthenticationProvider authenticationProvider(UserLookupService service) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(service);
         provider.setPasswordEncoder(passwordEncoder());

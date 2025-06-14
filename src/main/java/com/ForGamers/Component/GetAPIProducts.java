@@ -11,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 @Component
 @AllArgsConstructor
@@ -40,7 +39,7 @@ public class GetAPIProducts {
             if (!exists) {
                 Product newProduct = new Product();
                 newProduct.setName(a.getTitle());
-                newProduct.setPrice(a.getPrice());
+                newProduct.setPrice(a.getPrice() * 1200);
                 newProduct.setDescription(a.getDescription());
                 newProduct.setImage(a.getImage());
                 newProduct.setStock((int)(Math.random() * 101));

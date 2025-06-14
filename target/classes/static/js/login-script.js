@@ -4,7 +4,7 @@ const loginBack = document.getElementById('login-back');
 const loginButton = document.getElementById('change-login-button');
 const registerButton = document.getElementById('change-register-button');
 const registerForm = document.getElementById('register-form');
-const toastRegisterFail = document.getElementById('fail-regiser-toast');
+const toastRegisterFail = document.getElementById('fail-register-toast');
 const toastRegisterBody = document.getElementById('fail-register-toast-body');
 const toastRegisterSuccess = document.getElementById('success-register-toast');
 
@@ -12,21 +12,21 @@ const toastRegisterSuccess = document.getElementById('success-register-toast');
 const loginForm = document.getElementById('sign-in-form');
 const loginErrorDiv = document.getElementById('login-error'); // Assuming this is for displaying login errors
 
-registerButton.addEventListener('click', (event) => {
-    event.preventDefault();
+registerButton.addEventListener('click', (e) => {
+    e.preventDefault();
     loginFront.style.transform = 'rotateY(-180deg)';
     loginBack.style.transform = 'rotateY(0deg)';
 });
 
-loginButton.addEventListener('click', (event) => {
-    event.preventDefault();
+loginButton.addEventListener('click', (e) => {
+    e.preventDefault();
     loginFront.style.transform = 'rotateY(0deg)';
     loginBack.style.transform = 'rotateY(180deg)';
 });
 
 //REGISTRAR
-registerForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
+registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
     const formData = new FormData(registerForm);
     const clientData = {
         name: formData.get('name'),
