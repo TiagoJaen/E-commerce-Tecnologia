@@ -22,8 +22,9 @@ import java.util.LinkedHashSet;
 @Schema(description = "Clase que representa a los clientes.")
 public class Client extends User {
 
-    public Client(Long id, String name, String lastname, String email, String phone, String username, String password) {
-        super(id, name, lastname, email, phone, username, password);
+    public Client(ClientDTO dto) {
+        super(dto);
         this.role = Role.CLIENT;
+        // this.cart = new LinkedHashSet<>();
     }
 }

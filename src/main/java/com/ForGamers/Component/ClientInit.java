@@ -8,6 +8,8 @@ import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @AllArgsConstructor
 public class ClientInit {
@@ -21,15 +23,17 @@ public class ClientInit {
 
     @PostConstruct
     public void createInitClients() {
-        if(service.getByUsername("qwe").isEmpty()) {
-            service.add(service.DTOtoClient(new ClientDTO(
-                    "rivato",
-                    "aravir",
-                    "client1@gmail.com",
-                    "2237984568",
-                    "qwe",
-                    "123"
-            )));
+        Optional<Client> op = service.getByUsername("qwe");
+        ClientDTO dto = new ClientDTO(
+                "rivato",
+                "aravir",
+                "client1@gmail.com",
+                "2237984568",
+                "qwe",
+                "123"
+        );
+        if(op.isEmpty()) {
+            service.add(new Client(dto));
         }
     }
 }
