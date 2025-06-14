@@ -81,7 +81,6 @@ input[type="number"]::-webkit-inner-spin-button{
     height: 10vh;
     width: 100%;
 }
-
 #title{
     position: absolute;
     margin: auto;

@@ -1,7 +1,7 @@
 const headerContainer = document.querySelector('.header-container');
 const unloggedNav = `<!-- header sin logear -->
             <div class="fixed-top container-fluid nav-container unlogged-nav p-0 d-flex justify-content-center align-items-center">
-                <div id="login-nav" class="position-absolute start-0 ms-4">
+                <div class="position-absolute login-nav start-0 ms-4">
                     <a href="login.html" id="btn-unlogged" class="btn-style-1 d-flex align-items-center justify-content-center border-0 rounded-pill" type="button">
                         <i class="fa-solid fa-user"></i>
                         <span class="text-button">Iniciar Sesión</span>
@@ -83,7 +83,7 @@ function clientMenu(name, lastname){
                                 </div>
                             </button>
                             <!-- offcanvas -->
-                            <div class="offcanvas show offcanvas-start offcanvas-profile" tabindex="-1" id="offcanvasProfileClient" aria-labelledby="offcanvasProfileClientLabel">
+                            <div class="offcanvas offcanvas-start offcanvas-profile" tabindex="-1" id="offcanvasProfileClient" aria-labelledby="offcanvasProfileClientLabel">
                                 <div class="offcanvas-header justify-content-center logged">
                                     <h2 class="text-center m-0">${name} ${lastname}</h2>
                                     <button type="button" class="btn-offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close">
