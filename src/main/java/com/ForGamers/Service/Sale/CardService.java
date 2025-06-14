@@ -52,4 +52,8 @@ public class CardService {
     public Optional<Card> getById(Long id){
         return cardRepository.findById(id);
     }
+
+    public Optional<Card> getCard(Card card) {
+        return cardRepository.getCard(card);
+    }
 }

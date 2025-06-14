@@ -40,7 +40,7 @@ public class CardController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Eliminar una tarjeta por id.")
-    @DeleteMapping(params = "id")
+    @DeleteMapping(value = "", params = "id")
     public ResponseEntity<Void> deleteCard(@RequestParam(name = "id") Long id){
         return services.deleteCard(id);
     }

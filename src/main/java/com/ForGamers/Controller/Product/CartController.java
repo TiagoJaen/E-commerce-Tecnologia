@@ -46,6 +46,7 @@ public class CartController {
     @Operation(summary = "Eliminar un producto del carrito por id.")
     @DeleteMapping(params = "id")
     public ResponseEntity<Void> deleteProductFromCart(@RequestParam(name = "id") Long id){
+
         return cartService.deleteProductFromCart(id);
     }
 }
