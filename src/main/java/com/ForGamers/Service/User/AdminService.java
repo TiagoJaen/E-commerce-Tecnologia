@@ -4,8 +4,6 @@ import com.ForGamers.Configuration.SecurityConfig;
 import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
 import com.ForGamers.Model.User.Admin;
-import com.ForGamers.Model.User.Admin;
-import com.ForGamers.Repository.User.AdminRepository;
 import com.ForGamers.Repository.User.AdminRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
