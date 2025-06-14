@@ -5,8 +5,6 @@ import com.ForGamers.Model.User.AdminDTO;
 import com.ForGamers.Service.User.AdminService;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

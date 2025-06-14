@@ -14,7 +14,6 @@ import java.util.Objects;
 //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @MappedSuperclass
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @ToString
