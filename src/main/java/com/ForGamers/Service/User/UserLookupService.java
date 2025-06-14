@@ -1,12 +1,17 @@
 package com.ForGamers.Service.User;
 
+import com.ForGamers.Exception.ExistentEmailException;
+import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Model.User.Admin;
 import com.ForGamers.Model.User.Client;
+import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Model.User.Manager;
 import com.ForGamers.Model.User.User;
 import com.ForGamers.Repository.User.AdminRepository;
 import com.ForGamers.Repository.User.ClientRepository;
 import com.ForGamers.Repository.User.ManagerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,19 +20,13 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 // Servicio de búsqueda en todas las tablas de usuario (clientes, administradores y gestores)
+@AllArgsConstructor
 @Service
 public class UserLookupService implements UserDetailsService {
     private final ClientRepository clientRepository;
     private final ManagerRepository managerRepository;
     private final AdminRepository adminRepository;
 
-    public UserLookupService(ClientRepository clientRepository,
-                             ManagerRepository managerRepository,
-                             AdminRepository adminRepository) {
-        this.clientRepository = clientRepository;
-        this.managerRepository = managerRepository;
-        this.adminRepository = adminRepository;
-    }
 
     public Optional<? extends User> findById(Long id) {
         Optional<Client> client = clientRepository.findById(id);
@@ -57,6 +56,29 @@ public class UserLookupService implements UserDetailsService {
         if (manager.isPresent()) return manager;
 
         return adminRepository.getByEmail(email);
+    }
+
+    public void modify (Long id, User t){
+        User old = findById(id).get();
+        //Verificar si cambió el usuario o el email
+        if (!old.getEmail().equals(t.getEmail())) {
+            //Verificar si el email nuevo ya se encuentra en uso
+            if (findByEmail(t.getEmail()).isPresent()) {
+                throw new ExistentEmailException();
+            }
+        }else if (!old.getUsername().equals(t.getUsername())) {
+            //Verificar si el usuario nuevo ya se encuentra en uso
+            if (findByUsername(t.getUsername()).isPresent()) {
+                throw new ExistentUsernameException();
+            }
+        }
+        if (old.getRole() == Role.ADMIN){
+            adminRepository.save((Admin)t);
+        }else if (old.getRole() == Role.MANAGER){
+            managerRepository.save((Manager)t);
+        }else if (old.getRole() == Role.CLIENT){
+            clientRepository.save((Client)t);
+        }
     }
 
     @Override

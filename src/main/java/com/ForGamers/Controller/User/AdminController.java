@@ -91,23 +91,4 @@ public class AdminController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    //Peticiones del usuario de la sesión
-    //GET
-    @GetMapping("/me")
-    public User getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
-        return services.getByUsername(userDetails.getUsername()).get();
-    }
-
-    //PUT todavia no sé si funciona
-    @PutMapping("/me/update")
-    public ResponseEntity<?> updateCurrentUser(@AuthenticationPrincipal UserDetails userDetails,
-                                               @RequestBody Admin updatedUser) {
-        try {
-            Admin currentAdmin = services.getByUsername(userDetails.getUsername()).get();
-            services.modify(currentAdmin.getId(), updatedUser);
-            return ResponseEntity.ok(updatedUser);
-        }catch (ExistentEmailException | ExistentUsernameException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
 }
