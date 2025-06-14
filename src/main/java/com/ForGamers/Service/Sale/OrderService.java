@@ -5,6 +5,7 @@ import com.ForGamers.Exception.ExistentPaymentException;
 import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Model.Sale.OrderDTO;
+import com.ForGamers.Model.Sale.Payment;
 import com.ForGamers.Repository.Sale.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,13 @@ import java.util.Optional;
 @AllArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final OrderDTOService dtoService;
+
+    public Order addOrder(Order order) throws ExistentPaymentException, NoSuchElementException {
+        if (orderRepository.findById(order.getId()).isPresent()) {
+            throw new ExistentOrderException("Ya existe la orden.");
+        }
+        return orderRepository.save(order);
+    }
 
     public List<Order> listOrders() {
         return orderRepository.findAll();
