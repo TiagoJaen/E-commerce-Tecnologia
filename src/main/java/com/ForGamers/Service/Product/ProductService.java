@@ -5,6 +5,7 @@ import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Repository.Product.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +39,16 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Page<Product> listProductsPagination(int page, int size) {
+    public Page<Product> listProductsPaginated(int page, int size) {
         return productRepository.findAll(PageRequest.of(page, size));
+    }
+
+    public Optional<Product> getById(Long id){
+        return productRepository.findById(id);
+    }
+
+    public List<Product> getByNameIgnoringCase(String name) {
+        return productRepository.getByNameContainingIgnoreCase(name);
     }
 
     public ResponseEntity<Void> modifyProduct(Long id, Product product){
@@ -60,14 +69,4 @@ public class ProductService {
         productRepository.save(oldProduct);
         return ResponseEntity.ok().build();
         }
-
-    public Optional<Product> getById(Long id){
-        return productRepository.findById(id);
-    }
-
-    public List<Product> getByNameIgnoringCase(String name) {
-        List<Product> test = productRepository.getByNameContainingIgnoreCase("sa");
-        System.out.println(test);
-        return productRepository.getByNameContainingIgnoreCase(name);
-    }
 }

@@ -13,6 +13,7 @@
 }
 a{
     text-decoration-line: none !important;
+    color: inherit !important;
 }
 body{
     background: linear-gradient(to bottom, var(--background-color-1), var(--background-color-2)) !important;
@@ -118,12 +119,73 @@ input[type="number"]::-webkit-inner-spin-button{
     z-index: 1;
     color: var(--background-color-1);
 }
+#btn-unlogged{
+    width: 8.5em;
+    height: 2em;
+}
 /* -------OFFCANVAS------- */
 .offcanvas{
     max-width: 25vw !important;
     background-color: var(--background-color-1) !important;
     color: var(--primary-color);
 }
+.offcanvas-menu > h2, .offcanvas-header > h2{
+    font-family: var(--main-font-family);
+    color: var(--light-title-color-1);
+    text-shadow: 0 0 5px var(--primary-color);
+}
+.offcanvas-header{
+    padding: 0 !important;
+    min-height: 4em;
+    border-bottom: solid 1px var(--primary-color);
+}
+.offcanvas-header > h2 {
+    max-width: 80%;
+}
+.offcanvas-profile-item{
+    height: 2em;
+    width: 6em;
+}
+.btn-offcanvas-close{
+    position: absolute;
+    right: .5em;
+    background-color: #ffffff00 !important;
+    color: var(--primary-color);
+    border: none;
+    font-size: 2em;
+    transition: .4s;
+}
+.btn-offcanvas-close:hover{
+    color: var(--background-color-1);
+    filter: drop-shadow(0 0 3px var(--primary-color));
+    text-shadow:0 0  5px var(--primary-color);
+}
+.btn-offcanvas-logged{
+    width: 2em;
+    height: 2em;
+}
+.offcanvas-logout{
+    height: 2em;
+    display: flex;
+    align-items: center; 
+    width: fit-content;
+    padding: .8em;
+    margin: 0 auto;
+}
+.offcanvas-menu{
+    padding: 0;
+    list-style: none;
+}
+.offcanvas-item{
+    cursor: pointer;
+    margin: 1em 0;
+    width: 100%;
+    height: 2em !important;
+}
+.offcanvas-item > a{
+    width: 100%;
+}
+
 /* -------CARRITO-------- */
 .btn-cart {
     width: 7em;
@@ -147,20 +209,6 @@ input[type="number"]::-webkit-inner-spin-button{
     position: absolute;
     left: 0;
     transition: .5s;   
-}
-/* --------PERFIL--------- */
-.btn-offcanvas-logged{
-    width: 2em;
-    height: 2em;
-}
-#btn-profile{
-    height: 2em;
-    width: 5.5em;
-}
-/* -------LOGIN------- */
-#btn-unlogged{
-    width: 8.5em;
-    height: 2em;
 }
 
 .products-title{
@@ -188,17 +236,19 @@ input[type="number"]::-webkit-inner-spin-button{
     height: 2em;
     padding: 0 14px;
     border-right: solid 2px #198754;
-    background-color: var(--primary-color);
+    background-color: var(--title-color-1);
+    color: white;
     box-shadow: 0 0 4px 1px var(--primary-color);
 }
 .page-item:first-child{
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;}
-.page-item:first-child, .page-item:last-child, .active{
-    color: white;
-    background-color: var(--title-color-1);
+.active{
+    background-color: var(--primary-color);
+    color: black;
 }
 .disabled{
+    box-shadow: none !important;
     opacity: .7;
 }
 .page-item:last-child{
