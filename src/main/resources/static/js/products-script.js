@@ -103,7 +103,7 @@ document.getElementById('products-search-bar').addEventListener('input', functio
                 });
             }
         });
-    }, 300);
+    }, 800);
 });
 
 //Funcion para imprimir producto

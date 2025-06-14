@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,9 +33,9 @@ public class ProductController {
     //Paginación
     @Operation(summary = "Obtener listado de productos con paginación.")
     @GetMapping("/paginated")
-    public Page<Product> listProductsPagination(@RequestParam(name = "page") int page,
+    public Page<Product> listProductsPaginated(@RequestParam(name = "page") int page,
                                                 @RequestParam(name = "size") int size) {
-        return services.listProductsPagination(page, size);
+        return services.listProductsPaginated(page, size);
     }
 
     //BUSCAR POR ID
