@@ -49,6 +49,7 @@ public class SecurityConfig {
 
                                 //Endpoints
                                 "/",
+                                "/user",
                                 "/products/all",
                                 "/products/paginated",
                                 "/clients",
@@ -79,7 +80,6 @@ public class SecurityConfig {
                                 "/products"
                                 ).hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers(
-                                "/user",
                                 "/user/update"
                         ).hasAnyRole("ADMIN", "MANAGER", "CLIENT")
                         .anyRequest().authenticated()

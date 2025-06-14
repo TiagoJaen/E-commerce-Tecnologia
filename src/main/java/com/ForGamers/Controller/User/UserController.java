@@ -2,7 +2,6 @@ package com.ForGamers.Controller.User;
 
 import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
-import com.ForGamers.Model.User.Admin;
 import com.ForGamers.Model.User.User;
 import com.ForGamers.Service.User.UserLookupService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -27,7 +26,8 @@ public class UserController {
     @GetMapping
     public ResponseEntity<?> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
         if (userDetails == null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No hay un usuario autenticado.");
+            //Devuelve stado 401 si no hay sesión.
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok(
                 service.findByUsername(userDetails.getUsername()).get()
