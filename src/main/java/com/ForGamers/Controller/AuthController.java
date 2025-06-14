@@ -3,13 +3,12 @@ package com.ForGamers.Controller;
 import com.ForGamers.Model.LoginRequest;
 import com.ForGamers.Model.LoginResponse;
 import com.ForGamers.Service.JwtService;
-import com.ForGamers.Service.User.GeneralUserService;
+import com.ForGamers.Service.User.UserLookupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,7 @@ public class AuthController {
     private JwtService jwtService;
 
     @Autowired
-    private GeneralUserService service;
+    private UserLookupService service;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
