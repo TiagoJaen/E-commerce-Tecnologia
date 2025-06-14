@@ -50,17 +50,21 @@ public class SecurityConfig {
                                 //Endpoints
                                 "/",
                                 "/products/all",
+                                "/products/paginated",
+                                "/clients",
                                 "/login",
                                 "/logout",
                                 "/cart",
                                 "/favicon.ico"
                         ).permitAll()
                         .requestMatchers("/client").hasRole("CLIENT")
-                        .requestMatchers("/manager").hasRole("MANAGER")
+                        .requestMatchers("/manager",
+                                "/clients/update").hasRole("MANAGER")
                         .requestMatchers(
                                 "/managers",
                                 "/admins",
                                 "/admin",
+                                "/user/update/any",
 
                                 // Swagger solo para admins
                                 "/v3/api-docs/**",
@@ -69,9 +73,15 @@ public class SecurityConfig {
                         ).hasRole("ADMIN")
                         .requestMatchers(
                                 "/products.html",
-                                "/clients",
+                                "/clients/all",
+                                "/clients/id/",
+                                "/clients/username/",
                                 "/products"
                                 ).hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers(
+                                "/user",
+                                "/user/update"
+                        ).hasAnyRole("ADMIN", "MANAGER", "CLIENT")
                         .anyRequest().authenticated()
                 )
                 //EXCEPTIONS
