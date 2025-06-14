@@ -27,7 +27,7 @@ public class Payment {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "card_id")
     private Card card;
 

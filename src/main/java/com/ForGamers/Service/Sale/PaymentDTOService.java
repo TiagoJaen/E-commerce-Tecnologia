@@ -6,7 +6,6 @@ import com.ForGamers.Model.User.Client;
 import com.ForGamers.Service.User.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -24,12 +23,6 @@ public class PaymentDTOService {
     private Card getCard(Card card) throws NoSuchElementException{
         return cardService.getCard(card).
                 orElseThrow(() -> new NoSuchElementException("Los datos de la tarjeta son invalidos"));
-    }
-
-    private List<Order> getOrders(List<OrderDTO> orders, Payment payment) {
-        return orders.stream()
-                .map(dto -> orderDTOService.DTOtoOrder(dto, payment))
-                .toList();
     }
 
     private Double getTotal(OrderDTO dto) {
