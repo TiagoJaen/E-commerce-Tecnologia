@@ -129,7 +129,6 @@ clientTableBody.addEventListener('click', (e) => {
 
     //Boton de modificar
     if (btn.classList.contains('modify-client-btn')) {
-        // const currentUser = getCurrentUser();
         const row = btn.closest('tr');
         document.getElementById('client-id-input').value = row.querySelector('.client-table-id').innerText;
         document.getElementById('client-name-input').value = row.querySelector('.client-table-name').innerText;
@@ -144,7 +143,7 @@ clientTableBody.addEventListener('click', (e) => {
     if (btn.classList.contains('delete-client-btn')) {
         const id = btn.dataset.id;
         if (confirm("¿Estás seguro de que querés eliminar este cliente?")) {
-            fetch(`/clients/${id}`, { method: 'DELETE' })
+            fetch(`/clients/id/${id}`, { method: 'DELETE' })
             .then(async response => {
                 if (!response.ok) {
                     toastFail("Error al eliminar cliente", await response.text());
@@ -159,27 +158,12 @@ clientTableBody.addEventListener('click', (e) => {
     }
 });
 
-//Obtener el usuario de la sesión
-async function getCurrentUser() {
-    const response = await fetch('/user', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
-        });
-        if (!response.ok) {
-            return;
-        }
-
-    const user = await response.json();
-    return user;
-}
-
 
 // Formulario para modificar cliente
 modifyClientForm.addEventListener('submit', async(e)=>{
     e.preventDefault();
     const formData = new FormData(modifyClientForm);
-    const productData = {
+    const clientData = {
         "id": parseInt(document.getElementById('client-id-input').value),
         "name": formData.get('name'),
         "lastname": formData.get('lastname'),
@@ -192,7 +176,7 @@ modifyClientForm.addEventListener('submit', async(e)=>{
     fetch('/clients', {
         method : 'PUT',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(productData)
+        body: JSON.stringify(clientData)
     })
     .then(async response => {
         if(!response.ok){
@@ -213,7 +197,7 @@ modifyClientForm.addEventListener('submit', async(e)=>{
 addClientForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(addClientForm);
-    const productData = {
+    const clientData = {
         name: formData.get('name'),
         lastname: formData.get('lastname'),
         email: formData.get('email'),
@@ -224,7 +208,7 @@ addClientForm.addEventListener('submit', async (e) => {
     fetch('/clients', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(productData)
+    body: JSON.stringify(clientData)
     })
     .then(async response => {
         if (!response.ok) {

@@ -52,7 +52,7 @@ public class ClientService {
         return repository.findAll(PageRequest.of(page, size));
     }
 
-    public List<Client> getByUserameIgnoringCase(String username) {
+    public List<Client> getByUsernameIgnoringCase(String username) {
         return repository.getByUsernameContainingIgnoreCase(username);
     }
 

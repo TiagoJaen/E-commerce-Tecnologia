@@ -11,8 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,12 +43,11 @@ public class AdminController {
     //Obtener por usuario
     @Operation(summary = "Obtener un admin por username sin contar mayusculas (para barra de búsqueda).")
     @GetMapping("/username/{username}")
-    public ResponseEntity<?> getByUserameIgnoringCase(@PathVariable(name = "username") String username){
-        Optional<Admin> admin = services.getByUsername(username);
-        if (admin.isPresent()) {
-            return ResponseEntity.ok(admin.get());
-        }else{
-            return ResponseEntity.notFound().build();
+    public List<Admin> getByUsernameIgnoringCase(@PathVariable(name = "username", required = false) String username) {
+        if (username == null || username.isEmpty()) {
+            return listAdmins();
+        } else {
+            return services.getByUsernameIgnoringCase(username);
         }
     }
     //Obtener por id
@@ -81,8 +78,8 @@ public class AdminController {
 
     //DELETE
     @Operation(summary = "Eliminar un admin por id.")
-    @DeleteMapping(params = "id")
-    public ResponseEntity<Void> deleteAdmin(@RequestParam Long id){
+    @DeleteMapping("/id/{id}")
+    public ResponseEntity<Void> deleteAdmin(@PathVariable(name = "id") Long id){
         return services.delete(id);
     }
 

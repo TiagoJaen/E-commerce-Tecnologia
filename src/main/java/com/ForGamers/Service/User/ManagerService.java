@@ -41,7 +41,7 @@ public class ManagerService {
         return repository.findAll(PageRequest.of(page, size));
     }
 
-    public List<Manager> getByUserameIgnoringCase(String username) {
+    public List<Manager> getByUsernameIgnoringCase(String username) {
         return repository.getByUsernameContainingIgnoreCase(username);
     }
 

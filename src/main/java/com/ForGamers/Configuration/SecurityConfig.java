@@ -59,10 +59,18 @@ public class SecurityConfig {
                                 "/favicon.ico"
                         ).permitAll()
                         .requestMatchers("/client").hasRole("CLIENT")
-                        .requestMatchers("/manager",
-                                "/clients/update").hasRole("MANAGER")
+                        .requestMatchers("/manager").hasRole("MANAGER")
                         .requestMatchers(
                                 "/managers",
+                                "/managers/username/",
+                                "/managers/all",
+                                "/managers/id/",
+                                "/managers/paginated",
+                                "/admins",
+                                "/admins/username/",
+                                "/admins/all",
+                                "/admins/id/",
+                                "/admins/paginated",
                                 "/admins",
                                 "/admin",
                                 "/user/update/any",
@@ -76,8 +84,9 @@ public class SecurityConfig {
                                 "/products.html",
                                 "/clients/all",
                                 "/clients/id/",
+                                "/clients/paginated",
                                 "/clients/username/",
-                                "/products"
+                                "/products/id/"
                                 ).hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers(
                                 "/user/update"

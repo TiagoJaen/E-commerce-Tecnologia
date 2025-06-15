@@ -2,11 +2,9 @@ package com.ForGamers.Controller.User;
 
 import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
-import com.ForGamers.Model.User.Client;
 import com.ForGamers.Model.User.Manager;
 import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Model.User.ManagerDTO;
-import com.ForGamers.Model.User.User;
 import com.ForGamers.Service.User.ManagerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,8 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,12 +44,11 @@ public class ManagerController {
     //Obtener por usuario
     @Operation(summary = "Obtener un gestor por username sin contar mayusculas (para barra de búsqueda).")
     @GetMapping("/username/{username}")
-    public ResponseEntity<?> getByUserameIgnoringCase(@PathVariable(name = "username") String username){
-        Optional<Manager> manager = services.getByUsername(username);
-        if (manager.isPresent()) {
-            return ResponseEntity.ok(manager.get());
-        }else{
-            return ResponseEntity.notFound().build();
+    public List<Manager> getByUsernameIgnoringCase(@PathVariable(name = "username", required = false) String username) {
+        if (username == null || username.isEmpty()) {
+            return listManagers();
+        } else {
+            return services.getByUsernameIgnoringCase(username);
         }
     }
 
@@ -85,8 +80,8 @@ public class ManagerController {
 
     //DELETE
     @Operation(summary = "Eliminar un gestor por id.")
-    @DeleteMapping(params = "id")
-    public ResponseEntity<Void> deleteManager(@RequestParam Long id){
+    @DeleteMapping("/id/{id}")
+    public ResponseEntity<Void> deleteManager(@PathVariable(name = "id") Long id){
         return services.delete(id);
     }
 

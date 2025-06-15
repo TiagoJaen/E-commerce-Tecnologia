@@ -2,11 +2,9 @@ package com.ForGamers.Controller.User;
 
 import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
-import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Model.User.Client;
 import com.ForGamers.Model.User.ClientDTO;
 import com.ForGamers.Model.User.Enum.Role;
-import com.ForGamers.Model.User.User;
 import com.ForGamers.Service.User.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,8 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,7 +47,7 @@ public class ClientController {
         if (username == null || username.isEmpty()) {
             return listClients();
         } else {
-            return services.getByUserameIgnoringCase(username);
+            return services.getByUsernameIgnoringCase(username);
         }
     }
 
@@ -83,7 +79,7 @@ public class ClientController {
 
     //DELETE
     @Operation(summary = "Eliminar un cliente por id.")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable(name = "id") Long id){
         return services.delete(id);
     }
