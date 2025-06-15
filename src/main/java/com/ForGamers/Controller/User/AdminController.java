@@ -2,15 +2,14 @@ package com.ForGamers.Controller.User;
 
 import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
-import com.ForGamers.Model.User.Admin;
-import com.ForGamers.Model.User.AdminDTO;
+import com.ForGamers.Model.User.*;
 import com.ForGamers.Model.User.Enum.Role;
-import com.ForGamers.Model.User.User;
 import com.ForGamers.Service.User.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,23 +34,30 @@ public class AdminController {
         return services.list();
     }
 
-    //Obtener por id
-    @Operation(summary = "Obtener un admin por id.")
-    @GetMapping("/id/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id){
-        Optional<Admin> admin = services.getById(id);
+    //Paginación
+    @Operation(summary = "Obtener listado de gestores con paginación.")
+    @GetMapping("/paginated")
+    public Page<Admin> listAdminPaginated(@RequestParam(name = "page") int page,
+                                              @RequestParam(name = "size") int size) {
+        return services.listAdminsPaginated(page, size);
+    }
+
+    //Obtener por usuario
+    @Operation(summary = "Obtener un admin por username sin contar mayusculas (para barra de búsqueda).")
+    @GetMapping("/username/{username}")
+    public ResponseEntity<?> getByUserameIgnoringCase(@PathVariable(name = "username") String username){
+        Optional<Admin> admin = services.getByUsername(username);
         if (admin.isPresent()) {
             return ResponseEntity.ok(admin.get());
         }else{
             return ResponseEntity.notFound().build();
         }
     }
-
-    //Obtener por usuario
-    @Operation(summary = "Obtener un admin por user.")
-    @GetMapping("/username/{username}")
-    public ResponseEntity<?> getByUserame(@PathVariable String username){
-        Optional<Admin> admin = services.getByUsername(username);
+    //Obtener por id
+    @Operation(summary = "Obtener un admin por id.")
+    @GetMapping("/id/{id}")
+    public ResponseEntity<?> getById(@PathVariable(name = "id") Long id){
+        Optional<Admin> admin = services.getById(id);
         if (admin.isPresent()) {
             return ResponseEntity.ok(admin.get());
         }else{

@@ -3,12 +3,16 @@ package com.ForGamers.Service.User;
 import com.ForGamers.Configuration.SecurityConfig;
 import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Model.User.Client;
 import com.ForGamers.Model.User.Manager;
 import com.ForGamers.Repository.User.ManagerRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +25,7 @@ import java.util.Optional;
 public class ManagerService {
     private final ManagerRepository repository;
     private final UserLookupService userLookupService;
+    private PasswordEncoder passwordEncoder;
 
     public void add(Manager t) {
         if (userLookupService.findByUsername(t.getUsername()).isPresent()) {
@@ -30,6 +35,14 @@ public class ManagerService {
         }
         t.setPassword(SecurityConfig.passwordEncoder().encode(t.getPassword()));
         repository.save(t);
+    }
+
+    public Page<Manager> listManagersPaginated(int page, int size) {
+        return repository.findAll(PageRequest.of(page, size));
+    }
+
+    public List<Manager> getByUserameIgnoringCase(String username) {
+        return repository.getByUsernameContainingIgnoreCase(username);
     }
 
     public ResponseEntity<Void> delete(Long id){
@@ -63,7 +76,12 @@ public class ManagerService {
         old.setEmail(t.getEmail());
         old.setPhone(t.getPhone());
         old.setUsername(t.getUsername());
-        old.setPassword(t.getPassword());
+
+        // Verificar si se ingresó una contraseña nueva, si el usuario no quiso cambiarla debe dejar ese input vacío.
+        if (t.getPassword() != null && !t.getPassword().isBlank()) {
+            String encoded = passwordEncoder.encode(t.getPassword());
+            old.setPassword(encoded);
+        }
         repository.save(old);
     }
 

@@ -115,18 +115,18 @@ function imprimirProducto(p){
     });
 
     const tr = document.createElement('tr');
-    tr.classList.add('product-table-item');
-    tr.innerHTML = `<td class="product-table-image">
-                        <img src="${p.image}" alt="Imagen" class="product-table-image">
+    tr.classList.add('product-table-item', 'crud-table-item');
+    tr.innerHTML = `<td class="crud-table-image">
+                        <img src="${p.image}" alt="Imagen" class="crud-table-image">
                     </td>
                     <td class="product-table-id">${p.id}</td>
                     <td class="product-table-name">${p.name}</td>
                     <td class="product-table-description">${p.description}</td>
                     <td class="product-table-stock">${p.stock}</td>
                     <td class="product-table-price">${priceARS}</td>
-                    <td class="products-table-actions">
-                        <button class="modify-product-btn" data-bs-toggle="modal" data-bs-target="#modal-modify-product">Modificar</button>
-                        <button class="delete-product-btn" data-id="${p.id}">Eliminar</button>
+                    <td class="crud-table-actions">
+                        <button class="modify-product-btn modify-crud-btn" data-bs-toggle="modal" data-bs-target="#modal-modify-product">Modificar</button>
+                        <button class="delete-product-btn delete-crud-btn" data-id="${p.id}">Eliminar</button>
                     </td>`;
     productTableBody.appendChild(tr);
 }
@@ -156,7 +156,6 @@ productTableBody.addEventListener('click', (e) => {
                 if (!response.ok) {
                     toastFail("Error al eliminar producto", await response.text());
                 } else {
-                    addProductForm.reset();
                     const urlParams = new URLSearchParams(window.location.search);
                     const currentPage = urlParams.get('page') || 0;
                     cargarProductos(currentPage);

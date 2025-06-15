@@ -2,6 +2,7 @@ package com.ForGamers.Controller.User;
 
 import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Model.User.Client;
 import com.ForGamers.Model.User.Manager;
 import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Model.User.ManagerDTO;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,11 +37,19 @@ public class ManagerController {
         return services.list();
     }
 
-    //Obtener por id
-    @Operation(summary = "Obtener un gestor por id.")
-    @GetMapping("/id/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id){
-        Optional<Manager> manager = services.getById(id);
+    //Paginación
+    @Operation(summary = "Obtener listado de gestores con paginación.")
+    @GetMapping("/paginated")
+    public Page<Manager> listManagerPaginated(@RequestParam(name = "page") int page,
+                                             @RequestParam(name = "size") int size) {
+        return services.listManagersPaginated(page, size);
+    }
+
+    //Obtener por usuario
+    @Operation(summary = "Obtener un gestor por username sin contar mayusculas (para barra de búsqueda).")
+    @GetMapping("/username/{username}")
+    public ResponseEntity<?> getByUserameIgnoringCase(@PathVariable(name = "username") String username){
+        Optional<Manager> manager = services.getByUsername(username);
         if (manager.isPresent()) {
             return ResponseEntity.ok(manager.get());
         }else{
@@ -47,11 +57,11 @@ public class ManagerController {
         }
     }
 
-    //Obtener por usuario
-    @Operation(summary = "Obtener un gestor por user.")
-    @GetMapping("/username/{username}")
-    public ResponseEntity<?> getByUserame(@PathVariable String username){
-        Optional<Manager> manager = services.getByUsername(username);
+    //Obtener por id
+    @Operation(summary = "Obtener un gestor por id.")
+    @GetMapping("/id/{id}")
+    public ResponseEntity<?> getById(@PathVariable(name = "id") Long id){
+        Optional<Manager> manager = services.getById(id);
         if (manager.isPresent()) {
             return ResponseEntity.ok(manager.get());
         }else{
@@ -86,25 +96,6 @@ public class ManagerController {
     public ResponseEntity<?> updateManager(@RequestBody Manager updatedUser) {
         try {
             services.modify(updatedUser.getId(), updatedUser);
-            return ResponseEntity.ok(updatedUser);
-        }catch (ExistentEmailException | ExistentUsernameException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-    //Peticiones del usuario de la sesión
-    //GET
-    @GetMapping("/me")
-    public User getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
-        return services.getByUsername(userDetails.getUsername()).get();
-    }
-
-    //PUT todavia no sé si funciona
-    @PutMapping("/me/update")
-    public ResponseEntity<?> updateCurrentUser(@AuthenticationPrincipal UserDetails userDetails,
-                                               @RequestBody Manager updatedUser) {
-        try {
-            Manager currentManager = services.getByUsername(userDetails.getUsername()).get();
-            services.modify(currentManager.getId(), updatedUser);
             return ResponseEntity.ok(updatedUser);
         }catch (ExistentEmailException | ExistentUsernameException e){
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -210,7 +210,7 @@ input[type="number"]::-webkit-inner-spin-button{
     transition: .5s;   
 }
 
-.products-title{
+.title{
     text-align: center;
     font-size: 4em;
     font-family: var(--main-font-family);
@@ -221,6 +221,7 @@ input[type="number"]::-webkit-inner-spin-button{
 }
 /* ----PAGINACION----- */
 .pagination-container{
+    max-height: fit-content;
     display: flex;
     list-style: none;
     padding: 1em 0;

@@ -39,8 +39,8 @@ async function getCurrentUser() {
             return;
         }
 
-        const user = await response.json();
-        renderMenu(user);
+    const user = await response.json();
+    renderMenu(user);
 }
 
 // MENUS DISTINTOS POR ROL
@@ -145,6 +145,10 @@ function adminMenu(name, lastname){
                                         </li>
                                         <li class="offcanvas-item btn-style-1 d-flex align-items-center">
                                             <a href="admins.html" class="text-center">Admins</a>
+                                        </li>
+                                        <h2 class="mb-2">DOCUMENTACIÓN</h2>
+                                        <li class="offcanvas-item btn-style-1 d-flex align-items-center">
+                                            <a href="/docs" class="text-center">Swagger UI</a>
                                         </li>
                                     </ul>
                                     <a href="/logout" class="offcanvas-logout text-center btn-style-1" type="button">

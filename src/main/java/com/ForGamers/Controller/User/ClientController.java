@@ -2,6 +2,7 @@ package com.ForGamers.Controller.User;
 
 import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Model.User.Client;
 import com.ForGamers.Model.User.ClientDTO;
 import com.ForGamers.Model.User.Enum.Role;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,27 +37,32 @@ public class ClientController {
     public List<Client> listClients() {
         return services.list();
     }
+    //Paginación
+    @Operation(summary = "Obtener listado de clientes con paginación.")
+    @GetMapping("/paginated")
+    public Page<Client> listClientsPaginated(@RequestParam(name = "page") int page,
+                                               @RequestParam(name = "size") int size) {
+        return services.listClientsPaginated(page, size);
+    }
+    //BUSCAR POR NOMBRE
+    @Operation(summary = "Obtener un cliente por username sin contar mayusculas (para barra de búsqueda).")
+    @GetMapping("/username/{username}")
+    public List<Client> getByUserameIgnoringCase(@PathVariable(name = "username", required = false) String username) {
+        if (username == null || username.isEmpty()) {
+            return listClients();
+        } else {
+            return services.getByUserameIgnoringCase(username);
+        }
+    }
 
     //Obtener por id
     @Operation(summary = "Obtener un cliente por id.")
     @GetMapping("/id/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id){
+    public ResponseEntity<?> getById(@PathVariable(name = "id") Long id) {
         Optional<Client> client = services.getById(id);
         if (client.isPresent()) {
             return ResponseEntity.ok(client.get());
-        }else{
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    //Obtener por nombre
-    @Operation(summary = "Obtener un cliente por nombre.")
-    @GetMapping("/username/{username}")
-    public ResponseEntity<?> getByUserame(@PathVariable String username){
-        Optional<Client> client = services.getByUsername(username);
-        if (client.isPresent()) {
-            return ResponseEntity.ok(client.get());
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
@@ -76,8 +83,8 @@ public class ClientController {
 
     //DELETE
     @Operation(summary = "Eliminar un cliente por id.")
-    @DeleteMapping(params = "id")
-    public ResponseEntity<Void> deleteClient(@RequestParam Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteClient(@PathVariable(name = "id") Long id){
         return services.delete(id);
     }
 
@@ -87,25 +94,6 @@ public class ClientController {
     public ResponseEntity<?> updateClient(@RequestBody Client updatedUser) {
         try {
             services.modify(updatedUser.getId(), updatedUser);
-            return ResponseEntity.ok(updatedUser);
-        }catch (ExistentEmailException | ExistentUsernameException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-    //Peticiones del usuario de la sesión
-    //GET
-    @GetMapping("/me")
-    public User getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
-        return services.getByUsername(userDetails.getUsername()).get();
-    }
-
-    //PUT todavia no sé si funciona
-    @PutMapping("/me/update")
-    public ResponseEntity<?> updateCurrentUser(@AuthenticationPrincipal UserDetails userDetails,
-                                               @RequestBody Client updatedUser) {
-        try {
-            Client currentClient = services.getByUsername(userDetails.getUsername()).get();
-            services.modify(currentClient.getId(), updatedUser);
             return ResponseEntity.ok(updatedUser);
         }catch (ExistentEmailException | ExistentUsernameException e){
             return ResponseEntity.badRequest().body(e.getMessage());
