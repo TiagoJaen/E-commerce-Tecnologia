@@ -20,6 +20,7 @@ import java.util.Optional;
 @Schema(description = "Servicio de carritos.")
 @Service
 public class CartService {
+    private CartEntryService cartEntryService;
     private ClientService clientService;
     private ProductService productService;
 
@@ -51,4 +52,7 @@ public class CartService {
         );
     }
 
+    public List<Product> getProductsInClientCart(Long id) {
+        return cartEntryService.getProductsInClientCart(id);
+    }
 }
