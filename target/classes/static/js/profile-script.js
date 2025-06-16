@@ -64,24 +64,25 @@ async function cargarDatos(){
                 <p style="color: #bffff6;" class="hidden mt-2 mb-0" id="delete-account-advice">Por favor, confirme su contraseña para continuar.</p>
                 <button id="delete-user-btn" class="mt-2">Darse de baja</button>
             </div>`;
+
+        document.getElementById('delete-user-btn').addEventListener('click', (e)=>{
+        const passwordInput = document.getElementById('delete-account-password');
+        passwordInput.classList.remove('hidden');
+        document.getElementById('delete-account-advice').classList.remove('hidden');
+        const password = passwordInput.value;
+        console.log(password);
+        fetch(`/user/${password}`, {
+            method : 'DELETE'
+        })
+        .then(async response =>{
+            if(!response.ok){
+                toastFail("  Error al darse de baja", await response.text());
+            }else{
+                window.location.replace('/index.html');
+            }
+        })
+    });
 }
-document.getElementById('delete-user-btn').addEventListener('click', (e)=>{
-    const passwordInput = document.getElementById('delete-account-password');
-    passwordInput.classList.remove('hidden');
-    document.getElementById('delete-account-advice').classList.remove('hidden');
-    const password = passwordInput.value;
-    console.log(password);
-    fetch(`/user/${password}`, {
-        method : 'DELETE'
-    })
-    .then(async response =>{
-        if(!response.ok){
-            toastFail("  Error al darse de baja", await response.text());
-        }else{
-            window.location.replace('/index.html');
-        }
-    })
-});
 
 const modifyProfileForm = document.getElementById('modify-profile-form');
     modifyProfileForm.addEventListener('submit', (e) =>{
