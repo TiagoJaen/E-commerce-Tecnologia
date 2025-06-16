@@ -65,12 +65,13 @@ async function cargarDatos(){
                 <button id="delete-user-btn" class="mt-2">Darse de baja</button>
             </div>`;
 
-        document.getElementById('delete-user-btn').addEventListener('click', (e)=>{
-        const passwordInput = document.getElementById('delete-account-password');
-        passwordInput.classList.remove('hidden');
-        document.getElementById('delete-account-advice').classList.remove('hidden');
-        const password = passwordInput.value;
-        console.log(password);
+    document.getElementById('delete-user-btn').addEventListener('click', (e)=>{
+    const passwordInput = document.getElementById('delete-account-password');
+    passwordInput.classList.remove('hidden');
+    document.getElementById('delete-account-advice').classList.remove('hidden');
+    const password = passwordInput.value;
+
+    if(password.trim()){
         fetch(`/user/${password}`, {
             method : 'DELETE'
         })
@@ -78,17 +79,18 @@ async function cargarDatos(){
             if(!response.ok){
                 toastFail("  Error al darse de baja", await response.text());
             }else{
-                window.location.replace('/index.html');
+                window.location.replace('/login.html');
             }
         })
+    }
     });
-}
-
-const modifyProfileForm = document.getElementById('modify-profile-form');
+        
+    const modifyProfileForm = document.getElementById('modify-profile-form');
     modifyProfileForm.addEventListener('submit', (e) =>{
+        e.preventDefault();
         const formData = new FormData(modifyProfileForm);
         const userData = {
-            "id": 0, //Se obtiene desde el back-end
+            "id": user.id,
             "name": formData.get('name'),
             "lastname": formData.get('lastname'),
             "email": formData.get('email'),
@@ -96,6 +98,7 @@ const modifyProfileForm = document.getElementById('modify-profile-form');
             "username": formData.get('username'),
             "password": formData.get('password')
         };
+
         fetch('/user', {
             method : 'PUT',
             headers: {'Content-Type': 'application/json'},
@@ -105,11 +108,13 @@ const modifyProfileForm = document.getElementById('modify-profile-form');
             if(!response.ok){
                 toastFail("  Error al modificar datos", await response.text());
             }else{
-                cargarDatos();
+                location.reload();
                 toastSuccess("Datos modificados correctamente");
             }
         })
     });
+}
+
 //Funcion para toast
 function toastSuccess(msg){
     successToastBody.innerText = msg;

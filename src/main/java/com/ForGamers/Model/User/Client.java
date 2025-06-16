@@ -27,14 +27,17 @@ public class Client extends User {
         this.role = Role.CLIENT;
     }
 
-    public Client(User user){
-        this.id = (user.getId());
-        this.name = (user.getName());
-        this.lastname = (user.getLastname());
-        this.username = (user.getUsername());
-        this.phone = (user.getPhone());
-        this.password = (user.getPassword());
-        this.email = (user.getEmail());
-        this.role = Role.CLIENT;
+    @Override
+    public String toString() {
+        return "Client{" +
+                "role=" + role +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                '}';
     }
 }
