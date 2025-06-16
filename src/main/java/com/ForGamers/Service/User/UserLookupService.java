@@ -12,7 +12,6 @@ import com.ForGamers.Repository.User.AdminRepository;
 import com.ForGamers.Repository.User.ClientRepository;
 import com.ForGamers.Repository.User.ManagerRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
