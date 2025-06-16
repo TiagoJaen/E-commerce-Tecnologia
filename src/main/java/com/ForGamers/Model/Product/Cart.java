@@ -1,29 +1,31 @@
 package com.ForGamers.Model.Product;
 
-import com.ForGamers.Model.User.Client;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.tuple.MutablePair;
 
-@Entity
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class Cart {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Schema(example = "")
-    private Long id;
+    // Comentado porque por ahora no va a necesitar id (no tiene tabla propia de SQL)
+    //private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    private Long clientId;
+    // Pairs: cantInCart (left), productId (right)
+    private List<MutablePair<Integer, Long>> contents;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
+    //private Pair<Integer, Product> pair = new MutablePair<>();
 
-    private int cantInCart;
+    public Cart(Long clientId, List<MutablePair<Integer, Long>> contents) {
+        this.clientId = clientId;
+        this.contents = contents;
+    }
+
+    public Cart(Long clientId) {
+        this.clientId = clientId;
+        this.contents = new ArrayList<>();
+    }
 }

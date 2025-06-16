@@ -2,7 +2,6 @@ package com.ForGamers.Component;
 
 import com.ForGamers.Model.User.Admin;
 import com.ForGamers.Model.User.AdminDTO;
-import com.ForGamers.Model.User.Client;
 import com.ForGamers.Service.User.AdminService;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
