@@ -25,19 +25,6 @@ public class Client extends User {
     public Client(ClientDTO dto) {
         super(dto);
         this.role = Role.CLIENT;
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "role=" + role +
-                ", password='" + password + '\'' +
-                ", username='" + username + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", name='" + name + '\'' +
-                ", id=" + id +
-                '}';
+        // this.cart = new LinkedHashSet<>();
     }
 }

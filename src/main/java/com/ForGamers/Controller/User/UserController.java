@@ -34,11 +34,13 @@ public class UserController {
                 );
     }
 
-    //PUT
+    //PUT todavia no sé si funciona
     @PutMapping
-    public ResponseEntity<?> updateCurrentUser(@RequestBody User updatedUser) {
+    public ResponseEntity<?> updateCurrentUser(@AuthenticationPrincipal UserDetails userDetails,
+                                               @RequestBody User updatedUser) {
         try {
-            service.modify(updatedUser);
+            User currentUser = service.findByUsername(userDetails.getUsername()).get();
+            service.modify(currentUser.getId(), updatedUser);
             return ResponseEntity.ok(updatedUser);
         }catch (ExistentEmailException | ExistentUsernameException e){
             return ResponseEntity.badRequest().body(e.getMessage());

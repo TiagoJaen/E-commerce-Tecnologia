@@ -73,6 +73,7 @@ public class SecurityConfig {
                                 "/admins/paginated",
                                 "/admins",
                                 "/admin",
+                                "/user/update/any",
 
                                 // Swagger solo para admins
                                 "/v3/api-docs/**",
