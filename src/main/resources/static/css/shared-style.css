@@ -7,7 +7,6 @@
     --primary-color: #84e98e;
     --background-color-1: #004346;
     --background-color-2: #8eb3ae;
-    --background-color-3: #8eb3ae77;
     --title-color-1: #006154;
     --light-title-color-1: #bffff6;
     --main-font-family: "Electrolize", sans-serif;
@@ -75,21 +74,7 @@ input[type="number"]::-webkit-inner-spin-button{
     background-color: var(--primary-color)!important;
     box-shadow: 0 0 10px 3px var(--background-color-1);
 }
-.btn-style-3{
-    font-family: var(--main-font-family);;
-    color: var(--title-color-1) !important;
-    background-color: var(--light-title-color-1)!important;
-    overflow: hidden;
-    border-radius: 15px !important;
-    outline: none;
-    border: none;
-    transition: .4s;
-}
-.btn-style-3:hover{
-    color: var(--light-title-color-1)!important;
-    background-color: #8eb3ae6a!important;
-    box-shadow: 0 0 10px 3px var(--light-title-color-1);
-}
+
 /* --------------------HEADER------------------- */
 .nav-container{
     background-color: var(--background-color-1);
@@ -162,6 +147,7 @@ input[type="number"]::-webkit-inner-spin-button{
 }
 .btn-offcanvas-close{
     position: absolute;
+    right: .5em;
     background-color: #ffffff00 !important;
     color: var(--primary-color);
     border: none;
@@ -229,7 +215,7 @@ input[type="number"]::-webkit-inner-spin-button{
     font-size: 4em;
     font-family: var(--main-font-family);
     font-weight: 900;
-    margin: 1rem;
+    margin: 2rem;
     color: var(--light-title-color-1);
     text-shadow: 0 0 5px var(--primary-color);
 }

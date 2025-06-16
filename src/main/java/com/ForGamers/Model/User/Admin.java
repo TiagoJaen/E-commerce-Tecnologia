@@ -24,17 +24,6 @@ public class Admin extends User {
         this.role = Role.ADMIN;
     }
 
-    public Admin(User user){
-        this.id = (user.getId());
-        this.name = (user.getName());
-        this.lastname = (user.getLastname());
-        this.username = (user.getUsername());
-        this.phone = (user.getPhone());
-        this.password = (user.getPassword());
-        this.email = (user.getEmail());
-        this.role = Role.ADMIN;
-    }
-
     @Override
     public String toString() {
         return "Admin{" +

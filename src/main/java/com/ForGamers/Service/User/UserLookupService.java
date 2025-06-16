@@ -2,7 +2,6 @@ package com.ForGamers.Service.User;
 
 import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
-import com.ForGamers.Exception.WrongPasswordException;
 import com.ForGamers.Model.User.Admin;
 import com.ForGamers.Model.User.Client;
 import com.ForGamers.Model.User.Enum.Role;
@@ -16,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,7 +26,6 @@ public class UserLookupService implements UserDetailsService {
     private final ClientRepository clientRepository;
     private final ManagerRepository managerRepository;
     private final AdminRepository adminRepository;
-    private final PasswordEncoder passwordEncoder;
 
 
     public Optional<? extends User> findById(Long id) {
@@ -76,34 +73,12 @@ public class UserLookupService implements UserDetailsService {
             }
         }
         if (old.getRole() == Role.ADMIN){
-            Admin admin = new Admin(t);
-            adminRepository.save(admin);
+            adminRepository.save((Admin)t);
         }else if (old.getRole() == Role.MANAGER){
-            Manager manager = new Manager(t);
-            managerRepository.save(manager);
+            managerRepository.save((Manager)t);
         }else if (old.getRole() == Role.CLIENT){
-            Client client = new Client(t);
-            clientRepository.save(client);
+            clientRepository.save((Client)t);
         }
-    }
-
-    public void deleteCurrentUser(String username, String passwordCheck) {
-        User user = findByUsername(username).get();
-            //Si la contraseña ingresada coincide con la encriptada
-            if (passwordEncoder.matches(passwordCheck, user.getPassword())) {
-                if (user.getRole() == Role.ADMIN){
-                    Admin admin = new Admin(user);
-                    adminRepository.delete(admin);
-                }else if (user.getRole() == Role.MANAGER){
-                    Manager manager = new Manager(user);
-                    managerRepository.delete(manager);
-                }else if (user.getRole() == Role.CLIENT){
-                    Client client = new Client(user);
-                    clientRepository.delete(client);
-                }
-            }else{
-                throw new WrongPasswordException();
-            }
     }
 
     @Override

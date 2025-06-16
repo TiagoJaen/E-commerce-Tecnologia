@@ -25,16 +25,6 @@ public class Client extends User {
     public Client(ClientDTO dto) {
         super(dto);
         this.role = Role.CLIENT;
-    }
-
-    public Client(User user){
-        this.id = (user.getId());
-        this.name = (user.getName());
-        this.lastname = (user.getLastname());
-        this.username = (user.getUsername());
-        this.phone = (user.getPhone());
-        this.password = (user.getPassword());
-        this.email = (user.getEmail());
-        this.role = Role.CLIENT;
+        // this.cart = new LinkedHashSet<>();
     }
 }
