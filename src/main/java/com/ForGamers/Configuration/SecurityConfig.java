@@ -89,7 +89,7 @@ public class SecurityConfig {
                                 "/products/id/"
                                 ).hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers(
-                                "/user/update"
+                                "/profile.html"
                         ).hasAnyRole("ADMIN", "MANAGER", "CLIENT")
                         .anyRequest().authenticated()
                 )
