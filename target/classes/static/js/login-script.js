@@ -8,9 +8,9 @@ const toastRegisterFail = document.getElementById('fail-register-toast');
 const toastRegisterBody = document.getElementById('fail-register-toast-body');
 const toastRegisterSuccess = document.getElementById('success-register-toast');
 
-// New: Get the login form and error display element
+//Get the login form and error display element
 const loginForm = document.getElementById('sign-in-form');
-const loginErrorDiv = document.getElementById('login-error'); // Assuming this is for displaying login errors
+const loginErrorDiv = document.getElementById('login-error');
 
 registerButton.addEventListener('click', (e) => {
     e.preventDefault();
@@ -61,10 +61,10 @@ registerForm.addEventListener('submit', async (e) => {
     })
 });
 
-// --- NEW LOGIN LOGIC ---
+//LOGIN
 if (loginForm) {
     loginForm.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Stop the default form submission!
+        event.preventDefault(); // Stop the default form submission
 
         const usernameInput = loginForm.querySelector('input[name="username"]');
         const passwordInput = loginForm.querySelector('input[name="password"]');
@@ -73,10 +73,10 @@ if (loginForm) {
         const password = passwordInput.value;
 
         try {
-            const response = await fetch('/auth/login', { // Your JWT login endpoint
+            const response = await fetch('/auth/login', { //JWT login endpoint
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json' // Crucial: send as JSON
+                    'Content-Type': 'application/json' //send as JSON
                 },
                 body: JSON.stringify({ // Convert data to JSON string
                     username: username,
@@ -99,7 +99,7 @@ if (loginForm) {
                 }
 
                 // Redirect to a protected page, or update the UI to show logged-in state
-                window.location.href = '/'; // Example: redirect to homepage
+                window.location.href = '/';
             } else {
                 // Login failed (e.g., 401 Unauthorized, 403 Forbidden, etc.)
                 const errorData = await response.json().catch(() => ({ message: 'Error de autenticación' }));

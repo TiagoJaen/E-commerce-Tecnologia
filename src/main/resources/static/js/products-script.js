@@ -14,7 +14,7 @@ let pageSize = 5;
 cargarProductos();
 
 function cargarProductos(page = 0) {
-    fetch(`/products/paginated?page=${page}&size=${pageSize}`)
+    authFetch(`/products/paginated?page=${page}&size=${pageSize}`)
     .then(res => res.json())
     .then(data => {
         if (!data.content || data.content.length === 0) {
@@ -90,7 +90,7 @@ document.getElementById('products-search-bar').addEventListener('input', functio
           cargarProductos();
           return
         }
-        fetch(`/products/name/${encodeURIComponent(name)}`)
+        authFetch(`/products/name/${encodeURIComponent(name)}`)
         .then(response => response.json())
         .then(products => {
             if (!products || products.length === 0) {
@@ -151,7 +151,7 @@ productTableBody.addEventListener('click', (e) => {
     if (btn.classList.contains('delete-product-btn')) {
         const id = btn.dataset.id;
         if (confirm("¿Estás seguro de que querés eliminar este producto?")) {
-            fetch(`/products/${id}`, { method: 'DELETE' })
+            authFetch(`/products/${id}`, { method: 'DELETE' })
             .then(async response => {
                 if (!response.ok) {
                     toastFail("Error al eliminar producto", await response.text());
@@ -181,7 +181,7 @@ modifyProductForm.addEventListener('submit', async(e)=>{
         "stock": parseInt(formData.get('stock'))
     };
 
-    fetch('/products', {
+    authFetch('/products', {
         method : 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(productData)
@@ -212,7 +212,7 @@ addProductForm.addEventListener('submit', async (e) => {
         "image": formData.get('image'),
         "stock": formData.get('stock')
     };
-    fetch('/products', {
+    authFetch('/products', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(productData)

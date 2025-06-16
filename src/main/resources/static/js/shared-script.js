@@ -29,17 +29,12 @@ const loggedNav = `<!-- header logeado -->
 getCurrentUser();
 
 async function getCurrentUser() {
-    const response = await fetch('/user', {
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
-        });
-        if (!response.ok) {
+    const user = getDecodedToken();
+        if (!user) {
             renderMenu(null);
             return;
         }
 
-        const user = await response.json();
         renderMenu(user);
 }
 
@@ -47,11 +42,11 @@ async function getCurrentUser() {
 function renderMenu(user) {
     if(user == null){
         headerContainer.innerHTML = unloggedNav;
-    }else if (user.role === 'CLIENT') {
+    }else if (user.role === 'ROLE_CLIENT') {
         clientMenu(user.name, user.lastname);
-    } else if (user.role === 'ADMIN') {
+    } else if (user.role === 'ROLE_ADMIN') {
         adminMenu(user.name, user.lastname);
-    } else if (user.role === 'MANAGER') {
+    } else if (user.role === 'ROLE_MANAGER') {
         managerMenu(user.name, user.lastname);
     }
 };
@@ -102,7 +97,7 @@ function clientMenu(name, lastname){
                                             <a href="payment.html" class="text-center">Metodos de pago</a>
                                         </li>
                                     </ul>
-                                    <a href="/logout" class="offcanvas-logout text-center btn-style-1" type="button">
+                                    <a href="" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
                                         <span>Cerrar sesión</span>
                                     </a>
                                 </div>
@@ -147,7 +142,7 @@ function adminMenu(name, lastname){
                                             <a href="admins.html" class="text-center">Admins</a>
                                         </li>
                                     </ul>
-                                    <a href="/logout" class="offcanvas-logout text-center btn-style-1" type="button">
+                                    <a href="" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
                                         <span>Cerrar sesión</span>
                                     </a>
                                 </div>
@@ -186,7 +181,7 @@ function managerMenu(name, lastname){
                                             <a href="clients.html" class="text-center">Clientes</a>
                                         </li>
                                     </ul>
-                                    <a href="/logout" class="offcanvas-logout text-center btn-style-1" type="button">
+                                    <a href="" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
                                         <span>Cerrar sesión</span>
                                     </a>
                                 </div>

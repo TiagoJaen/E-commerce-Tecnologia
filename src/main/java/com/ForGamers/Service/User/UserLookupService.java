@@ -10,6 +10,7 @@ import com.ForGamers.Model.User.User;
 import com.ForGamers.Repository.User.AdminRepository;
 import com.ForGamers.Repository.User.ClientRepository;
 import com.ForGamers.Repository.User.ManagerRepository;
+import com.ForGamers.Security.UserDetailsImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -85,10 +86,6 @@ public class UserLookupService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User u = findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
-        return org.springframework.security.core.userdetails.User
-                .withUsername(u.getUsername())
-                .password(u.getPassword())
-                .roles(u.getRole().toString())
-                .build();
+        return new UserDetailsImpl(u);
     }
 }

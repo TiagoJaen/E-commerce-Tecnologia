@@ -25,9 +25,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @Schema(description = "Configuración de seguridad.")
 public class SecurityConfig {
-    @Autowired
-    private UserLookupService service;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter, UserLookupService service) throws Exception {
         http
@@ -36,7 +33,6 @@ public class SecurityConfig {
                 //PERMISOS
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-
                                 //Static
                                 "/static/**",
                                 "/login.html",
@@ -51,6 +47,9 @@ public class SecurityConfig {
                                 "/js/products-script.js",
                                 "/Media/**",
                                 "/docs.html",
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/products.html",
 
                                 //Endpoints
                                 "/",
@@ -59,7 +58,6 @@ public class SecurityConfig {
                                 "/products/paginated",
                                 "/clients",
                                 "/logout",
-                                "/clients",
                                 "/cart",
                                 "/auth/**",
                                 "/favicon.ico"
@@ -76,11 +74,12 @@ public class SecurityConfig {
                                 // Swagger solo para admins
                                 "/docs/**",
                                 "/v3/api-docs/**",
-                                "/swagger-ui.html",
-                                "/swagger-ui/**"
+                                "/js/swagger-config.js",
+                                "/js/auth.js"
+
                         ).hasRole("ADMIN")
                         .requestMatchers(
-                                "/products.html",
+
                                 "/clients/all",
                                 "/clients/id/",
                                 "/clients/username/",
@@ -103,9 +102,7 @@ public class SecurityConfig {
                 // Disable form login
                 http.formLogin(AbstractHttpConfigurer::disable);
                 http.logout(LogoutConfigurer::disable);
-
         return http.build();
-
     }
 
     @Bean

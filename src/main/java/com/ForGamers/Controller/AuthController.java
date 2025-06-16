@@ -2,6 +2,7 @@ package com.ForGamers.Controller;
 
 import com.ForGamers.Model.LoginRequest;
 import com.ForGamers.Model.LoginResponse;
+import com.ForGamers.Security.UserDetailsImpl;
 import com.ForGamers.Service.JwtService;
 import com.ForGamers.Service.User.UserLookupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class AuthController {
         );
 
         // Obtenemos los detalles del usuario desde la base de datos
-        UserDetails user = service.loadUserByUsername(request.getUsername());
+        UserDetailsImpl user = (UserDetailsImpl) service.loadUserByUsername(request.getUsername());
 
         // Generamos el token JWT
         String token = jwtService.generateToken(user);
