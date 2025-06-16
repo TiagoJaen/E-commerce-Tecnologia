@@ -151,7 +151,7 @@ productTableBody.addEventListener('click', (e) => {
     if (btn.classList.contains('delete-product-btn')) {
         const id = btn.dataset.id;
         if (confirm("¿Estás seguro de que querés eliminar este producto?")) {
-            fetch(`/products/${id}`, { method: 'DELETE' })
+            fetch(`/products/id/${id}`, { method: 'DELETE' })
             .then(async response => {
                 if (!response.ok) {
                     toastFail("Error al eliminar producto", await response.text());

@@ -14,8 +14,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -52,6 +50,8 @@ public class SecurityConfig {
                                 "/user",
                                 "/products/all",
                                 "/products/paginated",
+                                "/products/name/**",
+                                "/products/id/**",
                                 "/clients",
                                 "/login",
                                 "/logout",
@@ -71,7 +71,6 @@ public class SecurityConfig {
                                 "/admins/all",
                                 "/admins/id/",
                                 "/admins/paginated",
-                                "/admins",
                                 "/admin",
 
                                 // Swagger solo para admins
@@ -84,8 +83,7 @@ public class SecurityConfig {
                                 "/clients/all",
                                 "/clients/id/",
                                 "/clients/paginated",
-                                "/clients/username/",
-                                "/products/id/"
+                                "/clients/username/"
                                 ).hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers(
                                 "/profile.html"

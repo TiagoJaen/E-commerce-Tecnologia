@@ -50,13 +50,46 @@
         </section>
         <section id="products">
             <h2 class="title">PRODUCTOS</h2>
+            <!-- Paginación -->
+            <ul class="pagination-container">
+            </ul>
             <div id="products-display" class="m-0">
                 
                 
             </div>
-            <!-- Paginación -->
-            <ul class="pagination-container">
-            </ul>
+            <div class="product-modal">
+                <div class="modal fade" id="modal-product" tabindex="-1" aria-labelledby="modal-product-label" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5 titles" id="modal-product-name"></h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <img src="" id="modal-product-img" class="w-100" alt="">
+                                    </div>
+                                    <div class="col-7 d-flex justify-content-between flex-column">
+                                        <p id="modal-product-description"></p>
+                                        <div class="modal-bottom">
+                                            <h6 class="titles" >Precio</h6>
+                                            <p id="modal-product-price"></p>
+                                            <p id="modal-product-stock"></p>
+                                            <div class="modal-buttons">
+                                                <button type="button" class="btn-style-2" id="modal-add-cart" data-bs-dismiss="modal">
+                                                    Agregar al Carrito
+                                                    <i class="fa-solid fa-cart-shopping"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
     <footer></footer>
