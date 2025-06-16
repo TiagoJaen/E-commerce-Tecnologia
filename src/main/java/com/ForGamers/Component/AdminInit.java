@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Component
 @AllArgsConstructor
-public class UserInit {
+public class AdminInit {
     private final AdminService adminService;
 
     @PostConstruct
