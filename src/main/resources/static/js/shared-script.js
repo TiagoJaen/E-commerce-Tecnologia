@@ -123,7 +123,7 @@ function adminMenu(name, lastname){
                             <div class="offcanvas offcanvas-start offcanvas-profile" tabindex="-1" id="offcanvasProfileAdmin" aria-labelledby="offcanvasProfileAdminLabel">
                                 <div class="offcanvas-header justify-content-center logged">
                                     <h2 class="text-center m-0">${name} ${lastname}</h2>
-                                    <button type="button" class="btn-offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                                    <button type="button" class="btn-offcanvas-close" style="right: .5em;" data-bs-dismiss="offcanvas" aria-label="Close">
                                         <i class="fa-solid fa-xmark"></i>
                                     </button>
                                 </div>
@@ -172,7 +172,7 @@ function managerMenu(name, lastname){
                             <div class="offcanvas offcanvas-start offcanvas-profile" tabindex="-1" id="offcanvasProfileManager" aria-labelledby="offcanvasProfileManagerLabel">
                                 <div class="offcanvas-header justify-content-center logged">
                                     <h2 class="text-center m-0">${name} ${lastname}</h2>
-                                    <button type="button" class="btn-offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                                    <button type="button" class="btn-offcanvas-close" style="right: .5em;" data-bs-dismiss="offcanvas" aria-label="Close">
                                         <i class="fa-solid fa-xmark"></i>
                                     </button>
                                 </div>
