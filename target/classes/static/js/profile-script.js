@@ -60,7 +60,7 @@ async function cargarDatos(){
                 </div>
             </form>
             <div id="delete-account-control" class="col-md-12 text-center">
-                <input type="text" class="hidden form-control profile-input m-auto" id="delete-account-password" placeholder="••••••••••••" required>
+                <input type="password" class="hidden form-control profile-input m-auto" id="delete-account-password" placeholder="••••••••••••" required>
                 <p style="color: #bffff6;" class="hidden mt-2 mb-0" id="delete-account-advice">Por favor, confirme su contraseña para continuar.</p>
                 <button id="delete-user-btn" class="mt-2">Darse de baja</button>
             </div>`;
@@ -109,7 +109,6 @@ async function cargarDatos(){
                 toastFail("  Error al modificar datos", await response.text());
             }else{
                 location.reload();
-                toastSuccess("Datos modificados correctamente");
             }
         })
     });
