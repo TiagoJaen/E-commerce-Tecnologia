@@ -8,9 +8,8 @@ const failToast = document.getElementById('fail-profile-toast');
 cargarDatos();
 
 async function cargarDatos(){
-    const response = await fetch('/user', {
+    const response = await authFetch('/user', {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' },
             credentials: 'include'
         });
         if (!response.ok) {
@@ -72,7 +71,7 @@ async function cargarDatos(){
     const password = passwordInput.value;
 
     if(password.trim()){
-        fetch(`/user/${password}`, {
+        authFetch(`/user/${password}`, {
             method : 'DELETE'
         })
         .then(async response =>{
@@ -99,9 +98,8 @@ async function cargarDatos(){
             "password": formData.get('password')
         };
 
-        fetch('/user', {
+        authFetch('/user', {
             method : 'PUT',
-            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(userData)
         })
         .then(async response => {

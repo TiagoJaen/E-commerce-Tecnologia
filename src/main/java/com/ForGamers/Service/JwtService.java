@@ -28,7 +28,7 @@ public class JwtService {
                 .claim("lastname", user.getLastname())
                 .claim("role", "ROLE_" + user.getRole()) // Información adicional: los roles del usuario
                 .setIssuedAt(new Date(System.currentTimeMillis())) // Cuándo fue generado
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // Expira en 1 hora
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60)) // Expira en 1 hora
                 .signWith(getKey(), SignatureAlgorithm.HS256) // Firma el token con HS256 y la clave secreta
                 .compact(); // Lo convierte a una cadena tipo JWT (header.payload.firma)
     }

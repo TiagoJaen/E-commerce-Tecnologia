@@ -6,27 +6,9 @@
     <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css">
 </head>
 <body>
-<script>
-    const token = localStorage.getItem("jwtToken");
-    if (!token) {
-        alert("Debes iniciar sesión");
-        window.location.href = "/";
-    }
-
-    try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        if (payload.role !== "ROLE_ADMIN") {
-            alert("Acceso denegado");
-            window.location.href = "/";
-        }
-    }catch(e){
-        alert("Token inválido");
-        window.location.href = "/";
-    }
-</script>
-<div id="swagger-ui"></div>
-<script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
-<script src="js/auth.js"></script>
-<script src="js/swagger-config.js"></script>
+    <script src="js/auth.js"></script>
+    <div id="swagger-ui"></div>
+    <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
+    <script src="js/swagger-config.js"></script>
 </body>
 </html>

@@ -50,6 +50,10 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
                                 "/products.html",
+                                "/profile.html",
+                                "/admins.html",
+                                "/clients.html",
+                                "/managers.html",
 
                                 //Endpoints
                                 "/",
@@ -93,9 +97,7 @@ public class SecurityConfig {
                                 "/clients/paginated",
                                 "/clients/username/"
                         ).hasAnyRole("ADMIN", "MANAGER")
-                        .requestMatchers(
-                                "/profile.html"
-                        ).hasAnyRole("ADMIN", "MANAGER", "CLIENT")
+
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider(service))

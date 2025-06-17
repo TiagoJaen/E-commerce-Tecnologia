@@ -7,7 +7,7 @@ let pageSize = 8;
 cargarProductos();
 
 function cargarProductos(page = 0) {
-    authFetch(`/products/paginated?page=${page}&size=${pageSize}`)
+    fetch(`/products/paginated?page=${page}&size=${pageSize}`)
     .then(res => res.json())
     .then(data => {
         if (!data.content || data.content.length === 0) {

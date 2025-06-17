@@ -14,7 +14,7 @@ let pageSize = 5;
 cargarAdministradores();
 
 function cargarAdministradores(page = 0) {
-    fetch(`/admins/paginated?page=${page}&size=${pageSize}`)
+    authFetch(`/admins/paginated?page=${page}&size=${pageSize}`)
     .then(res => res.json())
     .then(data => {
         if (!data.content || data.content.length === 0) {
@@ -90,7 +90,7 @@ document.getElementById('admins-search-bar').addEventListener('input', function(
           cargarAdministradores();
           return
         }
-        fetch(`/admins/username/${encodeURIComponent(username)}`)
+        authFetch(`/admins/username/${encodeURIComponent(username)}`)
         .then(response => response.json())
         .then(admins => {
             if (!admins || admins.length === 0) {
@@ -143,7 +143,7 @@ adminTableBody.addEventListener('click', (e) => {
     if (btn.classList.contains('delete-admin-btn')) {
         const id = btn.dataset.id;
         if (confirm("¿Estás seguro de que querés eliminar este administrador?")) {
-            fetch(`/admins/id/${id}`, { method: 'DELETE' })
+            authFetch(`/admins/id/${id}`, { method: 'DELETE' })
             .then(async response => {
                 if (!response.ok) {
                     toastFail("Error al eliminar administrador", await response.text());
@@ -173,7 +173,7 @@ modifyAdminForm.addEventListener('submit', async(e)=>{
         "password": formData.get('password')
     };
 
-    fetch('/admins', {
+    authFetch('/admins', {
         method : 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(adminData)
@@ -205,7 +205,7 @@ addAdminForm.addEventListener('submit', async (e) => {
         username: formData.get('username'),
         password: formData.get('password')
     };
-    fetch('/admins', {
+    authFetch('/admins', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(adminData)

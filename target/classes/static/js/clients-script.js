@@ -14,7 +14,7 @@ let pageSize = 5;
 cargarClientes();
 
 function cargarClientes(page = 0) {
-    fetch(`/clients/paginated?page=${page}&size=${pageSize}`)
+    authFetch(`/clients/paginated?page=${page}&size=${pageSize}`)
     .then(res => res.json())
     .then(data => {
         if (!data.content || data.content.length === 0) {
@@ -90,7 +90,7 @@ document.getElementById('clients-search-bar').addEventListener('input', function
           cargarClientes();
           return
         }
-        fetch(`/clients/username/${encodeURIComponent(username)}`)
+        authFetch(`/clients/username/${encodeURIComponent(username)}`)
         .then(response => response.json())
         .then(clients => {
             if (!clients || clients.length === 0) {
@@ -143,7 +143,7 @@ clientTableBody.addEventListener('click', (e) => {
     if (btn.classList.contains('delete-client-btn')) {
         const id = btn.dataset.id;
         if (confirm("¿Estás seguro de que querés eliminar este cliente?")) {
-            fetch(`/clients/id/${id}`, { method: 'DELETE' })
+            authFetch(`/clients/id/${id}`, { method: 'DELETE' })
             .then(async response => {
                 if (!response.ok) {
                     toastFail("Error al eliminar cliente", await response.text());
@@ -173,7 +173,7 @@ modifyClientForm.addEventListener('submit', async(e)=>{
         "password": formData.get('password')
     };
 
-    fetch('/clients', {
+    authFetch('/clients', {
         method : 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(clientData)
@@ -205,7 +205,7 @@ addClientForm.addEventListener('submit', async (e) => {
         username: formData.get('username'),
         password: formData.get('password')
     };
-    fetch('/clients', {
+    authFetch('/clients', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(clientData)

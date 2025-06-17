@@ -14,7 +14,7 @@ let pageSize = 5;
 cargarGestores();
 
 function cargarGestores(page = 0) {
-    fetch(`/managers/paginated?page=${page}&size=${pageSize}`)
+    authFetch(`/managers/paginated?page=${page}&size=${pageSize}`)
     .then(res => res.json())
     .then(data => {
         if (!data.content || data.content.length === 0) {
@@ -90,7 +90,7 @@ document.getElementById('managers-search-bar').addEventListener('input', functio
           cargarGestores();
           return
         }
-        fetch(`/managers/username/${encodeURIComponent(username)}`)
+        authFetch(`/managers/username/${encodeURIComponent(username)}`)
         .then(response => response.json())
         .then(managers => {
             if (!managers || managers.length === 0) {
@@ -143,7 +143,7 @@ managerTableBody.addEventListener('click', (e) => {
     if (btn.classList.contains('delete-manager-btn')) {
         const id = btn.dataset.id;
         if (confirm("¿Estás seguro de que querés eliminar este gestor?")) {
-            fetch(`/managers/id/${id}`, { method: 'DELETE' })
+            authFetch(`/managers/id/${id}`, { method: 'DELETE' })
             .then(async response => {
                 if (!response.ok) {
                     toastFail("Error al eliminar gestor", await response.text());
@@ -173,7 +173,7 @@ modifyManagerForm.addEventListener('submit', async(e)=>{
         "password": formData.get('password')
     };
 
-    fetch('/managers', {
+    authFetch('/managers', {
         method : 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(managerData)
@@ -205,7 +205,7 @@ addManagerForm.addEventListener('submit', async (e) => {
         username: formData.get('username'),
         password: formData.get('password')
     };
-    fetch('/managers', {
+    authFetch('/managers', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(managerData)

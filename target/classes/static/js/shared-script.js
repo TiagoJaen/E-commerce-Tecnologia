@@ -16,7 +16,7 @@ const unloggedNav = `<!-- header sin logear -->
 const loggedNav = `<!-- header logeado -->
             <div class="fixed-top container-fluid nav-container logged-nav p-0 d-flex justify-content-center align-items-center">
                 <div class="profile-offcanvas position-absolute start-0 ms-4">
-                    
+
                 </div>
                 <a href="/" id="logo-container" >
                     <h1 id="title">FOR GAMERS</h1>
@@ -99,7 +99,7 @@ function clientMenu(name, lastname){
                                             <a href="payment.html" class="text-center">Metodos de pago</a>
                                         </li>
                                     </ul>
-                                    <a href="" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
+                                    <a href="/" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
                                         <span>Cerrar sesión</span>
                                     </a>
                                 </div>
@@ -145,10 +145,10 @@ function adminMenu(name, lastname){
                                         </li>
                                         <h2 class="mb-2">DOCUMENTACIÓN</h2>
                                         <li class="offcanvas-item btn-style-1 d-flex align-items-center">
-                                            <a href="/docs" class="text-center">Swagger UI</a>
+                                            <a href="/docs.html" class="text-center">Swagger UI</a>
                                         </li>
                                     </ul>
-                                    <a href="" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
+                                    <a href="/" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
                                         <span>Cerrar sesión</span>
                                     </a>
                                 </div>
@@ -187,7 +187,7 @@ function managerMenu(name, lastname){
                                             <a href="clients.html" class="text-center">Clientes</a>
                                         </li>
                                     </ul>
-                                    <a href="" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
+                                    <a href="/" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
                                         <span>Cerrar sesión</span>
                                     </a>
                                 </div>
