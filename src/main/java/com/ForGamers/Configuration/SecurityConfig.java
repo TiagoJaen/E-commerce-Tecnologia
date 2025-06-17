@@ -72,7 +72,6 @@ public class SecurityConfig {
                                 "/admins/id/",
                                 "/admins/paginated",
                                 "/admin",
-                                "/user/update/any",
 
                                 // Swagger solo para admins
                                 "/v3/api-docs/**",
@@ -85,9 +84,9 @@ public class SecurityConfig {
                                 "/clients/id/",
                                 "/clients/paginated",
                                 "/clients/username/"
-                                ).hasAnyRole("ADMIN", "MANAGER")
+                        ).hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers(
-                                "/user/update"
+                                "/profile.html"
                         ).hasAnyRole("ADMIN", "MANAGER", "CLIENT")
                         .anyRequest().authenticated()
                 )
