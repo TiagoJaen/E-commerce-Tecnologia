@@ -77,7 +77,7 @@ async function cargarDatos(){
         })
         .then(async response =>{
             if(!response.ok){
-                toastFail("   Error al darse de baja", await response.text());
+                toastFail("  Error al darse de baja", await response.text());
             }else{
                 window.location.replace('/login.html');
             }
