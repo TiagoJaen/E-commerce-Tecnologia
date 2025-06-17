@@ -52,7 +52,7 @@ public class ProductController {
     //BUSCAR POR NOMBRE
     @Operation(summary = "Obtener un producto por nombre.")
     @GetMapping("/name/{name}")
-    public List<Product> getByName(@PathVariable(name = "name", required = false) String name) {
+    public List<Product> getByNameIgnoringCase(@PathVariable(name = "name", required = false) String name) {
         if (name == null || name.isEmpty()) {
             return listProducts();
         } else {
@@ -74,7 +74,7 @@ public class ProductController {
 
     //DELETE
     @Operation(summary = "Eliminar un producto por id.")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable(name = "id") Long id){
         return services.deleteProduct(id);
     }

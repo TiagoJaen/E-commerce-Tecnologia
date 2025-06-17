@@ -8,7 +8,10 @@ import com.ForGamers.Repository.User.ClientRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class ClientService {
     private final ClientRepository repository;
     private final UserLookupService userLookupService;
+    private PasswordEncoder passwordEncoder;
 
     public void add(Client t) {
         if (userLookupService.findByUsername(t.getUsername()).isPresent()) {
@@ -44,6 +48,14 @@ public class ClientService {
         return repository.findAll();
     }
 
+    public Page<Client> listClientsPaginated(int page, int size) {
+        return repository.findAll(PageRequest.of(page, size));
+    }
+
+    public List<Client> getByUsernameIgnoringCase(String username) {
+        return repository.getByUsernameContainingIgnoreCase(username);
+    }
+
     public void modify (Long id, Client t){
         Client old = repository.findById(id).get();
         //Verificar si cambió el usuario o el email
@@ -58,12 +70,18 @@ public class ClientService {
                 throw new ExistentUsernameException();
             }
         }
+
         old.setName(t.getName());
         old.setLastname(t.getLastname());
         old.setEmail(t.getEmail());
         old.setPhone(t.getPhone());
         old.setUsername(t.getUsername());
-        old.setPassword(t.getPassword());
+
+        // Verificar si se ingresó una contraseña nueva, si el usuario no quiso cambiarla debe dejar ese input vacío.
+        if (t.getPassword() != null && !t.getPassword().isBlank()) {
+            String encoded = passwordEncoder.encode(t.getPassword());
+            old.setPassword(encoded);
+        }
         repository.save(old);
     }
 

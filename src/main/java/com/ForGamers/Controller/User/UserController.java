@@ -2,8 +2,10 @@ package com.ForGamers.Controller.User;
 
 import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Exception.WrongPasswordException;
 import com.ForGamers.Model.User.User;
 import com.ForGamers.Service.User.UserLookupService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,18 +33,29 @@ public class UserController {
         }
         return ResponseEntity.ok(
                 service.findByUsername(userDetails.getUsername()).get()
-                );
+        );
     }
 
-    //PUT todavia no sé si funciona
+    //PUT
     @PutMapping
-    public ResponseEntity<?> updateCurrentUser(@AuthenticationPrincipal UserDetails userDetails,
-                                               @RequestBody User updatedUser) {
+    public ResponseEntity<?> updateCurrentUser(@RequestBody User updatedUser) {
         try {
-            User currentUser = service.findByUsername(userDetails.getUsername()).get();
-            service.modify(currentUser.getId(), updatedUser);
+            service.modify(updatedUser);
             return ResponseEntity.ok(updatedUser);
         }catch (ExistentEmailException | ExistentUsernameException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    //DELETE
+    @Operation(summary = "Darse de baja.")
+    @DeleteMapping("/{password}")
+    public ResponseEntity<?> deleteCurrentUser(@AuthenticationPrincipal UserDetails userDetails
+            ,@PathVariable(name = "password") String password){
+        try {
+            service.deleteCurrentUser(userDetails.getUsername(), password);
+            return ResponseEntity.ok().build();
+        }catch (WrongPasswordException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ForGamers</title>
+    <link rel="icon" href="Media/ForGamers logo.png">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/shared-style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
@@ -48,358 +49,47 @@
             </div>
         </section>
         <section id="products">
-            <h2 class="products-title">PRODUCTOS</h2>
-            <div id="products-display" class="m-0"><div class="product-item d-flex flex-column align-items-center"><img src="https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg" class="product-img mt-2">
-                        <div class="product-body">
-                            <h5 class="product-title text-center mb-3">WD 2TB Elements Portable External Hard Drive - USB 3.0 </h5>
-                            <div class="product-price-stock d-flex justify-content-between align-items-center">
-                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;76.800</h3>
-                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
+            <h2 class="title">PRODUCTOS</h2>
+            <div id="products-display" class="m-0">
+                
+                
+            </div>
+            <div class="product-modal">
+                <div class="modal fade" id="modal-product" tabindex="-1" aria-labelledby="modal-product-label" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5 titles" id="modal-product-name"></h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="product-buttons d-flex justify-content-around">
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-1">
-                                    Ver detalles
-                                </button>
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-1">
-                                    Agregar
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-modal">
-                            <div class="modal fade" id="modal-1" tabindex="-1" aria-labelledby="modal-1-label" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5 titles" id="modal-1">WD 2TB Elements Portable External Hard Drive - USB 3.0 </h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-5">
-                                                    <img src="https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg" class="w-100" alt="">
-                                                </div>
-                                                <div class="col-7 d-flex justify-content-between flex-column">
-                                                    <p>USB 3.0 and USB 2.0 Compatibility Fast data transfers Improve PC Performance High Capacity; Compatibility Formatted NTFS for Windows 10, Windows 8.1, Windows 7; Reformatting may be required for other operating systems; Compatibility may vary depending on user’s hardware configuration and operating system</p>
-                                                    <div class="modal-bottom">
-                                                        <h6 class="titles">Precio</h6>
-                                                        <p>$&nbsp;76.800</p>
-                                                        <div class="modal-buttons">
-                                                            <button type="button" class="btn btn-secondary modal-agregar" data-bs-dismiss="modal">
-                                                                Agregar al Carrito
-                                                                <i class="fa-solid fa-cart-shopping" style="color: #84e98e;"></i>
-                                                            </button>
-                                                            <label for="heart-input" class="modal-heart">
-                                                                <input type="checkbox" class="heart-input">
-                                                                <span class="heart-span">
-                                                                    <i class="fa-regular fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                                <span class="heart-fav">
-                                                                    <i class="fa-solid fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-5">
+                                        <img src="" id="modal-product-img" class="w-100" alt="">
+                                    </div>
+                                    <div class="col-7 d-flex justify-content-between flex-column">
+                                        <p id="modal-product-description"></p>
+                                        <div class="modal-bottom">
+                                            <h6 class="titles" >Precio</h6>
+                                            <p id="modal-product-price"></p>
+                                            <p id="modal-product-stock"></p>
+                                            <div class="modal-buttons">
+                                                <button type="button" class="btn-style-2" id="modal-add-cart" data-bs-dismiss="modal">
+                                                    Agregar al Carrito
+                                                    <i class="fa-solid fa-cart-shopping"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div><div class="product-item d-flex flex-column align-items-center"><img src="https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg" class="product-img mt-2">
-                        <div class="product-body">
-                            <h5 class="product-title text-center mb-3">SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s</h5>
-                            <div class="product-price-stock d-flex justify-content-between align-items-center">
-                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;130.800</h3>
-                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
-                            </div>
-                            <div class="product-buttons d-flex justify-content-around">
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-2">
-                                    Ver detalles
-                                </button>
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-2">
-                                    Agregar
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-modal">
-                            <div class="modal fade" id="modal-2" tabindex="-1" aria-labelledby="modal-2-label" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5 titles" id="modal-2">SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-5">
-                                                    <img src="https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg" class="w-100" alt="">
-                                                </div>
-                                                <div class="col-7 d-flex justify-content-between flex-column">
-                                                    <p>Easy upgrade for faster boot up, shutdown, application load and response (As compared to 5400 RPM SATA 2.5” hard drive; Based on published specifications and internal benchmarking tests using PCMark vantage scores) Boosts burst write performance, making it ideal for typical PC workloads The perfect balance of performance and reliability Read/write speeds of up to 535MB/s/450MB/s (Based on internal testing; Performance may vary depending upon drive capacity, host device, OS and application.)</p>
-                                                    <div class="modal-bottom">
-                                                        <h6 class="titles">Precio</h6>
-                                                        <p>$&nbsp;130.800</p>
-                                                        <div class="modal-buttons">
-                                                            <button type="button" class="btn btn-secondary modal-agregar" data-bs-dismiss="modal">
-                                                                Agregar al Carrito
-                                                                <i class="fa-solid fa-cart-shopping" style="color: #84e98e;"></i>
-                                                            </button>
-                                                            <label for="heart-input" class="modal-heart">
-                                                                <input type="checkbox" class="heart-input">
-                                                                <span class="heart-span">
-                                                                    <i class="fa-regular fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                                <span class="heart-fav">
-                                                                    <i class="fa-solid fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><div class="product-item d-flex flex-column align-items-center"><img src="https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg" class="product-img mt-2">
-                        <div class="product-body">
-                            <h5 class="product-title text-center mb-3">Silicon Power 256GB SSD 3D NAND A55 SLC Cache Performance Boost SATA III 2.5</h5>
-                            <div class="product-price-stock d-flex justify-content-between align-items-center">
-                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;130.800</h3>
-                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
-                            </div>
-                            <div class="product-buttons d-flex justify-content-around">
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-3">
-                                    Ver detalles
-                                </button>
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-3">
-                                    Agregar
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-modal">
-                            <div class="modal fade" id="modal-3" tabindex="-1" aria-labelledby="modal-3-label" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5 titles" id="modal-3">Silicon Power 256GB SSD 3D NAND A55 SLC Cache Performance Boost SATA III 2.5</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-5">
-                                                    <img src="https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg" class="w-100" alt="">
-                                                </div>
-                                                <div class="col-7 d-flex justify-content-between flex-column">
-                                                    <p>3D NAND flash are applied to deliver high transfer speeds Remarkable transfer speeds that enable faster bootup and improved overall system performance. The advanced SLC Cache Technology allows performance boost and longer lifespan 7mm slim design suitable for Ultrabooks and Ultra-slim notebooks. Supports TRIM command, Garbage Collection technology, RAID, and ECC (Error Checking &amp; Correction) to provide the optimized performance and enhanced reliability.</p>
-                                                    <div class="modal-bottom">
-                                                        <h6 class="titles">Precio</h6>
-                                                        <p>$&nbsp;130.800</p>
-                                                        <div class="modal-buttons">
-                                                            <button type="button" class="btn btn-secondary modal-agregar" data-bs-dismiss="modal">
-                                                                Agregar al Carrito
-                                                                <i class="fa-solid fa-cart-shopping" style="color: #84e98e;"></i>
-                                                            </button>
-                                                            <label for="heart-input" class="modal-heart">
-                                                                <input type="checkbox" class="heart-input">
-                                                                <span class="heart-span">
-                                                                    <i class="fa-regular fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                                <span class="heart-fav">
-                                                                    <i class="fa-solid fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><div class="product-item d-flex flex-column align-items-center"><img src="https://fakestoreapi.com/img/61mtL65D4cL._AC_SX679_.jpg" class="product-img mt-2">
-                        <div class="product-body">
-                            <h5 class="product-title text-center mb-3">WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive</h5>
-                            <div class="product-price-stock d-flex justify-content-between align-items-center">
-                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;136.800</h3>
-                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
-                            </div>
-                            <div class="product-buttons d-flex justify-content-around">
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-4">
-                                    Ver detalles
-                                </button>
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-4">
-                                    Agregar
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-modal">
-                            <div class="modal fade" id="modal-4" tabindex="-1" aria-labelledby="modal-4-label" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5 titles" id="modal-4">WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-5">
-                                                    <img src="https://fakestoreapi.com/img/61mtL65D4cL._AC_SX679_.jpg" class="w-100" alt="">
-                                                </div>
-                                                <div class="col-7 d-flex justify-content-between flex-column">
-                                                    <p>Expand your PS4 gaming experience, Play anywhere Fast and easy, setup Sleek design with high capacity, 3-year manufacturer's limited warranty</p>
-                                                    <div class="modal-bottom">
-                                                        <h6 class="titles">Precio</h6>
-                                                        <p>$&nbsp;136.800</p>
-                                                        <div class="modal-buttons">
-                                                            <button type="button" class="btn btn-secondary modal-agregar" data-bs-dismiss="modal">
-                                                                Agregar al Carrito
-                                                                <i class="fa-solid fa-cart-shopping" style="color: #84e98e;"></i>
-                                                            </button>
-                                                            <label for="heart-input" class="modal-heart">
-                                                                <input type="checkbox" class="heart-input">
-                                                                <span class="heart-span">
-                                                                    <i class="fa-regular fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                                <span class="heart-fav">
-                                                                    <i class="fa-solid fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><div class="product-item d-flex flex-column align-items-center"><img src="https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg" class="product-img mt-2">
-                        <div class="product-body">
-                            <h5 class="product-title text-center mb-3">Acer SB220Q bi 21.5 inches Full HD (1920 x 1080) IPS Ultra-Thin</h5>
-                            <div class="product-price-stock d-flex justify-content-between align-items-center">
-                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;718.800</h3>
-                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
-                            </div>
-                            <div class="product-buttons d-flex justify-content-around">
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-5">
-                                    Ver detalles
-                                </button>
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-5">
-                                    Agregar
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-modal">
-                            <div class="modal fade" id="modal-5" tabindex="-1" aria-labelledby="modal-5-label" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5 titles" id="modal-5">Acer SB220Q bi 21.5 inches Full HD (1920 x 1080) IPS Ultra-Thin</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-5">
-                                                    <img src="https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg" class="w-100" alt="">
-                                                </div>
-                                                <div class="col-7 d-flex justify-content-between flex-column">
-                                                    <p>21. 5 inches Full HD (1920 x 1080) widescreen IPS display And Radeon free Sync technology. No compatibility for VESA Mount Refresh Rate: 75Hz - Using HDMI port Zero-frame design | ultra-thin | 4ms response time | IPS panel Aspect ratio - 16: 9. Color Supported - 16. 7 million colors. Brightness - 250 nit Tilt angle -5 degree to 15 degree. Horizontal viewing angle-178 degree. Vertical viewing angle-178 degree 75 hertz</p>
-                                                    <div class="modal-bottom">
-                                                        <h6 class="titles">Precio</h6>
-                                                        <p>$&nbsp;718.800</p>
-                                                        <div class="modal-buttons">
-                                                            <button type="button" class="btn btn-secondary modal-agregar" data-bs-dismiss="modal">
-                                                                Agregar al Carrito
-                                                                <i class="fa-solid fa-cart-shopping" style="color: #84e98e;"></i>
-                                                            </button>
-                                                            <label for="heart-input" class="modal-heart">
-                                                                <input type="checkbox" class="heart-input">
-                                                                <span class="heart-span">
-                                                                    <i class="fa-regular fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                                <span class="heart-fav">
-                                                                    <i class="fa-solid fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><div class="product-item d-flex flex-column align-items-center"><img src="https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg" class="product-img mt-2">
-                        <div class="product-body">
-                            <h5 class="product-title text-center mb-3">Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor (LC49HG90DMNXZA) – Super Ultrawide Screen QLED </h5>
-                            <div class="product-price-stock d-flex justify-content-between align-items-center">
-                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;1.199.988</h3>
-                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
-                            </div>
-                            <div class="product-buttons d-flex justify-content-around">
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-6">
-                                    Ver detalles
-                                </button>
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-6">
-                                    Agregar
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="product-modal">
-                            <div class="modal fade" id="modal-6" tabindex="-1" aria-labelledby="modal-6-label" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5 titles" id="modal-6">Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor (LC49HG90DMNXZA) – Super Ultrawide Screen QLED </h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-5">
-                                                    <img src="https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg" class="w-100" alt="">
-                                                </div>
-                                                <div class="col-7 d-flex justify-content-between flex-column">
-                                                    <p>49 INCH SUPER ULTRAWIDE 32:9 CURVED GAMING MONITOR with dual 27 inch screen side by side QUANTUM DOT (QLED) TECHNOLOGY, HDR support and factory calibration provides stunningly realistic and accurate color and contrast 144HZ HIGH REFRESH RATE and 1ms ultra fast response time work to eliminate motion blur, ghosting, and reduce input lag</p>
-                                                    <div class="modal-bottom">
-                                                        <h6 class="titles">Precio</h6>
-                                                        <p>$&nbsp;1.199.988</p>
-                                                        <div class="modal-buttons">
-                                                            <button type="button" class="btn btn-secondary modal-agregar" data-bs-dismiss="modal">
-                                                                Agregar al Carrito
-                                                                <i class="fa-solid fa-cart-shopping" style="color: #84e98e;"></i>
-                                                            </button>
-                                                            <label for="heart-input" class="modal-heart">
-                                                                <input type="checkbox" class="heart-input">
-                                                                <span class="heart-span">
-                                                                    <i class="fa-regular fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                                <span class="heart-fav">
-                                                                    <i class="fa-solid fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div></div>
+                    </div>
+                </div>
+            </div>
             <!-- Paginación -->
-            <ul class="pagination-container"><li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li><li class="page-item active"><a class="page-link" href="#">1</a></li><li class="page-item disabled"><a class="page-link" href="#">Siguiente</a></li></ul>
+            <ul class="pagination-container">
+            </ul>
         </section>
     </main>
     <footer></footer>

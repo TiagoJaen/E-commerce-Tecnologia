@@ -68,6 +68,27 @@ function cargarProductos(page = 0) {
                 }
             });
             paginationContainer.appendChild(nextBtn);
+
+            document.querySelectorAll('.btn-details, .btn-add').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.dataset.id;
+                    fetch(`/products/id/${id}`)
+                    .then(response => response.json())
+                    .then(p =>{
+                        document.getElementById('modal-product-name').textContent = p.name;
+                        document.getElementById('modal-product-price').textContent = Number(p.price).toLocaleString('es-AR', {style: 'currency',        currency:  'ARS'});
+                        document.getElementById('modal-product-img').src = p.image;
+                        document.getElementById('modal-product-description').textContent = p.description;
+                        if(p.stock <= 0){
+                            document.getElementById('modal-product-stock').textContent = 'Sin stock';
+                            document.getElementById('modal-add-cart').classList.add('d-none');
+                        }else{
+                            document.getElementById('modal-product-stock').textContent = 'Disponible';
+                            document.getElementById('modal-add-cart').classList.remove('d-none');
+                        }
+                    })
+                });
+            });
         }
     });
 }
@@ -91,54 +112,24 @@ function imprimirProducto(p){
                                 ${stockHtml}
                             </div>
                             <div class="product-buttons d-flex justify-content-around">
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-${p.id}">
+                                <button 
+                                    type="button" 
+                                    class="btn-style-1 btn-details" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modal-product"
+                                    data-id="${p.id}"
+                                >
                                     Ver detalles
                                 </button>
-                                <button type="button" class="btn-style-1" data-bs-toggle="modal" data-bs-target="#modal-${p.id}">
-                                    Agregar
-                                    <i class="fa-solid fa-cart-shopping"></i>
+                                <button 
+                                    type="button" 
+                                    class="btn-style-1 btn-add" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#modal-product"
+                                    data-id="${p.id}"
+                                >
+                                    Agregar <i class="fa-solid fa-cart-shopping"></i>
                                 </button>
-                            </div>
-                        </div>
-                        <div class="product-modal">
-                            <div class="modal fade" id="modal-${p.id}" tabindex="-1" aria-labelledby="modal-${p.id}-label" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5 titles" id="modal-${p.id}">${p.name}</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-5">
-                                                    <img src="${p.image}" class="w-100" alt="">
-                                                </div>
-                                                <div class="col-7 d-flex justify-content-between flex-column">
-                                                    <p>${p.description}</p>
-                                                    <div class="modal-bottom">
-                                                        <h6 class="titles">Precio</h6>
-                                                        <p>${priceARS}</p>
-                                                        <div class="modal-buttons">
-                                                            <button type="button" class="btn btn-secondary modal-agregar" data-bs-dismiss="modal">
-                                                                Agregar al Carrito
-                                                                <i class="fa-solid fa-cart-shopping" style="color: #84e98e;"></i>
-                                                            </button>
-                                                            <label for="heart-input" class="modal-heart">
-                                                                <input type="checkbox" class="heart-input">
-                                                                <span class="heart-span">
-                                                                    <i class="fa-regular fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                                <span class="heart-fav">
-                                                                    <i class="fa-solid fa-heart" style="color: #004346;"></i>
-                                                                </span>
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     `;  

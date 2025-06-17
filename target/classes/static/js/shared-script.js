@@ -16,7 +16,7 @@ const unloggedNav = `<!-- header sin logear -->
 const loggedNav = `<!-- header logeado -->
             <div class="fixed-top container-fluid nav-container logged-nav p-0 d-flex justify-content-center align-items-center">
                 <div class="profile-offcanvas position-absolute start-0 ms-4">
-
+                    
                 </div>
                 <a href="/" id="logo-container" >
                     <h1 id="title">FOR GAMERS</h1>
@@ -62,12 +62,14 @@ function clientMenu(name, lastname){
                         <span class="text-button">CARRITO</span>
                     </button>
                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
-                        <div class="offcanvas-header">
-                            <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body">
-                            CARRITO
+                        <div class="offcanvas-header justify-content-center logged">
+                                    <button type="button" class="btn-offcanvas-close" style="left: .5em;" data-bs-dismiss="offcanvas" aria-label="Close">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                    <h2 class="text-center m-0">CARRITO</h2>
+                                </div>
+                        <div class="offcanvas-cart-body">
+
                         </div>
                     </div>`;
     document.querySelector('.logged-nav').appendChild(cart);
@@ -81,7 +83,7 @@ function clientMenu(name, lastname){
                             <div class="offcanvas offcanvas-start offcanvas-profile" tabindex="-1" id="offcanvasProfileClient" aria-labelledby="offcanvasProfileClientLabel">
                                 <div class="offcanvas-header justify-content-center logged">
                                     <h2 class="text-center m-0">${name} ${lastname}</h2>
-                                    <button type="button" class="btn-offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                                    <button type="button" class="btn-offcanvas-close" style="right: .5em;" data-bs-dismiss="offcanvas" aria-label="Close">
                                         <i class="fa-solid fa-xmark"></i>
                                     </button>
                                 </div>
@@ -116,7 +118,7 @@ function adminMenu(name, lastname){
                             <div class="offcanvas offcanvas-start offcanvas-profile" tabindex="-1" id="offcanvasProfileAdmin" aria-labelledby="offcanvasProfileAdminLabel">
                                 <div class="offcanvas-header justify-content-center logged">
                                     <h2 class="text-center m-0">${name} ${lastname}</h2>
-                                    <button type="button" class="btn-offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                                    <button type="button" class="btn-offcanvas-close" style="right: .5em;" data-bs-dismiss="offcanvas" aria-label="Close">
                                         <i class="fa-solid fa-xmark"></i>
                                     </button>
                                 </div>
@@ -141,6 +143,10 @@ function adminMenu(name, lastname){
                                         <li class="offcanvas-item btn-style-1 d-flex align-items-center">
                                             <a href="admins.html" class="text-center">Admins</a>
                                         </li>
+                                        <h2 class="mb-2">DOCUMENTACIÓN</h2>
+                                        <li class="offcanvas-item btn-style-1 d-flex align-items-center">
+                                            <a href="/docs" class="text-center">Swagger UI</a>
+                                        </li>
                                     </ul>
                                     <a href="" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
                                         <span>Cerrar sesión</span>
@@ -161,7 +167,7 @@ function managerMenu(name, lastname){
                             <div class="offcanvas offcanvas-start offcanvas-profile" tabindex="-1" id="offcanvasProfileManager" aria-labelledby="offcanvasProfileManagerLabel">
                                 <div class="offcanvas-header justify-content-center logged">
                                     <h2 class="text-center m-0">${name} ${lastname}</h2>
-                                    <button type="button" class="btn-offcanvas-close" data-bs-dismiss="offcanvas" aria-label="Close">
+                                    <button type="button" class="btn-offcanvas-close" style="right: .5em;" data-bs-dismiss="offcanvas" aria-label="Close">
                                         <i class="fa-solid fa-xmark"></i>
                                     </button>
                                 </div>

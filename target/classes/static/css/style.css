@@ -66,9 +66,8 @@
 .modal-content{
     width: 600px !important;
 }
-.modal-agregar{
-    background-color: var(--background-color-1) !important;
-    border: none !important;
+#modal-add-cart{
+    padding: .5em 1em;
 }
 
 .modal-heart{

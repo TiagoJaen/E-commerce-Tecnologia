@@ -56,6 +56,8 @@ public class SecurityConfig {
                                 "/user",
                                 "/products/all",
                                 "/products/paginated",
+                                "/products/name/**",
+                                "/products/id/**",
                                 "/clients",
                                 "/logout",
                                 "/cart",
@@ -63,13 +65,19 @@ public class SecurityConfig {
                                 "/favicon.ico"
                         ).permitAll()
                         .requestMatchers("/client").hasRole("CLIENT")
-                        .requestMatchers("/manager",
-                                "/clients/update").hasRole("MANAGER")
+                        .requestMatchers("/manager").hasRole("MANAGER")
                         .requestMatchers(
                                 "/managers",
+                                "/managers/username/",
+                                "/managers/all",
+                                "/managers/id/",
+                                "/managers/paginated",
                                 "/admins",
+                                "/admins/username/",
+                                "/admins/all",
+                                "/admins/id/",
+                                "/admins/paginated",
                                 "/admin",
-                                "/user/update/any",
 
                                 // Swagger solo para admins
                                 "/docs/**",
@@ -82,11 +90,11 @@ public class SecurityConfig {
 
                                 "/clients/all",
                                 "/clients/id/",
-                                "/clients/username/",
-                                "/products"
-                                ).hasAnyRole("ADMIN", "MANAGER")
+                                "/clients/paginated",
+                                "/clients/username/"
+                        ).hasAnyRole("ADMIN", "MANAGER")
                         .requestMatchers(
-                                "/user/update"
+                                "/profile.html"
                         ).hasAnyRole("ADMIN", "MANAGER", "CLIENT")
                         .anyRequest().authenticated()
                 )

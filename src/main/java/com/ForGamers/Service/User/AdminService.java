@@ -4,11 +4,15 @@ import com.ForGamers.Configuration.SecurityConfig;
 import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
 import com.ForGamers.Model.User.Admin;
+import com.ForGamers.Model.User.Client;
 import com.ForGamers.Repository.User.AdminRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +25,7 @@ import java.util.Optional;
 public class AdminService {
     private final AdminRepository repository;
     private final UserLookupService userLookupService;
+    private PasswordEncoder passwordEncoder;
 
     public void add(Admin t) {
         if (userLookupService.findByUsername(t.getUsername()).isPresent()) {
@@ -44,6 +49,14 @@ public class AdminService {
         return repository.findAll();
     }
 
+    public Page<Admin> listAdminsPaginated(int page, int size) {
+        return repository.findAll(PageRequest.of(page, size));
+    }
+
+    public List<Admin> getByUsernameIgnoringCase(String username) {
+        return repository.getByUsernameContainingIgnoreCase(username);
+    }
+
     public void modify (Long id, Admin t){
         Admin old = repository.findById(id).get();
         //Verificar si cambió el usuario o el email
@@ -63,7 +76,13 @@ public class AdminService {
         old.setEmail(t.getEmail());
         old.setPhone(t.getPhone());
         old.setUsername(t.getUsername());
-        old.setPassword(t.getPassword());
+
+        // Verificar si se ingresó una contraseña nueva, si el usuario no quiso cambiarla debe dejar ese input vacío.
+        if (t.getPassword() != null && !t.getPassword().isBlank()) {
+            String encoded = passwordEncoder.encode(t.getPassword());
+            old.setPassword(encoded);
+        }
+
         repository.save(old);
     }
 

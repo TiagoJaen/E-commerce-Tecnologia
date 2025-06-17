@@ -1,63 +1,58 @@
 package com.ForGamers.Service.Product;
 
-import com.ForGamers.Exception.ExistentProductException;
 import com.ForGamers.Model.Product.Cart;
+import com.ForGamers.Model.Product.CartEntry;
 import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Model.User.Client;
-import com.ForGamers.Repository.Product.CartRepository;
-import com.ForGamers.Repository.Product.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import com.ForGamers.Service.User.ClientService;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.apache.commons.lang3.tuple.MutablePair;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
+@Getter
+@Schema(description = "Servicio de carritos.")
 @Service
 public class CartService {
-    private CartRepository cartRepository;
-    @Autowired
-    public CartService(CartRepository cartRepository) {
-        this.cartRepository = cartRepository;
-    }
+    private CartEntryService cartEntryService;
+    private ClientService clientService;
+    private ProductService productService;
 
-    public Cart addCart(Cart cart) {
-        return cartRepository.save(cart);
-    }
+    public List<CartEntry> convertCart(Cart cart) {
+        List<CartEntry> list = new ArrayList<>();
+        Optional<Client> clientOp = clientService.getById(cart.getClientId());
 
-    public ResponseEntity<Void> deleteCart(Long id){
-        if (!cartRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+        if (clientOp.isEmpty()) return list;
+        for (MutablePair<Integer, Long> pair : cart.getContents()) {
+            Optional<Product> productOp = productService.getById(pair.right);
+            productOp.ifPresent(product -> list.add(new CartEntry(
+                    product,
+                    clientOp.get(),
+                    pair.left
+            )));
         }
-        cartRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return list;
     }
+    public Cart convertCart(List<CartEntry> cartEntryList) {
+        List<MutablePair<Integer, Long>> list = new ArrayList<>();
 
-    public Cart addProductToCart(Cart cart) {
-        Optional<Cart> opCart = cartRepository.findById(cart.getClient().getId(), cart.getProduct().getId());
-        if (opCart.isPresent()) {
-            opCart.ifPresent(
-                    value -> value.setCantInCart(value.getCantInCart() + cart.getCantInCart())
-            );
-            return cartRepository.save(opCart.get());
+        for (CartEntry entry : cartEntryList) {
+            list.add(new MutablePair<>(entry.getCantInCart(), entry.getProduct().getId()));
         }
-        return cartRepository.save(cart);
-    }
 
-    public ResponseEntity<Void> deleteProductFromCart(Long id){
-        if (!cartRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        cartRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return new Cart(
+                cartEntryList.getFirst().getClient().getId(),
+                list
+        );
     }
 
     public List<Product> getProductsInClientCart(Long id) {
-        return cartRepository.findProductsByClientId(id);
-    }
-
-    public Cart getById(Long id){
-        return cartRepository.getById(id);
+        return cartEntryService.getProductsInClientCart(id);
     }
 }
