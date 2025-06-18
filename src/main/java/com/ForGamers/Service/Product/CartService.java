@@ -2,6 +2,7 @@ package com.ForGamers.Service.Product;
 
 import com.ForGamers.Model.Product.Cart;
 import com.ForGamers.Model.Product.CartEntry;
+import com.ForGamers.Model.Product.CartProductPair;
 import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Model.User.Client;
 import com.ForGamers.Service.User.ClientService;
@@ -28,21 +29,21 @@ public class CartService {
         Optional<Client> clientOp = clientService.getById(cart.getClientId());
 
         if (clientOp.isEmpty()) return list;
-        for (MutablePair<Integer, Long> pair : cart.getContents()) {
-            Optional<Product> productOp = productService.getById(pair.right);
+        for (CartProductPair pair : cart.getContents()) {
+            Optional<Product> productOp = productService.getById(pair.productId);
             productOp.ifPresent(product -> list.add(new CartEntry(
                     product,
                     clientOp.get(),
-                    pair.left
+                    pair.quantity
             )));
         }
         return list;
     }
     public Cart convertCart(List<CartEntry> cartEntryList) {
-        List<MutablePair<Integer, Long>> list = new ArrayList<>();
+        List<CartProductPair> list = new ArrayList<>();
 
         for (CartEntry entry : cartEntryList) {
-            list.add(new MutablePair<>(entry.getCantInCart(), entry.getProduct().getId()));
+            list.add(new CartProductPair(entry.getCantInCart(), entry.getProduct().getId()));
         }
         return new Cart(
                 cartEntryList.getFirst().getClient().getId(),
@@ -52,7 +53,7 @@ public class CartService {
 
     public Cart getByClient(Long clientId) {
         return convertCart(
-                cartEntryService.getEntriesByClient(clientId)
+                cartEntryService.getCartEntriesByClient(clientId)
         );
     }
 
@@ -66,5 +67,11 @@ public class CartService {
 
     public List<Product> getProductsByClient(Long clientId) {
         return cartEntryService.getProductsByClient(clientId);
+    }
+
+    public double getTotalPriceByClient(Long clientId) {
+        return cartEntryService.getProductsByClient(clientId).stream()
+                .mapToDouble(Product::getPrice)
+                .sum();
     }
 }
