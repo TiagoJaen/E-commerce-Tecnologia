@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 @Schema(description = "Servicio de carritos.")
 @Service
 public class CartService {
-    private CartEntryService cartEntryService;
-    private ClientService clientService;
-    private ProductService productService;
+    private final CartEntryService cartEntryService;
+    private final ClientService clientService;
+    private final ProductService productService;
 
     public List<CartEntry> convertCart(Cart cart) {
         List<CartEntry> list = new ArrayList<>();

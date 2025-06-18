@@ -5,6 +5,7 @@ import com.ForGamers.Model.Product.CartEntry;
 import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Repository.Product.CartRepository;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,15 +13,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Schema(description = "Servicio de entradas de carritos.")
 @Service
 public class CartEntryService {
-    private CartRepository cartRepository;
-    private CartService cartService;
-    @Autowired
-    public CartEntryService(CartRepository cartRepository) {
-        this.cartRepository = cartRepository;
-    }
+    private final CartRepository cartRepository;
 
     public ResponseEntity<Void> deleteCartEntry(Long id){
         if (!cartRepository.existsById(id)) {
@@ -38,8 +35,7 @@ public class CartEntryService {
         );
         return cartRepository.save(opCart.get());
     }
-    public List<CartEntry> addProductsToCart(Cart cart) {
-        List<CartEntry> list = cartService.convertCart(cart);
+    public List<CartEntry> addProductsToCart(List<CartEntry> list) {
         for (CartEntry entry : list)
             addCartEntry(entry);
         return list;
@@ -71,7 +67,7 @@ public class CartEntryService {
         return cartRepository.findProductsByClientId(clientId);
     }
 
-    public CartEntry getById(Long id){
-        return cartRepository.getById(id);
+    public Optional<CartEntry> getById(Long id){
+        return cartRepository.findById(id);
     }
 }

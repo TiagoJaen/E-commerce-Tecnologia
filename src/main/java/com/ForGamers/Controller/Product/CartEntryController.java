@@ -1,6 +1,6 @@
 package com.ForGamers.Controller.Product;
 
-import com.ForGamers.Exception.ExistentProductException;
+import com.ForGamers.Exception.ProductAlreadyExistsException;
 import com.ForGamers.Model.Product.Cart;
 import com.ForGamers.Model.Product.CartEntry;
 import com.ForGamers.Model.Product.CartEntryDTO;
@@ -10,30 +10,22 @@ import com.ForGamers.Service.Product.ProductService;
 import com.ForGamers.Service.User.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping("/cart")
 @Tag(name = "cart", description = "Operaciones relacionadas a entradas del carrito.")
 public class CartEntryController {
-    private CartEntryService cartEntryService;
-    private CartService cartService;
-    private ClientService clientService;
-    private ProductService productService;
-
-    //@Autowired
-    public CartEntryController(CartEntryService cartEntryService, CartService cartService, ClientService clientService, ProductService productService) {
-        this.cartEntryService = cartEntryService;
-        this.cartService = cartService;
-        this.clientService = clientService;
-        this.productService = productService;
-    }
+    private final CartEntryService cartEntryService;
+    private final CartService cartService;
+    private final ClientService clientService;
+    private final ProductService productService;
 
     //METODOS
     @Operation(summary = "Obtener el carrito de un cliente")
@@ -50,6 +42,12 @@ public class CartEntryController {
         }
     }
 
+    @Operation(summary = "Obtener todos los carritos.")
+    @GetMapping("/all")
+    public List<Cart> listCarts() {
+        return cartService.list();
+    }
+
     @Operation(summary = "Agregar una entrada de carrito.")
     @PostMapping
     public ResponseEntity<?> addCartEntry(@RequestBody CartEntryDTO cartEntryDTO) {
@@ -62,7 +60,7 @@ public class CartEntryController {
 
             CartEntry saved = cartEntryService.addCartEntry(cartEntry);
             return ResponseEntity.ok(saved);
-        }catch (ExistentProductException | NoSuchElementException e) {
+        }catch (ProductAlreadyExistsException | NoSuchElementException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }
