@@ -182,6 +182,11 @@ modifyManagerForm.addEventListener('submit', async(e)=>{
         if(!response.ok){
             toastFail("  Error al modificar el gestor", await response.text());
         }else{
+            const authHeader = response.headers.get("Authorization");
+            if(authHeader && authHeader.startsWith("Bearer ")){
+                const newToken = authHeader.substring(7);
+                localStorage.setItem("jwtToken", newToken);
+            }
             const urlParams = new URLSearchParams(window.location.search);
             const currentPage = urlParams.get('page') || 0;
             let modal = document.getElementById('modal-modify-manager');

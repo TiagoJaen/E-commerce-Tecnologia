@@ -4,6 +4,8 @@ import com.ForGamers.Exception.ExistentEmailException;
 import com.ForGamers.Exception.ExistentUsernameException;
 import com.ForGamers.Exception.WrongPasswordException;
 import com.ForGamers.Model.User.User;
+import com.ForGamers.Security.UserDetailsImpl;
+import com.ForGamers.Service.JwtService;
 import com.ForGamers.Service.User.UserLookupService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,6 +17,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/user")
 @AllArgsConstructor
@@ -22,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "users", description = "Operaciones relacionadas con el usuario de la sesión")
 public class UserController {
     private UserLookupService service;
-
+    private JwtService jwtService;
     //Peticiones del usuario de la sesión
     //GET
     @GetMapping
@@ -40,8 +45,15 @@ public class UserController {
     @PutMapping
     public ResponseEntity<?> updateCurrentUser(@RequestBody User updatedUser) {
         try {
-            service.modify(updatedUser);
-            return ResponseEntity.ok(updatedUser);
+            updatedUser.setRole(service.modify(updatedUser));
+
+            UserDetailsImpl updatedDetails = new UserDetailsImpl(updatedUser);
+            String jwtToken = jwtService.generateToken(updatedDetails);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("user", updatedUser);
+            response.put("jwtToken", jwtToken);
+            return ResponseEntity.ok(response);
         }catch (ExistentEmailException | ExistentUsernameException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
