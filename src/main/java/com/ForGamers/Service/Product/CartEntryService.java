@@ -55,8 +55,30 @@ public class CartEntryService {
         return ResponseEntity.noContent().build();
     }
 
-    public List<Product> getProductsInClientCart(Long id) {
-        return cartRepository.findProductsByClientId(id);
+    public ResponseEntity<Void> deleteEntriesByClient(Long clientId) {
+        if (!cartRepository.findProductsByClientId(clientId).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        for (CartEntry entry : cartRepository.findEntriesByClientId(clientId))
+            cartRepository.deleteById(entry.getId());
+        return ResponseEntity.noContent().build();
+    }
+
+    public List<CartEntry> list() {
+        return cartRepository.findAll();
+    }
+
+    public void modify(Long id, CartEntry t) {
+        t.setId(id);
+        cartRepository.save(t);
+    }
+
+    public List<CartEntry> getEntriesByClient(Long clientId) {
+        return cartRepository.findEntriesByClientId(clientId);
+    }
+
+    public List<Product> getProductsByClient(Long clientId) {
+        return cartRepository.findProductsByClientId(clientId);
     }
 
     public CartEntry getById(Long id){

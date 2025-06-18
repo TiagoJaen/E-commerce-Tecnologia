@@ -26,7 +26,7 @@ public class CartEntryController {
     @Operation(summary = "Obtener lista de productos en carrito")
     @GetMapping(params = "client_id")
     public ResponseEntity<List<Product>> getProductsInCart(@RequestParam(name = "client_id") Long clientId) {
-        List<Product> productos = cartEntryService.getProductsInClientCart(clientId);
+        List<Product> productos = cartEntryService.getProductsByClient(clientId);
         return ResponseEntity.ok(productos);
     }
 

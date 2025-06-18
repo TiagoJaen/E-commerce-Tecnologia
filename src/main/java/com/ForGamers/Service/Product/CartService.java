@@ -11,9 +11,8 @@ import lombok.Getter;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Getter
@@ -45,14 +44,27 @@ public class CartService {
         for (CartEntry entry : cartEntryList) {
             list.add(new MutablePair<>(entry.getCantInCart(), entry.getProduct().getId()));
         }
-
         return new Cart(
                 cartEntryList.getFirst().getClient().getId(),
                 list
         );
     }
 
-    public List<Product> getProductsInClientCart(Long id) {
-        return cartEntryService.getProductsInClientCart(id);
+    public Cart getByClient(Long clientId) {
+        return convertCart(
+                cartEntryService.getEntriesByClient(clientId)
+        );
+    }
+
+    public List<Cart> list() {
+        return cartEntryService.list().stream()
+                .collect(Collectors.groupingBy(entry -> entry.getClient().getId()))
+                .values().stream()
+                .map(this::convertCart)
+                .collect(Collectors.toList());
+    }
+
+    public List<Product> getProductsByClient(Long clientId) {
+        return cartEntryService.getProductsByClient(clientId);
     }
 }
