@@ -1,5 +1,6 @@
 package com.ForGamers.Model.User;
 
+import com.ForGamers.Model.Product.Cart;
 import com.ForGamers.Model.User.Enum.Role;
 import lombok.NoArgsConstructor;
 

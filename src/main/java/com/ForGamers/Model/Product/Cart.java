@@ -15,11 +15,11 @@ public class Cart {
 
     private Long clientId;
     // Pairs: cantInCart (left), productId (right)
-    private List<MutablePair<Integer, Long>> contents;
+    private List<CartProductPair> contents;
 
     //private Pair<Integer, Product> pair = new MutablePair<>();
 
-    public Cart(Long clientId, List<MutablePair<Integer, Long>> contents) {
+    public Cart(Long clientId, List<CartProductPair> contents) {
         this.clientId = clientId;
         this.contents = contents;
     }
