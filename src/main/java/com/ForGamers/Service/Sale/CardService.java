@@ -18,9 +18,10 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CardService {
     private CardRepository cardRepository;
+    private final CardDTOService dtoService;
 
-    public Card addCard(Card card) {
-        if (cardRepository.getByNumber(card.getNumber()).isPresent()) {
+    public Card addCard(CardDTO dto) {
+        if (cardRepository.getByNumber(dto.getNumber()).isPresent()) {
             throw new ExistentCardException("Ya existe la tarjeta.");
         }
         return cardRepository.save(card);

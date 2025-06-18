@@ -32,7 +32,7 @@ public class CardController {
     @PostMapping
     public ResponseEntity<?> addCard(@RequestBody @Valid CardDTO dto) {
         try {
-            return ResponseEntity.ok(services.addCard(services.DTOtoCard(dto)));
+            return ResponseEntity.ok(services.addCard(dto));
         }catch (ExistentCardException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
