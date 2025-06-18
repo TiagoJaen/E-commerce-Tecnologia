@@ -32,14 +32,12 @@ public class UserLookupService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
 
-    public Optional<? extends User> findById(Long id) {
-        Optional<Client> client = clientRepository.findById(id);
-        if (client.isPresent()) return client;
-
-        Optional<Manager> manager = managerRepository.findById(id);
-        if (manager.isPresent()) return manager;
-
-        return adminRepository.findById(id);
+    public Optional<? extends User> findById(Long id, Role role) {
+        return switch (role){
+            case CLIENT -> clientRepository.findById(id);
+            case MANAGER -> managerRepository.findById(id);
+            case ADMIN -> adminRepository.findById(id);
+        };
     }
 
     public Optional<? extends User> findByUsername(String username) {
@@ -62,8 +60,8 @@ public class UserLookupService implements UserDetailsService {
         return adminRepository.getByEmail(email);
     }
 
-    public void modify (User updated){
-        User old = findByUsername(updated.getUsername()).get();
+    public Role modify (User updated){
+        User old = findById(updated.getId(), updated.getRole()).get();
 
         //Verificar si cambió el usuario o el email
         if (!old.getEmail().equals(updated.getEmail())) {
@@ -119,6 +117,7 @@ public class UserLookupService implements UserDetailsService {
             System.out.println("AAAAAAAAAAAAAAA" + client.toString());
             clientRepository.save(client);
         }
+        return old.getRole();
     }
 
     public void deleteCurrentUser(String username, String passwordCheck) {
