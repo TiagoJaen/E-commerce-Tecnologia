@@ -20,11 +20,11 @@ public class CardService {
     private CardRepository cardRepository;
     private final CardDTOService dtoService;
 
-    public Card addCard(CardDTO dto) {
+    public Card addCard(CardDTO dto) throws Exception{
         if (cardRepository.getByNumber(dto.getNumber()).isPresent()) {
             throw new ExistentCardException("Ya existe la tarjeta.");
         }
-        return cardRepository.save(card);
+        return cardRepository.save(dtoService.DTOtoCard(dto));
     }
 
     public ResponseEntity<Void> deleteCard(Long id){

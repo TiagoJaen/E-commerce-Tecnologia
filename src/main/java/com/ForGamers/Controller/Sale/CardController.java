@@ -3,6 +3,8 @@ package com.ForGamers.Controller.Sale;
 import com.ForGamers.Exception.ExistentCardException;
 import com.ForGamers.Model.Sale.Card;
 import com.ForGamers.Model.Sale.CardDTO;
+import com.ForGamers.Model.Sale.CardValidation;
+import com.ForGamers.Repository.Sale.CardValidationRepository;
 import com.ForGamers.Service.Sale.CardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Tag(name = "cards", description = "Controladora de tarjetas")
 public class CardController {
+    private final CardValidationRepository cardValidationRepository;
     private final CardService services;
 
     @Operation(summary = "Obtener listado de tarjetas.", description = "Devuelve una lista de todas las tarjetas.")
@@ -33,7 +36,7 @@ public class CardController {
     public ResponseEntity<?> addCard(@RequestBody @Valid CardDTO dto) {
         try {
             return ResponseEntity.ok(services.addCard(dto));
-        }catch (ExistentCardException e) {
+        }catch (Exception e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }
