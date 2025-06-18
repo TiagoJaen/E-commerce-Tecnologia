@@ -18,17 +18,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CardService {
     private CardRepository cardRepository;
-    private PasswordEncoder encoder;
-
-    public Card DTOtoCard(CardDTO dto) {
-        return new Card(
-                dto.getId(),
-                encoder.encode(dto.getHolder()),
-                encoder.encode(dto.getNumber()),
-                encoder.encode(dto.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yy"))),
-                encoder.encode(dto.getCvv().toString())
-                );
-    }
 
     public Card addCard(Card card) {
         if (cardRepository.getByNumber(card.getNumber()).isPresent()) {

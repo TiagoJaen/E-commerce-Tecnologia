@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
@@ -31,7 +33,7 @@ public class AESEncriptService {
         this.keySpec = new SecretKeySpec(key.getBytes(), AES);
     }
 
-    public String encrypt(String string) throws Exception {
+    public String encode(String string) throws Exception {
         byte[] iv = new byte[IV_LENGTH];
         secureRandom.nextBytes(iv);
         GCMParameterSpec spec = new GCMParameterSpec(TAG_LENGTH, iv);
@@ -48,7 +50,7 @@ public class AESEncriptService {
         return Base64.getEncoder().encodeToString(encryptedIvAndText);
     }
 
-    public String decrypt(String cipherText) throws Exception {
+    public String decode(String cipherText) throws Exception {
         byte[] decoded = Base64.getDecoder().decode(cipherText);
 
         byte[] iv = new byte[IV_LENGTH];
