@@ -1,10 +1,12 @@
 package com.ForGamers.Service.User;
 
 import com.ForGamers.Configuration.SecurityConfig;
-import com.ForGamers.Exception.ExistentEmailException;
-import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Exception.EmailAlreadyExistsException;
+import com.ForGamers.Exception.UsernameAlreadyExistsException;
 import com.ForGamers.Model.User.Client;
+import com.ForGamers.Repository.Product.CartRepository;
 import com.ForGamers.Repository.User.ClientRepository;
+import com.ForGamers.Service.Product.CartService;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,52 +24,48 @@ import java.util.Optional;
 @Schema(description = "Servicio de clientes.")
 @Service
 public class ClientService {
-    private final ClientRepository repository;
+    private final ClientRepository clientRepository;
     private final UserLookupService userLookupService;
     private PasswordEncoder passwordEncoder;
 
     public void add(Client t) {
         if (userLookupService.findByUsername(t.getUsername()).isPresent()) {
-            throw new ExistentUsernameException();
+            throw new UsernameAlreadyExistsException();
         }else if(userLookupService.findByEmail(t.getEmail()).isPresent()) {
-            throw new ExistentEmailException();
+            throw new EmailAlreadyExistsException();
         }
         t.setPassword(SecurityConfig.passwordEncoder().encode(t.getPassword()));
-        repository.save(t);
+        clientRepository.save(t);
     }
 
     public ResponseEntity<Void> delete(Long id){
-        if (!repository.existsById(id)) {
+        if (!clientRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
         }
-        repository.deleteById(id);
+        clientRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     public List<Client> list() {
-        return repository.findAll();
+        return clientRepository.findAll();
     }
 
     public Page<Client> listClientsPaginated(int page, int size) {
-        return repository.findAll(PageRequest.of(page, size));
-    }
-
-    public List<Client> getByUsernameIgnoringCase(String username) {
-        return repository.getByUsernameContainingIgnoreCase(username);
+        return clientRepository.findAll(PageRequest.of(page, size));
     }
 
     public void modify (Long id, Client t){
-        Client old = repository.findById(id).get();
+        Client old = clientRepository.findById(id).get();
         //Verificar si cambió el usuario o el email
         if (!old.getEmail().equals(t.getEmail())) {
             //Verificar si el email nuevo ya se encuentra en uso
             if (userLookupService.findByEmail(t.getEmail()).isPresent()) {
-                throw new ExistentEmailException();
+                throw new EmailAlreadyExistsException();
             }
         }else if (!old.getUsername().equals(t.getUsername())) {
             //Verificar si el usuario nuevo ya se encuentra en uso
             if (userLookupService.findByUsername(t.getUsername()).isPresent()) {
-                throw new ExistentUsernameException();
+                throw new UsernameAlreadyExistsException();
             }
         }
 
@@ -82,18 +80,22 @@ public class ClientService {
             String encoded = passwordEncoder.encode(t.getPassword());
             old.setPassword(encoded);
         }
-        repository.save(old);
+        clientRepository.save(old);
     }
 
     public Optional<Client> getById(Long id){
-        return repository.findById(id);
+        return clientRepository.findById(id);
     }
 
     public Optional<Client> getByUsername(String username) {
-        return repository.getByUsername(username);
+        return clientRepository.getByUsername(username);
+    }
+
+    public List<Client> getByUsernameIgnoringCase(String username) {
+        return clientRepository.getByUsernameContainingIgnoreCase(username);
     }
 
     public Optional<Client> getByEmail(String email){
-        return repository.getByEmail(email);
+        return clientRepository.getByEmail(email);
     }
 }

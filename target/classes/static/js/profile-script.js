@@ -95,7 +95,8 @@ async function cargarDatos(){
             "email": formData.get('email'),
             "phone": formData.get('phone'),
             "username": formData.get('username'),
-            "password": formData.get('password')
+            "password": formData.get('password'),
+            "role": user.role
         };
 
         authFetch('/user', {
@@ -103,9 +104,13 @@ async function cargarDatos(){
             body: JSON.stringify(userData)
         })
         .then(async response => {
+            const data = await response.json();
             if(!response.ok){
-                toastFail("  Error al modificar datos", await response.text());
+                toastFail("  Error al modificar datos", data);
             }else{
+                if(data.jwtToken){
+                    localStorage.setItem('jwtToken', data.jwtToken)
+                }
                 location.reload();
             }
         })

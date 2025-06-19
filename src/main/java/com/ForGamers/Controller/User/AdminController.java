@@ -1,15 +1,19 @@
 package com.ForGamers.Controller.User;
 
-import com.ForGamers.Exception.ExistentEmailException;
-import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Exception.EmailAlreadyExistsException;
+import com.ForGamers.Exception.UsernameAlreadyExistsException;
 import com.ForGamers.Model.User.*;
 import com.ForGamers.Model.User.Enum.Role;
+import com.ForGamers.Security.UserDetailsImpl;
+import com.ForGamers.Service.JwtService;
 import com.ForGamers.Service.User.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +27,7 @@ import java.util.Optional;
 @Tag(name = "admins", description = "Operaciones relacionadas con los admins.")
 public class AdminController {
     private AdminService services;
+    private JwtService jwtService;
 
     //GET
     //Listado
@@ -71,7 +76,7 @@ public class AdminController {
             admin.setRole(Role.ADMIN);
             services.add(admin);
             return ResponseEntity.ok(admin);
-        }catch (ExistentEmailException | ExistentUsernameException e) {
+        }catch (EmailAlreadyExistsException | UsernameAlreadyExistsException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }
@@ -86,11 +91,27 @@ public class AdminController {
     //PUT
     @Operation(summary = "Modificar un admin.")
     @PutMapping
-    public ResponseEntity<?> updateAdmin(@RequestBody Admin updatedUser) {
+    public ResponseEntity<?> updateAdmin(@RequestBody Admin updatedUser, HttpServletRequest request) {
         try {
+            String token = request.getHeader("Authorization");
+            if(token != null && token.startsWith("Bearer ")){
+                token = token.substring(7);
+            }
+
+            String currentUsername = jwtService.extractUsername(token);
+            Admin currentAdmin = services.getByUsername(currentUsername).get();
+            updatedUser.setRole(Role.ADMIN);
             services.modify(updatedUser.getId(), updatedUser);
+
+            if(currentAdmin.getId().equals(updatedUser.getId())){
+                UserDetailsImpl updatedDetails = new UserDetailsImpl(updatedUser);
+                String newToken = jwtService.generateToken(updatedDetails);
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + newToken)
+                        .body(updatedUser);
+            }
             return ResponseEntity.ok(updatedUser);
-        }catch (ExistentEmailException | ExistentUsernameException e){
+        }catch (EmailAlreadyExistsException | UsernameAlreadyExistsException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

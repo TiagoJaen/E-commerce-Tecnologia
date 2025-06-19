@@ -1,8 +1,8 @@
 package com.ForGamers.Service.User;
 
 import com.ForGamers.Configuration.SecurityConfig;
-import com.ForGamers.Exception.ExistentEmailException;
-import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Exception.EmailAlreadyExistsException;
+import com.ForGamers.Exception.UsernameAlreadyExistsException;
 import com.ForGamers.Model.User.Admin;
 import com.ForGamers.Model.User.Client;
 import com.ForGamers.Repository.User.AdminRepository;
@@ -29,9 +29,9 @@ public class AdminService {
 
     public void add(Admin t) {
         if (userLookupService.findByUsername(t.getUsername()).isPresent()) {
-            throw new ExistentUsernameException();
+            throw new UsernameAlreadyExistsException();
         }else if(userLookupService.findByEmail(t.getEmail()).isPresent()) {
-            throw new ExistentEmailException();
+            throw new EmailAlreadyExistsException();
         }
         t.setPassword(SecurityConfig.passwordEncoder().encode(t.getPassword()));
         repository.save(t);
@@ -63,12 +63,12 @@ public class AdminService {
         if (!old.getEmail().equals(t.getEmail())) {
             //Verificar si el email nuevo ya se encuentra en uso
             if (userLookupService.findByEmail(t.getEmail()).isPresent()) {
-                throw new ExistentEmailException();
+                throw new EmailAlreadyExistsException();
             }
         }else if (!old.getUsername().equals(t.getUsername())) {
             //Verificar si el usuario nuevo ya se encuentra en uso
             if (userLookupService.findByUsername(t.getUsername()).isPresent()) {
-                throw new ExistentUsernameException();
+                throw new UsernameAlreadyExistsException();
             }
         }
         old.setName(t.getName());

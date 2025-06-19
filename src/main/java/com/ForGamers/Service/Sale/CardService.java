@@ -1,6 +1,6 @@
 package com.ForGamers.Service.Sale;
 
-import com.ForGamers.Exception.ExistentCardException;
+import com.ForGamers.Exception.CardAlreadyExistsException;
 import com.ForGamers.Model.Sale.Card;
 import com.ForGamers.Model.Sale.CardDTO;
 import com.ForGamers.Repository.Sale.CardRepository;
@@ -18,13 +18,23 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CardService {
     private CardRepository cardRepository;
-    private final CardDTOService dtoService;
+    private PasswordEncoder encoder;
 
-    public Card addCard(CardDTO dto) throws Exception{
-        if (cardRepository.getByNumber(dto.getNumber()).isPresent()) {
-            throw new ExistentCardException("Ya existe la tarjeta.");
+    public Card DTOtoCard(CardDTO dto) {
+        return new Card(
+                dto.getId(),
+                dto.getHolder(),
+                dto.getNumber(),
+                dto.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yy")),
+                dto.getCvv().toString()
+                );
+    }
+
+    public Card addCard(Card card) {
+        if (cardRepository.getByNumber(card.getNumber()).isPresent()) {
+            throw new CardAlreadyExistsException("Ya existe la tarjeta.");
         }
-        return cardRepository.save(dtoService.DTOtoCard(dto));
+        return cardRepository.save(card);
     }
 
     public ResponseEntity<Void> deleteCard(Long id){

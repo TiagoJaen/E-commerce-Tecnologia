@@ -1,7 +1,7 @@
 package com.ForGamers.Controller.User;
 
-import com.ForGamers.Exception.ExistentEmailException;
-import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Exception.EmailAlreadyExistsException;
+import com.ForGamers.Exception.UsernameAlreadyExistsException;
 import com.ForGamers.Model.User.Manager;
 import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Model.User.ManagerDTO;
@@ -73,7 +73,7 @@ public class ManagerController {
             manager.setRole(Role.MANAGER);
             services.add(manager);
             return ResponseEntity.ok(manager);
-        }catch (ExistentEmailException | ExistentUsernameException e) {
+        }catch (EmailAlreadyExistsException | UsernameAlreadyExistsException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }
@@ -92,7 +92,7 @@ public class ManagerController {
         try {
             services.modify(updatedUser.getId(), updatedUser);
             return ResponseEntity.ok(updatedUser);
-        }catch (ExistentEmailException | ExistentUsernameException e){
+        }catch (EmailAlreadyExistsException | UsernameAlreadyExistsException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

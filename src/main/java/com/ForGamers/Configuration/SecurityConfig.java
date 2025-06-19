@@ -66,7 +66,12 @@ public class SecurityConfig {
                                 "/logout",
                                 "/cart",
                                 "/auth/**",
-                                "/favicon.ico"
+                                "/favicon.ico",
+                                "/card",
+                                "/card/id",
+                                "/payment",
+                                "/payment/id",
+                                "/payment/client-historial"
                         ).permitAll()
                         .requestMatchers("/client").hasRole("CLIENT")
                         .requestMatchers("/manager").hasRole("MANAGER")

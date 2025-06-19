@@ -1,5 +1,6 @@
 package com.ForGamers.Model.User;
 
+import com.ForGamers.Model.Product.Cart;
 import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Model.User.Enum.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,10 +22,8 @@ import java.util.LinkedHashSet;
 @SuperBuilder
 @Schema(description = "Clase que representa a los clientes.")
 public class Client extends User {
-
     public Client(ClientDTO dto) {
         super(dto);
         this.role = Role.CLIENT;
-        // this.cart = new LinkedHashSet<>();
     }
 }
