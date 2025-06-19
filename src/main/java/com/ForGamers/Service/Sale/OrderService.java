@@ -19,9 +19,6 @@ public class OrderService {
     private final OrderRepository orderRepository;
 
     public Order addOrder(Order order) throws PaymentAlreadyExistsException, NoSuchElementException {
-        if (orderRepository.findById(order.getId()).isPresent()) {
-            throw new OrderAlreadyExistsException("Ya existe la orden.");
-        }
         return orderRepository.save(order);
     }
 

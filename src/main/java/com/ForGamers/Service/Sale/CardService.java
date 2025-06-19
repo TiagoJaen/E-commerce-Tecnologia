@@ -23,10 +23,10 @@ public class CardService {
     public Card DTOtoCard(CardDTO dto) {
         return new Card(
                 dto.getId(),
-                encoder.encode(dto.getHolder()),
-                encoder.encode(dto.getNumber()),
-                encoder.encode(dto.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yy"))),
-                encoder.encode(dto.getCvv().toString())
+                dto.getHolder(),
+                dto.getNumber(),
+                dto.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yy")),
+                dto.getCvv().toString()
                 );
     }
 
