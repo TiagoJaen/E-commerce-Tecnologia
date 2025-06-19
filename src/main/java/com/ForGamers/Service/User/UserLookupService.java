@@ -13,7 +13,6 @@ import com.ForGamers.Repository.User.ClientRepository;
 import com.ForGamers.Repository.User.ManagerRepository;
 import com.ForGamers.Security.UserDetailsImpl;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -61,7 +60,8 @@ public class UserLookupService implements UserDetailsService {
     }
 
     public Role modify (User updated){
-        User old = findById(updated.getId(), updated.getRole()).get();
+        Role role = updated.getRole();
+        User old = findById(updated.getId(), role).get();
 
         //Verificar si cambió el usuario o el email
         if (!old.getEmail().equals(updated.getEmail())) {
@@ -76,48 +76,25 @@ public class UserLookupService implements UserDetailsService {
             }
         }
 
-        if (old.getRole() == Role.ADMIN){
-            Admin admin = (Admin) old;
-            admin.setName(updated.getName());
-            admin.setLastname(updated.getLastname());
-            admin.setEmail(updated.getEmail());
-            admin.setUsername(updated.getUsername());
-            admin.setPhone(updated.getPhone());
-            admin.setId(updated.getId());
-            //Si se cambió la contraseña, es decir si no está vacía
-            if (!updated.getPassword().isBlank() || !updated.getPassword().isEmpty()) {
-                admin.setPassword(passwordEncoder.encode(updated.getPassword()));
-            }
-            adminRepository.save(admin);
-        }else if (old.getRole() == Role.MANAGER){
-            Manager manager = (Manager) old;
-            manager.setName(updated.getName());
-            manager.setLastname(updated.getLastname());
-            manager.setEmail(updated.getEmail());
-            manager.setUsername(updated.getUsername());
-            manager.setPhone(updated.getPhone());
-            manager.setId(updated.getId());
-            //Si se cambió la contraseña, es decir si no está vacía
-            if (!updated.getPassword().isBlank() || !updated.getPassword().isEmpty()) {
-                manager.setPassword(passwordEncoder.encode(updated.getPassword()));
-            }
-            managerRepository.save(manager);
-        }else if (old.getRole() == Role.CLIENT){
-            Client client = (Client) old;
-            client.setName(updated.getName());
-            client.setLastname(updated.getLastname());
-            client.setEmail(updated.getEmail());
-            client.setUsername(updated.getUsername());
-            client.setPhone(updated.getPhone());
-            client.setId(updated.getId());
-            //Si se cambió la contraseña, es decir si no está vacía
-            if (!updated.getPassword().isBlank() || !updated.getPassword().isEmpty()) {
-                client.setPassword(passwordEncoder.encode(updated.getPassword()));
-            }
-            System.out.println("AAAAAAAAAAAAAAA" + client.toString());
-            clientRepository.save(client);
+        old.setName(updated.getName());
+        old.setLastname(updated.getLastname());
+        old.setEmail(updated.getEmail());
+        old.setUsername(updated.getUsername());
+        old.setPhone(updated.getPhone());
+        old.setId(updated.getId());
+        //Si se cambió la contraseña, es decir si no está vacía
+        String password = updated.getPassword();
+        if (!password.isEmpty()) {
+            old.setPassword(passwordEncoder.encode(password));
         }
-        return old.getRole();
+
+        switch (role) {
+            case ADMIN -> adminRepository.save((Admin) old);
+            case CLIENT -> clientRepository.save((Client) old);
+            case MANAGER -> managerRepository.save((Manager) old);
+        }
+
+        return role;
     }
 
     public void deleteCurrentUser(String username, String passwordCheck) {
