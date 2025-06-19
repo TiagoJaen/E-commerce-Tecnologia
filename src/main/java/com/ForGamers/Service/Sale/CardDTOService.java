@@ -8,6 +8,7 @@ import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -22,16 +23,17 @@ public class CardDTOService {
                 encoder.encode(dto.getHolder()),
                 encoder.encode(dto.getNumber()),
                 encoder.encode(dto.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yy"))),
-                encoder.encode(dto.getCvv().toString())
+                encoder.encode(dto.getCvv().toString()),
+                dto.hashCode()
         );
     }
 
-    public CardDTO CardToDTO(Card card) throws Exception{
+    public CardDTO CardToDTO(Card card) throws Exception {
         return new CardDTO(
                 card.getId(),
                 encoder.decode(card.getHolder()),
                 encoder.decode(card.getNumber()),
-                LocalDate.parse(encoder.decode(card.getHolder()), DateTimeFormatter.ofPattern("MM/yy")),
+                YearMonth.parse(encoder.decode(card.getExpirationDate()), DateTimeFormatter.ofPattern("MM/yy")),
                 Integer.parseInt(encoder.decode(card.getCvv()))
         );
     }

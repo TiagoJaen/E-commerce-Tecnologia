@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,10 +25,23 @@ public class CardDTO {
     @Pattern(regexp = "\\d{16}", message = "El numero de tarjeta debe ser de 16 numeros")
     private String number;
 
-    private LocalDate expirationDate;
+    private YearMonth expirationDate;
 
     @Min(value = 100, message = "El codigo de seguridad debe ser de 3 digitos")
     @Max(value = 999, message = "El codigo de seguridad debe ser de 3 digitos")
     @Positive(message = "El codigo de seguridad debe ser positivo")
     private Integer cvv;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CardDTO cardDTO = (CardDTO) o;
+        return Objects.equals(holder, cardDTO.holder) && Objects.equals(number, cardDTO.number) && Objects.equals(expirationDate, cardDTO.expirationDate) && Objects.equals(cvv, cardDTO.cvv);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(holder, number, expirationDate, cvv);
+    }
 }

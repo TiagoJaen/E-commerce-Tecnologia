@@ -5,6 +5,7 @@ import com.ForGamers.Model.Sale.Card;
 import com.ForGamers.Model.Sale.CardDTO;
 import com.ForGamers.Repository.Sale.CardRepository;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,25 +17,16 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Getter
 public class CardService {
     private CardRepository cardRepository;
-    private PasswordEncoder encoder;
+    private CardDTOService dtoService;
 
-    public Card DTOtoCard(CardDTO dto) {
-        return new Card(
-                dto.getId(),
-                dto.getHolder(),
-                dto.getNumber(),
-                dto.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yy")),
-                dto.getCvv().toString()
-                );
-    }
-
-    public Card addCard(Card card) {
-        if (cardRepository.getByNumber(card.getNumber()).isPresent()) {
+    public Card addCard(CardDTO dto) throws Exception{
+        if (cardRepository.getCard(dto.hashCode()).isPresent()) {
             throw new CardAlreadyExistsException("Ya existe la tarjeta.");
         }
-        return cardRepository.save(card);
+        return cardRepository.save(dtoService.DTOtoCard(dto));
     }
 
     public ResponseEntity<Void> deleteCard(Long id){
@@ -53,7 +45,7 @@ public class CardService {
         return cardRepository.findById(id);
     }
 
-    public Optional<Card> getCard(Card card) {
-        return cardRepository.getCard(card);
+    public Optional<Card> getCard(int hashcode) {
+        return cardRepository.getCard(hashcode);
     }
 }

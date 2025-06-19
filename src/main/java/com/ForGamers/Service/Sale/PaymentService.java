@@ -6,6 +6,7 @@ import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Model.Sale.Payment;
 import com.ForGamers.Model.Sale.PaymentDTO;
 import com.ForGamers.Repository.Sale.PaymentRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,8 @@ public class PaymentService {
     private final PaymentDTOService dtoService;
     private final OrderService orderService;
 
-    public Payment addPayment(PaymentDTO dto) throws NoSuchElementException {
+    @Transactional
+    public Payment addPayment(PaymentDTO dto) throws Exception{
         Payment payment = paymentRepository.save(dtoService.DTOtoPayment(dto));
         for(Order order: payment.getOrders()) {
             orderService.addOrder(order);

@@ -32,7 +32,7 @@ public class PaymentController {
     public ResponseEntity<?> addPayment(@RequestBody PaymentDTO dto) {
         try {
             return ResponseEntity.ok(paymentServices.addPayment(dto));
-        }catch (PaymentAlreadyExistsException | NoSuchElementException e) {
+        }catch (Exception e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }
