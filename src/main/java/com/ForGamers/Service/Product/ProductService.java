@@ -1,6 +1,6 @@
 package com.ForGamers.Service.Product;
 
-import com.ForGamers.Exception.ExistentProductException;
+import com.ForGamers.Exception.ProductAlreadyExistsException;
 import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Repository.Product.ProductRepository;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ public class ProductService {
 
     public Product addProduct(Product product) {
         if (productRepository.getByName(product.getName()).isPresent()) {
-            throw new ExistentProductException("Este producto ya se encuentra registrado.");
+            throw new ProductAlreadyExistsException("Este producto ya se encuentra registrado.");
         }
         return productRepository.save(product);
     }
@@ -57,7 +57,7 @@ public class ProductService {
         if (!oldProduct.getName().equals(product.getName())) {
             //Verificar que el nuevo nombre no esté en uso
             if (productRepository.getByName(product.getName()).isPresent()) {
-                throw new ExistentProductException("Este producto ya se encuentra registrado.");
+                throw new ProductAlreadyExistsException("Este producto ya se encuentra registrado.");
             }
         }
         oldProduct.setName(product.getName());

@@ -1,6 +1,6 @@
 package com.ForGamers.Service.Sale;
 
-import com.ForGamers.Exception.ExistentCardException;
+import com.ForGamers.Exception.CardAlreadyExistsException;
 import com.ForGamers.Model.Sale.Card;
 import com.ForGamers.Model.Sale.CardDTO;
 import com.ForGamers.Repository.Sale.CardRepository;
@@ -32,7 +32,7 @@ public class CardService {
 
     public Card addCard(Card card) {
         if (cardRepository.getByNumber(card.getNumber()).isPresent()) {
-            throw new ExistentCardException("Ya existe la tarjeta.");
+            throw new CardAlreadyExistsException("Ya existe la tarjeta.");
         }
         return cardRepository.save(card);
     }

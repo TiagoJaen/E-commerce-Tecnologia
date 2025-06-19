@@ -1,6 +1,6 @@
 package com.ForGamers.Controller.Sale;
 
-import com.ForGamers.Exception.ExistentPaymentException;
+import com.ForGamers.Exception.PaymentAlreadyExistsException;
 import com.ForGamers.Model.Sale.Payment;
 import com.ForGamers.Model.Sale.PaymentDTO;
 import com.ForGamers.Service.Sale.PaymentService;
@@ -32,7 +32,7 @@ public class PaymentController {
     public ResponseEntity<?> addPayment(@RequestBody PaymentDTO dto) {
         try {
             return ResponseEntity.ok(paymentServices.addPayment(dto));
-        }catch (ExistentPaymentException | NoSuchElementException e) {
+        }catch (PaymentAlreadyExistsException | NoSuchElementException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }

@@ -1,7 +1,7 @@
 package com.ForGamers.Service.User;
 
-import com.ForGamers.Exception.ExistentEmailException;
-import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Exception.EmailAlreadyExistsException;
+import com.ForGamers.Exception.UsernameAlreadyExistsException;
 import com.ForGamers.Exception.WrongPasswordException;
 import com.ForGamers.Model.User.Admin;
 import com.ForGamers.Model.User.Client;
@@ -67,12 +67,12 @@ public class UserLookupService implements UserDetailsService {
         if (!old.getEmail().equals(updated.getEmail())) {
             //Verificar si el email nuevo ya se encuentra en uso
             if (findByEmail(updated.getEmail()).isPresent()) {
-                throw new ExistentEmailException();
+                throw new EmailAlreadyExistsException();
             }
         }else if (!old.getUsername().equals(updated.getUsername())) {
             //Verificar si el usuario nuevo ya se encuentra en uso
             if (findByUsername(updated.getUsername()).isPresent()) {
-                throw new ExistentUsernameException();
+                throw new UsernameAlreadyExistsException();
             }
         }
 

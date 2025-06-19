@@ -1,7 +1,7 @@
 package com.ForGamers.Controller.User;
 
-import com.ForGamers.Exception.ExistentEmailException;
-import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Exception.EmailAlreadyExistsException;
+import com.ForGamers.Exception.UsernameAlreadyExistsException;
 import com.ForGamers.Model.User.*;
 import com.ForGamers.Model.User.Enum.Role;
 import com.ForGamers.Security.UserDetailsImpl;
@@ -76,7 +76,7 @@ public class AdminController {
             admin.setRole(Role.ADMIN);
             services.add(admin);
             return ResponseEntity.ok(admin);
-        }catch (ExistentEmailException | ExistentUsernameException e) {
+        }catch (EmailAlreadyExistsException | UsernameAlreadyExistsException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }
@@ -111,7 +111,7 @@ public class AdminController {
                         .body(updatedUser);
             }
             return ResponseEntity.ok(updatedUser);
-        }catch (ExistentEmailException | ExistentUsernameException e){
+        }catch (EmailAlreadyExistsException | UsernameAlreadyExistsException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

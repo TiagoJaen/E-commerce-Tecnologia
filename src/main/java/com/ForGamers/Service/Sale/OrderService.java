@@ -1,7 +1,7 @@
 package com.ForGamers.Service.Sale;
 
-import com.ForGamers.Exception.ExistentOrderException;
-import com.ForGamers.Exception.ExistentPaymentException;
+import com.ForGamers.Exception.OrderAlreadyExistsException;
+import com.ForGamers.Exception.PaymentAlreadyExistsException;
 import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Model.Sale.OrderDTO;
@@ -18,9 +18,9 @@ import java.util.Optional;
 public class OrderService {
     private final OrderRepository orderRepository;
 
-    public Order addOrder(Order order) throws ExistentPaymentException, NoSuchElementException {
+    public Order addOrder(Order order) throws PaymentAlreadyExistsException, NoSuchElementException {
         if (orderRepository.findById(order.getId()).isPresent()) {
-            throw new ExistentOrderException("Ya existe la orden.");
+            throw new OrderAlreadyExistsException("Ya existe la orden.");
         }
         return orderRepository.save(order);
     }

@@ -1,6 +1,6 @@
 package com.ForGamers.Controller.Sale;
 
-import com.ForGamers.Exception.ExistentCardException;
+import com.ForGamers.Exception.CardAlreadyExistsException;
 import com.ForGamers.Model.Sale.Card;
 import com.ForGamers.Model.Sale.CardDTO;
 import com.ForGamers.Service.Sale.CardService;
@@ -33,7 +33,7 @@ public class CardController {
     public ResponseEntity<?> addCard(@RequestBody @Valid CardDTO dto) {
         try {
             return ResponseEntity.ok(services.addCard(services.DTOtoCard(dto)));
-        }catch (ExistentCardException e) {
+        }catch (CardAlreadyExistsException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }

@@ -1,7 +1,7 @@
 package com.ForGamers.Service.Sale;
 
-import com.ForGamers.Exception.ExistentOrderException;
-import com.ForGamers.Exception.ExistentPaymentException;
+import com.ForGamers.Exception.OrderAlreadyExistsException;
+import com.ForGamers.Exception.PaymentAlreadyExistsException;
 import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Model.Sale.Payment;
 import com.ForGamers.Model.Sale.PaymentDTO;

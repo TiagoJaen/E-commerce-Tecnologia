@@ -1,6 +1,6 @@
 package com.ForGamers.Controller.Sale;
 
-import com.ForGamers.Exception.ExistentOrderException;
+import com.ForGamers.Exception.OrderAlreadyExistsException;
 import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Service.Sale.OrderDTOService;
 import com.ForGamers.Service.Sale.OrderService;
@@ -31,7 +31,7 @@ public class OrderController {
     public ResponseEntity<?> addOrder(@RequestBody Order order) {
         try {
             return ResponseEntity.ok(services.addOrder(order)));
-        }catch (ExistentOrderException e) {
+        }catch (OrderAlreadyExistsException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }*/

@@ -1,7 +1,7 @@
 package com.ForGamers.Controller.User;
 
-import com.ForGamers.Exception.ExistentEmailException;
-import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Exception.EmailAlreadyExistsException;
+import com.ForGamers.Exception.UsernameAlreadyExistsException;
 import com.ForGamers.Exception.WrongPasswordException;
 import com.ForGamers.Model.User.User;
 import com.ForGamers.Security.UserDetailsImpl;
@@ -54,7 +54,7 @@ public class UserController {
             response.put("user", updatedUser);
             response.put("jwtToken", jwtToken);
             return ResponseEntity.ok(response);
-        }catch (ExistentEmailException | ExistentUsernameException e){
+        }catch (EmailAlreadyExistsException | UsernameAlreadyExistsException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

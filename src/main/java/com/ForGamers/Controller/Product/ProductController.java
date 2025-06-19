@@ -1,6 +1,6 @@
 package com.ForGamers.Controller.Product;
 
-import com.ForGamers.Exception.ExistentProductException;
+import com.ForGamers.Exception.ProductAlreadyExistsException;
 import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Service.Product.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -67,7 +67,7 @@ public class ProductController {
         try {
             Product saved = services.addProduct(product);
             return ResponseEntity.ok(saved);
-        }catch (ExistentProductException e) {
+        }catch (ProductAlreadyExistsException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }
@@ -86,7 +86,7 @@ public class ProductController {
         try{
             services.modifyProduct(updatedProduct.getId(), updatedProduct);
             return ResponseEntity.ok().build();
-        }catch (ExistentProductException e) {
+        }catch (ProductAlreadyExistsException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }

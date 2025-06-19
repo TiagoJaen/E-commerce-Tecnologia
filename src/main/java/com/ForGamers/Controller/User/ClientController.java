@@ -1,7 +1,7 @@
 package com.ForGamers.Controller.User;
 
-import com.ForGamers.Exception.ExistentEmailException;
-import com.ForGamers.Exception.ExistentUsernameException;
+import com.ForGamers.Exception.EmailAlreadyExistsException;
+import com.ForGamers.Exception.UsernameAlreadyExistsException;
 import com.ForGamers.Model.User.Client;
 import com.ForGamers.Model.User.ClientDTO;
 import com.ForGamers.Model.User.Enum.Role;
@@ -72,7 +72,7 @@ public class ClientController {
             client.setRole(Role.CLIENT);
             services.add(client);
             return ResponseEntity.ok(client);
-        }catch (ExistentEmailException | ExistentUsernameException e) {
+        }catch (EmailAlreadyExistsException | UsernameAlreadyExistsException e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }
@@ -91,7 +91,7 @@ public class ClientController {
         try {
             services.modify(updatedUser.getId(), updatedUser);
             return ResponseEntity.ok(updatedUser);
-        }catch (ExistentEmailException | ExistentUsernameException e){
+        }catch (EmailAlreadyExistsException | UsernameAlreadyExistsException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
