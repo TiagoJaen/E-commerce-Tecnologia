@@ -23,16 +23,15 @@ public class ClientInit {
 
     @PostConstruct
     public void createInitClients() {
-        Optional<Client> op = service.getByUsername("qwe");
-        ClientDTO dto = new ClientDTO(
-                "rivato",
-                "aravir",
-                "client1@gmail.com",
-                "2237984568",
-                "qwe",
-                "123"
-        );
-        if(op.isEmpty()) {
+        if(service.list().isEmpty()){
+            ClientDTO dto = new ClientDTO(
+                    "rivato",
+                    "aravir",
+                    "client1@gmail.com",
+                    "2237984568",
+                    "qwe",
+                    "123"
+            );
             service.add(new Client(dto));
         }
     }

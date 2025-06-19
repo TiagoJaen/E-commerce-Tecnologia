@@ -16,16 +16,15 @@ public class AdminInit {
 
     @PostConstruct
     public void createSuperUser() {
-        Optional<Admin> op = adminService.getByUsername("admin");
-        AdminDTO dto = new AdminDTO(
-                "Jefe",
-                "Maestro",
-                "admin@gmail.com",
-                "2237984567",
-                "admin",
-                "123"
-        );
-        if(op.isEmpty()) {
+        if(adminService.list().isEmpty()){
+            AdminDTO dto = new AdminDTO(
+                    "Jefe",
+                    "Maestro",
+                    "admin@gmail.com",
+                    "2237984567",
+                    "admin",
+                    "123"
+            );
             Admin admin = new Admin(dto);
             adminService.add(admin);
         }

@@ -16,16 +16,15 @@ public class ManagerInit {
 
     @PostConstruct
     public void createSuperUser() {
-        Optional<Manager> op = managerService.getByUsername("manager");
-        ManagerDTO dto = new ManagerDTO(
-                "Lautarani",
-                "Lorenzani",
-                "lorenzani@gmail.com",
-                "2237984567",
-                "manager",
-                "123"
-        );
-        if(op.isEmpty()) {
+        if(managerService.list().isEmpty()){
+            ManagerDTO dto = new ManagerDTO(
+                    "Lautarani",
+                    "Lorenzani",
+                    "lorenzani@gmail.com",
+                    "2237984567",
+                    "manager",
+                    "123"
+            );
             Manager manager = new Manager(dto);
             managerService.add(manager);
         }
