@@ -9,17 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
-    @Query("SELECT c FROM Card c WHERE c.number = :number")
-    Optional<Product> getByNumber(@Param("number") String number);
-
-    @Query(
-            "SELECT c " +
-            "FROM Card c " +
-            "WHERE " +
-                    "c.holder = :#{#card.holder} AND " +
-                    "c.number = :#{#card.number} AND " +
-                    "c.expirationDate = :#{#card.expirationDate} AND " +
-                    "c.cvv = :#{#card.cvv}"
+    @Query("SELECT c FROM Card c WHERE c.hashcode = :hashcode"
     )
-    Optional<Card> getCard(@Param("card") Card card);
+    Optional<Card> getCard(@Param("hashcode") int hashcode);
 }

@@ -1,6 +1,7 @@
 package com.ForGamers.Controller.Sale;
 
 import com.ForGamers.Exception.PaymentAlreadyExistsException;
+import com.ForGamers.Model.Sale.GetPaymentDTO;
 import com.ForGamers.Model.Sale.Payment;
 import com.ForGamers.Model.Sale.PaymentDTO;
 import com.ForGamers.Service.Sale.PaymentService;
@@ -22,7 +23,7 @@ public class PaymentController {
 
     @Operation(summary = "Obtener listado de pagos.", description = "Devuelve una lista de todos los pagos.")
     @GetMapping
-    public List<Payment> listPayments() {
+    public List<GetPaymentDTO> listPayments() {
         return paymentServices.listPayments();
     }
 
@@ -32,7 +33,7 @@ public class PaymentController {
     public ResponseEntity<?> addPayment(@RequestBody PaymentDTO dto) {
         try {
             return ResponseEntity.ok(paymentServices.addPayment(dto));
-        }catch (PaymentAlreadyExistsException | NoSuchElementException e) {
+        }catch (Exception e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }
@@ -42,21 +43,21 @@ public class PaymentController {
     @Operation(summary = "Obtener un pago por id.")
     @GetMapping(value = "/id", params = "id")
     public ResponseEntity<?> getById(@RequestParam(name = "id", required = false) Long id){
-        Optional<Payment> card = paymentServices.getById(id);
-        if (card.isPresent()) {
-            return ResponseEntity.ok(card.get());
+        try {
+            return ResponseEntity.ok(paymentServices.getById(id));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.notFound().build();
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Obtener los pagos por el id del cliente.")
     @GetMapping(value = "/client-historial", params = "client_id")
     public ResponseEntity<?> findByClientId(@RequestParam(name = "client_id", required = false) Long clientId){
-        Optional<List<Payment>> payment = paymentServices.findByClientId(clientId);
-        if (payment.isPresent()) {
-            return ResponseEntity.ok(payment.get());
+        try {
+            return ResponseEntity.ok(paymentServices.findByClientId(clientId));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.notFound().build();
     }
 }

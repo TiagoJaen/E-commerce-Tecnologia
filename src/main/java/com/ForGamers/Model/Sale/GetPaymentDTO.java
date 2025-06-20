@@ -1,7 +1,5 @@
 package com.ForGamers.Model.Sale;
 
-import com.ForGamers.Model.User.Client;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,16 +10,20 @@ import java.util.List;
 
 @NoArgsConstructor
 @Getter
-public class PaymentDTO {
+public class GetPaymentDTO {
     private Long id;
     private Long clientId;
-    private CardDTO card;
-    private List<OrderDTO> orders;
+    private Long cardId;
+    private List<GetOrderDTO> orders;
+    private Double total;
+    private LocalDateTime date;
 
-    public PaymentDTO(Long id, Long clientId, CardDTO card) {
+    public GetPaymentDTO(Long id, Long clientId, Long cardId, LocalDateTime date, double total) {
         this.id = id;
         this.clientId = clientId;
-        this.card = card;
+        this.cardId = cardId;
         this.orders = new LinkedList<>();
+        this.date = date;
+        this.total = total;
     }
 }

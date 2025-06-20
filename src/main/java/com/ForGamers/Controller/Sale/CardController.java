@@ -32,8 +32,8 @@ public class CardController {
     @PostMapping
     public ResponseEntity<?> addCard(@RequestBody @Valid CardDTO dto) {
         try {
-            return ResponseEntity.ok(services.addCard(services.DTOtoCard(dto)));
-        }catch (CardAlreadyExistsException e) {
+            return ResponseEntity.ok(services.addCard(dto));
+        }catch (Exception e) {
             return ResponseEntity.badRequest().body((e.getMessage()));
         }
     }

@@ -6,6 +6,8 @@ import com.ForGamers.Model.User.Client;
 import com.ForGamers.Service.User.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
 @Service
@@ -21,7 +23,7 @@ public class PaymentDTOService {
     }
 
     private Card getCard(Card card) throws NoSuchElementException{
-        return cardService.getCard(card).
+        return cardService.getCard(card.getHashcode()).
                 orElseThrow(() -> new NoSuchElementException("Los datos de la tarjeta son invalidos"));
     }
 
@@ -29,15 +31,15 @@ public class PaymentDTOService {
         return orderDTOService.getProduct(dto).getPrice() * dto.getCant();
     }
 
-    public Payment DTOtoPayment(PaymentDTO dto) {
+    public Payment DTOtoPayment(PaymentDTO dto) throws Exception{
         Payment payment = new Payment(
                 dto.getId(),
                 getClient(dto.getClientId()),
-                getCard(cardService.DTOtoCard(dto.getCard())),
+                getCard(cardService.getDtoService().DTOtoCard(dto.getCard())),
                 dto.getOrders().stream().
                         map(this::getTotal).
                         reduce(0.0, Double::sum),
-                dto.getDate()
+                LocalDateTime.now()
         );
 
         for (OrderDTO orderDTO : dto.getOrders()) {
@@ -45,5 +47,21 @@ public class PaymentDTOService {
         }
 
         return payment;
+    }
+
+    public GetPaymentDTO PaymentToDTO(Payment payment) {
+        GetPaymentDTO dto = new GetPaymentDTO(
+                payment.getId(),
+                payment.getClient().getId(),
+                payment.getCard().getId(),
+                LocalDateTime.now(),
+                payment.getTotal()
+        );
+
+        for(Order order: payment.getOrders()) {
+            dto.getOrders().add(orderDTOService.OrderToDTO(order));
+        }
+
+        return dto;
     }
 }

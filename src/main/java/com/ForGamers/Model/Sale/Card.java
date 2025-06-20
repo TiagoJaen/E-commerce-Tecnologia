@@ -35,18 +35,7 @@ public class Card {
     @Schema(example = "123")
     private String cvv;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return this.number.equals(card.number);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(number);
-    }
+    private int hashcode;
 
     @Override
     public String toString() {

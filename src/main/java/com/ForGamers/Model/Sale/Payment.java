@@ -31,7 +31,7 @@ public class Payment {
     @JoinColumn(name = "card_id")
     private Card card;
 
-    @OneToMany(mappedBy = "payment")
+    @OneToMany(mappedBy = "payment", fetch = FetchType.EAGER)
     private List<Order> orders;
 
     private Double total;
