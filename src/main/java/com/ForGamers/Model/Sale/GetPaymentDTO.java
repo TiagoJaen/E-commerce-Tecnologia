@@ -15,13 +15,15 @@ public class GetPaymentDTO {
     private Long clientId;
     private Long cardId;
     private List<GetOrderDTO> orders;
+    private Double total;
     private LocalDateTime date;
 
-    public GetPaymentDTO(Long id, Long clientId, Long cardId, LocalDateTime date) {
+    public GetPaymentDTO(Long id, Long clientId, Long cardId, LocalDateTime date, double total) {
         this.id = id;
         this.clientId = clientId;
         this.cardId = cardId;
         this.orders = new LinkedList<>();
         this.date = date;
+        this.total = total;
     }
 }

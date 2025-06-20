@@ -22,7 +22,7 @@ public class CardService {
     private CardRepository cardRepository;
     private CardDTOService dtoService;
 
-    public Card addCard(CardDTO dto) throws Exception{
+    public Card addCard(CardDTO dto){
         if (cardRepository.getCard(dto.hashCode()).isPresent()) {
             throw new CardAlreadyExistsException("Ya existe la tarjeta.");
         }

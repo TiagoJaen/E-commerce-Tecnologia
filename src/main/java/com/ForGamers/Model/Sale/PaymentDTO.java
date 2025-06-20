@@ -17,13 +17,11 @@ public class PaymentDTO {
     private Long clientId;
     private CardDTO card;
     private List<OrderDTO> orders;
-    private LocalDateTime date;
 
-    public PaymentDTO(Long id, Long clientId, CardDTO card, LocalDateTime date) {
+    public PaymentDTO(Long id, Long clientId, CardDTO card) {
         this.id = id;
         this.clientId = clientId;
         this.card = card;
         this.orders = new LinkedList<>();
-        this.date = date;
     }
 }

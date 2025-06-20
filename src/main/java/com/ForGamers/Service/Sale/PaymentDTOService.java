@@ -6,6 +6,8 @@ import com.ForGamers.Model.User.Client;
 import com.ForGamers.Service.User.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
 @Service
@@ -37,7 +39,7 @@ public class PaymentDTOService {
                 dto.getOrders().stream().
                         map(this::getTotal).
                         reduce(0.0, Double::sum),
-                dto.getDate()
+                LocalDateTime.now()
         );
 
         for (OrderDTO orderDTO : dto.getOrders()) {
@@ -52,7 +54,8 @@ public class PaymentDTOService {
                 payment.getId(),
                 payment.getClient().getId(),
                 payment.getCard().getId(),
-                payment.getDate()
+                LocalDateTime.now(),
+                payment.getTotal()
         );
 
         for(Order order: payment.getOrders()) {

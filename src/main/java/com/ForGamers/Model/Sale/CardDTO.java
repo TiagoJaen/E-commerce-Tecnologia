@@ -17,8 +17,6 @@ import java.util.Objects;
 @NoArgsConstructor
 @Getter
 public class CardDTO {
-    private Long id;
-
     @Size(max = 20, message = "El titular debe ser de maximo 20 caracteres")
     private String holder;
 

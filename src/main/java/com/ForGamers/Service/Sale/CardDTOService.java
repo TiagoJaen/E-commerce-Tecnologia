@@ -15,9 +15,9 @@ import java.time.format.DateTimeFormatter;
 public class CardDTOService {
     private PasswordEncoder encoder;
 
-    public Card DTOtoCard(CardDTO dto) throws Exception {
+    public Card DTOtoCard(CardDTO dto){
         return new Card(
-                dto.getId(),
+                null,
                 encoder.encode(dto.getHolder()),
                 encoder.encode(dto.getNumber()),
                 encoder.encode(dto.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yy"))),
