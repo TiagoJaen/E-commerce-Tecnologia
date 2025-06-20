@@ -47,7 +47,18 @@ public class PaymentDTOService {
         return payment;
     }
 
-    /*public Payment PaymentToDTO(Payment payment) {
+    public GetPaymentDTO PaymentToDTO(Payment payment) {
+        GetPaymentDTO dto = new GetPaymentDTO(
+                payment.getId(),
+                payment.getClient().getId(),
+                payment.getCard().getId(),
+                payment.getDate()
+        );
 
-    }*/
+        for(Order order: payment.getOrders()) {
+            dto.getOrders().add(orderDTOService.OrderToDTO(order));
+        }
+
+        return dto;
+    }
 }

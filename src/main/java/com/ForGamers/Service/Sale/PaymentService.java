@@ -2,6 +2,7 @@ package com.ForGamers.Service.Sale;
 
 import com.ForGamers.Exception.OrderAlreadyExistsException;
 import com.ForGamers.Exception.PaymentAlreadyExistsException;
+import com.ForGamers.Model.Sale.GetPaymentDTO;
 import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Model.Sale.Payment;
 import com.ForGamers.Model.Sale.PaymentDTO;
@@ -11,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -31,15 +33,23 @@ public class PaymentService {
         return payment;
     }
 
-    public List<Payment> listPayments() {
-        return paymentRepository.findAll();
+    public List<GetPaymentDTO> listPayments() {
+        return paymentRepository.findAll().
+                stream().
+                map(dtoService::PaymentToDTO).
+                toList();
     }
 
-    public Optional<List<Payment>> findByClientId(Long clientId) {
-        return paymentRepository.findByClientId(clientId);
+    public List<GetPaymentDTO> findByClientId(Long clientId) throws NoSuchElementException{
+        return paymentRepository.findByClientId(clientId).
+                orElseThrow(() -> new NoSuchElementException("El cliente no tiene pagos asociados")).
+                stream().map(dtoService::PaymentToDTO)
+                .toList();
     }
 
-    public Optional<Payment> getById(Long id){
-        return paymentRepository.findById(id);
+    public GetPaymentDTO getById(Long id) throws NoSuchElementException {
+        return dtoService.PaymentToDTO(
+                paymentRepository.findById(id).
+                orElseThrow(() -> new NoSuchElementException("No existe un pago con ese id")));
     }
 }

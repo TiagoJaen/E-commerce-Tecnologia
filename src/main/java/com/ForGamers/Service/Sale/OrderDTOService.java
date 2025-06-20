@@ -1,6 +1,7 @@
 package com.ForGamers.Service.Sale;
 
 import com.ForGamers.Model.Product.Product;
+import com.ForGamers.Model.Sale.GetOrderDTO;
 import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Model.Sale.OrderDTO;
 import com.ForGamers.Model.Sale.Payment;
@@ -27,5 +28,14 @@ public class OrderDTOService {
                 payment,
                 dto.getCant()
                 );
+    }
+
+    public GetOrderDTO OrderToDTO(Order order) {
+        return new GetOrderDTO(
+                order.getId(),
+                order.getProduct().getId(),
+                order.getPayment().getId(),
+                order.getCant()
+        );
     }
 }

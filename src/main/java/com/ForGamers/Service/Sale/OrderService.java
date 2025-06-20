@@ -3,6 +3,7 @@ package com.ForGamers.Service.Sale;
 import com.ForGamers.Exception.OrderAlreadyExistsException;
 import com.ForGamers.Exception.PaymentAlreadyExistsException;
 import com.ForGamers.Model.Product.Product;
+import com.ForGamers.Model.Sale.GetOrderDTO;
 import com.ForGamers.Model.Sale.Order;
 import com.ForGamers.Model.Sale.OrderDTO;
 import com.ForGamers.Model.Sale.Payment;
@@ -17,20 +18,30 @@ import java.util.Optional;
 @AllArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final OrderDTOService dtoService;
 
     public Order addOrder(Order order) throws PaymentAlreadyExistsException, NoSuchElementException {
         return orderRepository.save(order);
     }
 
-    public List<Order> listOrders() {
-        return orderRepository.findAll();
+    public List<GetOrderDTO> listOrders() {
+        return orderRepository.findAll().
+                stream().
+                map(dtoService::OrderToDTO).
+                toList();
     }
 
-    public Optional<Order> getById(Long id){
-        return orderRepository.findById(id);
+    public GetOrderDTO getById(Long id) throws NoSuchElementException {
+        return dtoService.OrderToDTO(
+                orderRepository.findById(id).
+                orElseThrow(() -> new NoSuchElementException("No existe el pago"))
+        );
     }
 
-    public Optional<List<Order>> findByPaymentId(Long paymentId) {
-        return orderRepository.findByPaymentId(paymentId);
+    public List<GetOrderDTO> findByPaymentId(Long paymentId) {
+        return orderRepository.findByPaymentId(paymentId).
+                orElseThrow(() -> new NoSuchElementException("El pago no existe")).
+                stream().map(dtoService::OrderToDTO)
+                .toList();
     }
 }
