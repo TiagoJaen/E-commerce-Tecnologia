@@ -20,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.Locale;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -73,7 +75,9 @@ public class SecurityConfig {
                                 "/payment/id",
                                 "/payment/client-historial"
                         ).permitAll()
-                        .requestMatchers("/client").hasRole("CLIENT")
+                        .requestMatchers("/client",
+                                "/cart",
+                                "/cart/total").hasRole("CLIENT")
                         .requestMatchers("/manager").hasRole("MANAGER")
                         .requestMatchers(
                                 "/managers",
@@ -102,7 +106,6 @@ public class SecurityConfig {
                                 "/clients/paginated",
                                 "/clients/username/"
                         ).hasAnyRole("ADMIN", "MANAGER")
-
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider(service))

@@ -13,6 +13,8 @@ public class UserDetailsImpl implements UserDetails {
 
     private final User user;
 
+    public Long getId() {return user.getId();}
+
     public String getName() {
         return user.getName();
     }
