@@ -76,7 +76,9 @@ function cargarProductos(page = 0) {
                     .then(response => response.json())
                     .then(p =>{
                         document.getElementById('modal-product-name').textContent = p.name;
-                        document.getElementById('modal-product-price').textContent = Number(p.price).toLocaleString('es-AR', {style: 'currency',        currency:  'ARS'});
+                        document.getElementById('modal-product-price').textContent = Number(p.price).toLocaleString('es-AR', {style: 'currency',
+                                                                                                                    currency:  'ARS',
+                                                                                                                    maximumFractionDigits: 0});
                         document.getElementById('modal-product-img').src = p.image;
                         document.getElementById('modal-product-description').textContent = p.description;
                         if(p.stock <= 0){

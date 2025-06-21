@@ -8,7 +8,6 @@ const toastRegisterFail = document.getElementById('fail-register-toast');
 const toastRegisterBody = document.getElementById('fail-register-toast-body');
 const toastRegisterSuccess = document.getElementById('success-register-toast');
 
-//Get the login form and error display element
 const loginForm = document.getElementById('sign-in-form');
 const loginErrorDiv = document.getElementById('login-error');
 
@@ -64,7 +63,7 @@ registerForm.addEventListener('submit', async (e) => {
 //LOGIN
 if (loginForm) {
     loginForm.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Stop the default form submission
+        event.preventDefault();
 
         const usernameInput = loginForm.querySelector('input[name="username"]');
         const passwordInput = loginForm.querySelector('input[name="password"]');
@@ -76,9 +75,9 @@ if (loginForm) {
             const response = await fetch('/auth/login', { //JWT login endpoint
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json' //send as JSON
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ // Convert data to JSON string
+                body: JSON.stringify({
                     username: username,
                     password: password
                 })
@@ -87,21 +86,15 @@ if (loginForm) {
             if (response.ok) {
                 const data = await response.json();
                 const jwtToken = data.token;
-                console.log('JWT Token recibido:', jwtToken);
-                console.log('Login successful! JWT Token:', jwtToken);
 
-                // Store the token (e.g., in localStorage) for future authenticated requests
                 localStorage.setItem('jwtToken', jwtToken);
 
-                // Hide error message if it was visible
                 if (loginErrorDiv) {
                     loginErrorDiv.style.display = 'none';
                 }
 
-                // Redirect to a protected page, or update the UI to show logged-in state
                 window.location.href = '/';
             } else {
-                // Login failed (e.g., 401 Unauthorized, 403 Forbidden, etc.)
                 const errorData = await response.json().catch(() => ({ message: 'Error de autenticación' }));
                 console.error('Login failed:', errorData);
                 if (loginErrorDiv) {
@@ -110,30 +103,10 @@ if (loginForm) {
                 }
             }
         } catch (error) {
-            console.error('Network or unexpected error during login:', error);
             if (loginErrorDiv) {
-                loginErrorDiv.textContent = 'Ocurrió un error de conexión. Inténtalo de nuevo.';
+                loginErrorDiv.textContent = 'Usuario o contraseña incorrectos.';
                 loginErrorDiv.style.display = 'block';
             }
         }
     });
 }
-
-(() => {
-  'use strict'
-
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll('.needs-validation')
-
-  // Loop over them and prevent submission
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
-
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()
