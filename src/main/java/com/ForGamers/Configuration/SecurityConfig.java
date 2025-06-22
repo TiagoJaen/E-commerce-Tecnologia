@@ -67,6 +67,7 @@ public class SecurityConfig {
                                 "/clients",
                                 "/logout",
                                 "/cart",
+                                "/cart/total",
                                 "/auth/**",
                                 "/favicon.ico",
                                 "/card",
@@ -75,9 +76,7 @@ public class SecurityConfig {
                                 "/payment/id",
                                 "/payment/client-historial"
                         ).permitAll()
-                        .requestMatchers("/client",
-                                "/cart",
-                                "/cart/total").hasRole("CLIENT")
+                        .requestMatchers("/client").hasRole("CLIENT")
                         .requestMatchers("/manager").hasRole("MANAGER")
                         .requestMatchers(
                                 "/managers",

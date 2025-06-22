@@ -124,10 +124,6 @@
     object-fit: cover;
 }
 
-.toast{
-    z-index: 1056;
-}
-
 /* -----MODAL----- */
 .modal-dialog{
     min-width: 50vw;

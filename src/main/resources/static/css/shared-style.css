@@ -16,6 +16,9 @@ a{
     text-decoration-line: none !important;
     color: inherit !important;
 }
+li{
+    list-style: none;
+}
 body{
     background: linear-gradient(to bottom, var(--background-color-1), var(--background-color-2)) !important;
 }
@@ -101,6 +104,10 @@ input[type="number"]::-webkit-inner-spin-button{
     border: none;
     opacity: .5;
 }
+
+.toast{
+    z-index: 1056;
+}
 /* --------------------HEADER------------------- */
 .nav-container{
     background-color: var(--background-color-1);
@@ -150,7 +157,7 @@ input[type="number"]::-webkit-inner-spin-button{
 }
 /* -------OFFCANVAS------- */
 .offcanvas{
-    max-width: 25vw !important;
+    max-width: 25em !important;
     background-color: var(--background-color-1) !important;
     color: var(--primary-color);
 }
@@ -211,6 +218,36 @@ input[type="number"]::-webkit-inner-spin-button{
 }
 
 /* -------CARRITO-------- */
+.offcanvas-cart-body{
+    height: 100%;
+    max-height: 100%;
+    overflow-y: scroll;
+}
+.offcanvas-cart-footer{
+    color: var(--light-title-color-1);
+    padding: 0 !important;
+    min-height: 4em;
+    border-top: solid 1px var(--primary-color);
+}
+#cart-list{
+    padding: 0;
+    margin: 0;
+}
+#cart-buy{
+    padding: .2em .8em;;
+}
+.cart-item{
+    padding: .6em 0 .6em .6em;
+    font-family: var(--main-font-family);
+}
+.cart-item:nth-child(even){
+    background-color: var(--background-color-1);
+    color: var(--light-title-color-1);
+}
+.cart-item:nth-child(odd){
+    background-color: var(--light-title-color-1);
+    color: var(--background-color-1);
+}
 .btn-cart {
     width: 7em;
     height: 2em;
