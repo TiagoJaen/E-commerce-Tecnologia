@@ -24,6 +24,7 @@ public class JwtService {
         UserDetailsImpl user = (UserDetailsImpl) userDetails;
         return Jwts.builder()
                 .setSubject(user.getUsername()) // El "dueño" del token (ej: nombre de usuario)
+                .claim("id", user.getId())
                 .claim("name", user.getName())
                 .claim("lastname", user.getLastname())
                 .claim("role", "ROLE_" + user.getRole()) // Información adicional: los roles del usuario
