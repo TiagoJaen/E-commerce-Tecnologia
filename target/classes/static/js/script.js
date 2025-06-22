@@ -1,5 +1,13 @@
+//Toasts
+const successToastBody = document.getElementById('success-product-toast-body');
+const successToast = document.getElementById('success-product-toast');
+const failToastHeader = document.getElementById('fail-product-toast-header');
+const failToastBody = document.getElementById('fail-product-toast-body');
+const failToast = document.getElementById('fail-product-toast');
+
 const productDisplay = document.getElementById('products-display');
 const paginationContainer = document.querySelector(".pagination-container");
+const addProductButton = document.getElementById("modal-add-cart");
 let timeout = null;
 let pageSize = 8;
 
@@ -69,21 +77,23 @@ function cargarProductos(page = 0) {
             });
             paginationContainer.appendChild(nextBtn);
 
-            document.querySelectorAll('.btn-details, .btn-add').forEach(button => {
+            document.querySelectorAll('.btn-details').forEach(button => {
                 button.addEventListener('click', () => {
                     const id = button.dataset.id;
                     fetch(`/products/id/${id}`)
                     .then(response => response.json())
                     .then(p =>{
                         document.getElementById('modal-product-name').textContent = p.name;
-                        document.getElementById('modal-product-price').textContent = Number(p.price).toLocaleString('es-AR', {style: 'currency',        currency:  'ARS'});
+                        document.getElementById('modal-product-price').textContent = Number(p.price).toLocaleString('es-AR', {style: 'currency',
+                                                                                                                    currency:  'ARS',
+                                                                                                                    maximumFractionDigits: 0});
                         document.getElementById('modal-product-img').src = p.image;
                         document.getElementById('modal-product-description').textContent = p.description;
                         if(p.stock <= 0){
-                            document.getElementById('modal-product-stock').textContent = 'Sin stock';
+                            document.getElementById('modal-product-stock').innerHTML = `<i class="fa-solid fa-circle-xmark me-2" style="color: #ff4444; font-size: .9em;">  Sin stock</i>`;
                             document.getElementById('modal-add-cart').classList.add('d-none');
                         }else{
-                            document.getElementById('modal-product-stock').textContent = 'Disponible';
+                            document.getElementById('modal-product-stock').innerHTML = `<i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>`;
                             document.getElementById('modal-add-cart').classList.remove('d-none');
                         }
                     })
@@ -121,18 +131,73 @@ function imprimirProducto(p){
                                 >
                                     Ver detalles
                                 </button>
-                                <button 
-                                    type="button" 
-                                    class="btn-style-1 btn-add" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#modal-product"
-                                    data-id="${p.id}"
-                                >
-                                    Agregar <i class="fa-solid fa-cart-shopping"></i>
-                                </button>
                             </div>
                         </div>
                     `;  
 
     productDisplay.appendChild(div);
+}
+
+//Boton de agregar producto
+addProductButton.addEventListener('click', async (e) =>{
+    const name = document.getElementById('modal-product-name').innerText.trim();
+    const productId = await getProductID(name);
+    const clientId = getDecodedToken().id;
+    console.log(productId)
+    console.log(clientId)
+
+    fetch('/cart', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            clientId: clientId,
+            productId: productId,
+            quantity: 1
+        })
+    })
+    .then(res => {
+        if (res.ok) {
+            toastSuccess("Producto agregado correctamente.")
+        } else {
+            toastFail("Ha ocurrido un error", "No se ha podido agregar el producto.")
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        toastFail("Ha ocurrido un error", "No se ha podido agregar el producto.")
+    });
+});
+
+async function getProductID(name){
+    const response = await fetch(`/products/name/${encodeURIComponent(name)}`);
+    if (response.ok) {
+        const product = await response.json();
+        return product[0].id;
+    } else {
+        throw new Error("Producto no encontrado");
+    }
+}
+
+//Funcion para toast
+function toastSuccess(msg){
+    successToastBody.innerText = msg;
+    failToast.classList.remove('show');
+    successToast.classList.remove('show');
+    successToast.classList.add('show');
+
+    setTimeout(() => {
+        successToast.classList.remove('show');
+    },5000)
+}
+function toastFail(msg, response){
+    failToast.classList.remove('show');
+    failToastHeader.innerText = msg;
+    failToastBody.innerText = response;
+    
+    successToast.classList.remove('show');
+    failToast.classList.add('show');
+
+    setTimeout(() => {
+        failToast.classList.remove('show');
+    },5000)
 }

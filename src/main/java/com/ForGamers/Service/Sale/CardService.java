@@ -21,6 +21,7 @@ import java.util.Optional;
 public class CardService {
     private CardRepository cardRepository;
     private CardDTOService dtoService;
+    private PasswordEncoder encoder;
 
     public Card addCard(CardDTO dto){
         if (cardRepository.getCard(dto.hashCode()).isPresent()) {
@@ -43,6 +44,10 @@ public class CardService {
 
     public Optional<Card> getById(Long id){
         return cardRepository.findById(id);
+    }
+    public List<Card> getByHolder(String holder){
+        String encodedHolder = encoder.encode(holder);
+        return cardRepository.findCardsByHolder(encodedHolder);
     }
 
     public Optional<Card> getCard(int hashcode) {

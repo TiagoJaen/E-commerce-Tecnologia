@@ -63,42 +63,16 @@
     height: 2em;
 }
 /* --------------------MODAL PRODUCTOS------------------- */
+.modal-dialog{
+    max-width: fit-content !important;
+}
 .modal-content{
-    width: 600px !important;
+    height: 90vh;
+    width: 70vw !important;
 }
 #modal-add-cart{
     padding: .5em 1em;
 }
-
-.modal-heart{
-    margin-left: 1em;
-}
-.modal-heart > input{
-    display: none;
-}
-.heart-span{
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    font-size: 1.5em;
-    transition: .6s;
-}
-.heart-span:hover{
-    transition-timing-function: ease-in-out;
-    transform: scale(1.2);
-}
-.heart-fav{
-    transition: .6s;
-    cursor: pointer;
-    display: none;
-    font-size: 1.5em;
-}
-.heart-fav:hover{
-    transform: scale(1.2);
-}
-.modal-heart input:checked ~ .heart-span{
-    display: none !important;
-}
-.modal-heart input:checked ~ .heart-fav{
-    display: block !important;
+#modal-product-description{
+    height: 50%;
 }

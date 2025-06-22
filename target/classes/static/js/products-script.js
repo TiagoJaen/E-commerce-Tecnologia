@@ -179,25 +179,28 @@ modifyProductForm.addEventListener('submit', async(e)=>{
         "image": formData.get('image'),
         "stock": parseInt(formData.get('stock'))
     };
+    if(productData.price < 0 || productData.stock <0){
+        toastFail("  Error al modificar producto", "El stock y el precio no pueden ser negativos.");
+    }else{
+        authFetch('/products', {
+            method : 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(productData)
+        })
+        .then(async response => {
+            if(!response.ok){
+                toastFail("  Error al modificar el producto", await response.text());
+            }else{
+                const urlParams = new URLSearchParams(window.location.search);
+                const currentPage = urlParams.get('page') || 0;
+                let modal = document.getElementById('modal-modify-product');
+                bootstrap.Modal.getInstance(modal).hide();
 
-    authFetch('/products', {
-        method : 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(productData)
-    })
-    .then(async response => {
-        if(!response.ok){
-            toastFail("  Error al modificar el producto", await response.text());
-        }else{
-            const urlParams = new URLSearchParams(window.location.search);
-            const currentPage = urlParams.get('page') || 0;
-            let modal = document.getElementById('modal-modify-product');
-            bootstrap.Modal.getInstance(modal).hide();
-
-            cargarProductos(currentPage);
-            toastSuccess("Producto modificado correctamente");
-        }
-    })
+                cargarProductos(currentPage);
+                toastSuccess("Producto modificado correctamente");
+            }
+        })
+    }
 })
 
 // Formulario para agregar producto
@@ -211,23 +214,27 @@ addProductForm.addEventListener('submit', async (e) => {
         "image": formData.get('image'),
         "stock": formData.get('stock')
     };
-    authFetch('/products', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(productData)
-    })
-    .then(async response => {
-        if (!response.ok) {
-            toastFail("Error al agregar producto", await response.text())
-        }else{
-            let modal = document.getElementById('modal-add-product');
-            bootstrap.Modal.getInstance(modal).hide();
+    if(productData.price < 0 || productData.stock <0){
+        toastFail("  Error al agregar producto", "El stock y el precio no pueden ser negativos.");
+    }else{
+        authFetch('/products', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(productData)
+        })
+        .then(async response => {
+            if (!response.ok) {
+                toastFail("Error al agregar producto", await response.text())
+            }else{
+                let modal = document.getElementById('modal-add-product');
+                bootstrap.Modal.getInstance(modal).hide();
 
-            addProductForm.reset();
-            cargarProductos();
-            toastSuccess("Producto agregado correctamente");
-        }
-    });
+                addProductForm.reset();
+                cargarProductos();
+                toastSuccess("Producto agregado correctamente");
+            }
+        })
+    }
 });
 //Funcion para toast
 function toastSuccess(msg){

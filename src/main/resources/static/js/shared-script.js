@@ -23,88 +23,24 @@ const loggedNav = `<!-- header logeado -->
                     <i class="fa-duotone fa-solid fa-gamepad" id="logo"></i>
                 </a>
             </div>`;
-//Agregarle menu segun el rol
 
-//Opciones de roles
-getCurrentUser();
-
-async function getCurrentUser() {
-    const user = getDecodedToken();
-        if (!user) {
-            renderMenu(null);
-            return;
-        }
-
-        renderMenu(user);
-}
-
+renderMenu();
 // MENUS DISTINTOS POR ROL
-function renderMenu(user) {
-    if(user == null){
+function renderMenu() {
+    const user = getDecodedToken();
+    if(user == null || !user){
         headerContainer.innerHTML = unloggedNav;
     }else if (user.role === 'ROLE_CLIENT') {
-        clientMenu(user.name, user.lastname);
+        clientMenu(user.name, user.lastname, user.id);
+        //Cargo el carrito
+        loadCart(user.id);
+        totalCart(user.id);
     } else if (user.role === 'ROLE_ADMIN') {
         adminMenu(user.name, user.lastname);
     } else if (user.role === 'ROLE_MANAGER') {
         managerMenu(user.name, user.lastname);
     }
 };
-
-function clientMenu(name, lastname){
-    headerContainer.innerHTML = loggedNav;
-    const offcanvas = document.querySelector('.profile-offcanvas');
-    //Carrito
-    const cart = document.createElement('div');
-    cart.classList.add('cart', 'position-absolute', 'end-0', 'me-4');
-    cart.innerHTML = `<button class="btn-cart btn-style-1 d-flex align-items-center justify-content-center p-0 border-0 rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
-                        <i class="fa-solid fa-cart-shopping ps-2 nav-cart"></i>
-                        <span class="text-button">CARRITO</span>
-                    </button>
-                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
-                        <div class="offcanvas-header justify-content-center logged">
-                                    <button type="button" class="btn-offcanvas-close" style="left: .5em;" data-bs-dismiss="offcanvas" aria-label="Close">
-                                        <i class="fa-solid fa-xmark"></i>
-                                    </button>
-                                    <h2 class="text-center m-0">CARRITO</h2>
-                                </div>
-                        <div class="offcanvas-cart-body">
-
-                        </div>
-                    </div>`;
-    document.querySelector('.logged-nav').appendChild(cart);
-    //Menu
-    offcanvas.innerHTML = `<button class="btn-offcanvas-logged btn-style-1 d-flex align-items-center justify-content-center p-0 border-0 rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasProfileClient" aria-controls="offcanvasProfileClient">
-                                <div>
-                                    <i class="fa-solid fa-user"></i>
-                                </div>
-                            </button>
-                            <!-- offcanvas -->
-                            <div class="offcanvas offcanvas-start offcanvas-profile" tabindex="-1" id="offcanvasProfileClient" aria-labelledby="offcanvasProfileClientLabel">
-                                <div class="offcanvas-header justify-content-center logged">
-                                    <h2 class="text-center m-0">${name} ${lastname}</h2>
-                                    <button type="button" class="btn-offcanvas-close" style="right: .5em;" data-bs-dismiss="offcanvas" aria-label="Close">
-                                        <i class="fa-solid fa-xmark"></i>
-                                    </button>
-                                </div>
-                                <div class="offcanvas-body d-flex flex-column justify-content-between">
-                                    <ul class="offcanvas-menu">
-                                        <li class="offcanvas-item btn-style-1 d-flex align-items-center">
-                                            <a href="profile.html" class="offcanvas-profile-item btn-style-1 d-flex justify-content-center align-items-center" type="button">
-                                                <i class="fa-solid fa-user me-2"></i>
-                                                <span class="me-2">Ver perfil</span>
-                                            </a>
-                                        </li>
-                                        <li class="offcanvas-item btn-style-1 d-flex align-items-center">
-                                            <a href="payment.html" class="text-center">Metodos de pago</a>
-                                        </li>
-                                    </ul>
-                                    <a href="/" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
-                                        <span>Cerrar sesión</span>
-                                    </a>
-                                </div>
-                            </div>`;
-}
 
 function adminMenu(name, lastname){
     headerContainer.innerHTML = loggedNav;
@@ -192,4 +128,122 @@ function managerMenu(name, lastname){
                                     </a>
                                 </div>
                             </div>`;
+}
+
+//Menu clientes
+function clientMenu(name, lastname, id){
+    headerContainer.innerHTML = loggedNav;
+    const offcanvas = document.querySelector('.profile-offcanvas');
+    //Carrito
+    const cart = document.createElement('div');
+    cart.classList.add('cart', 'position-absolute', 'end-0', 'me-4');
+    cart.innerHTML = `<button class="btn-cart btn-style-1 d-flex align-items-center justify-content-center p-0 border-0 rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
+                        <i class="fa-solid fa-cart-shopping ps-2 nav-cart"></i>
+                        <span class="text-button">CARRITO</span>
+                    </button>
+                    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
+                        <div class="offcanvas-header justify-content-center logged">
+                                    <button type="button" class="btn-offcanvas-close" style="left: .5em;" data-bs-dismiss="offcanvas" aria-label="Close">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                    <h2 class="text-center m-0">CARRITO</h2>
+                                </div>
+                        <div class="offcanvas-cart-body">
+                            <ul id="cart-list"></ul>
+                        </div>
+                        <div class="offcanvas-cart-footer d-flex justify-content-around align-items-center">
+                            <span id="cart-total"></span>
+                            <button class="btn-style-1" id="cart-buy">Comprar</button>
+                        </div>
+                    </div>`;
+    document.querySelector('.logged-nav').appendChild(cart);
+    
+    //Menu
+    offcanvas.innerHTML = `<button class="btn-offcanvas-logged btn-style-1 d-flex align-items-center justify-content-center p-0 border-0 rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasProfileClient" aria-controls="offcanvasProfileClient">
+                                <div>
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                            </button>
+                            <!-- offcanvas -->
+                            <div class="offcanvas offcanvas-start offcanvas-profile" tabindex="-1" id="offcanvasProfileClient" aria-labelledby="offcanvasProfileClientLabel">
+                                <div class="offcanvas-header justify-content-center logged">
+                                    <h2 class="text-center m-0">${name} ${lastname}</h2>
+                                    <button type="button" class="btn-offcanvas-close" style="right: .5em;" data-bs-dismiss="offcanvas" aria-label="Close">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
+                                <div class="offcanvas-body d-flex flex-column justify-content-between">
+                                    <ul class="offcanvas-menu">
+                                        <li class="offcanvas-item btn-style-1 d-flex align-items-center">
+                                            <a href="profile.html" class="offcanvas-profile-item btn-style-1 d-flex justify-content-center align-items-center" type="button">
+                                                <i class="fa-solid fa-user me-2"></i>
+                                                <span class="me-2">Ver perfil</span>
+                                            </a>
+                                        </li>
+                                        <li class="offcanvas-item btn-style-1 d-flex align-items-center">
+                                            <a href="payments.html" class="text-center">Metodos de pago</a>
+                                        </li>
+                                    </ul>
+                                    <a href="/" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
+                                        <span>Cerrar sesión</span>
+                                    </a>
+                                </div>
+                            </div>`;
+
+    
+}
+
+async function loadCart(clientId){
+    const response = await fetch(`/cart?client_id=${clientId}`);
+    if (response.ok) {
+        const cart = await response.json();
+        const html = ``;
+        const itemsHTML = await Promise.all(cart.contents.map(async item => {
+            const prodRes = await fetch(`/products/id/${item.productId}`);
+            if (prodRes.ok) {
+                const product = await prodRes.json();
+                let priceARS = (product.price).toLocaleString('es-AR', {
+                    style: 'currency',
+                    currency: 'ARS',
+                    maximumFractionDigits: 0
+                });
+                return `
+                    <li class="cart-item d-flex">
+                        <img src="${product.image}" alt="${product.name}" style="max-width:4em; max-height:4em; object-fit:cover; margin-right: 10px;">
+                       <div class="d-flex flex-column align-items-center">
+                            <span>${product.name}</span>
+                            <div class="w-100 d-flex justify-content-between align-items-center mt-3 pe-2">
+                                <span>Cantidad: ${item.quantity} - ${priceARS}</span>
+                                <button class="btn btn-sm btn-danger remove-from-cart ms-2" data-product-id="${item.productId}" data-client-id="${clientId}">
+                                <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                `;
+            } else {
+                return `<li>Producto ID ${item.productId} (no encontrado) - Cantidad: ${item.quantity}</li>`;
+            }
+        }));
+        
+        document.getElementById('cart-list').innerHTML = itemsHTML.join('');
+    } else {
+        throw new Error("Producto no encontrado");
+    }
+}
+
+async function totalCart(clientId){
+    const response = await fetch(`/cart/total?client_id=${clientId}`);
+    if (response.ok) {
+        const total = await response.json();
+        let totalARS = (total).toLocaleString('es-AR', {
+            style: 'currency',
+            currency: 'ARS',
+            maximumFractionDigits: 0
+        });
+
+        document.getElementById('cart-total').innerText = `Total: ${totalARS}`;
+    }else{
+        document.getElementById('cart-total').innerText = "Error al calcular total.";
+    }
 }
