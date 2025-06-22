@@ -181,7 +181,7 @@ function clientMenu(name, lastname, id){
                                             </a>
                                         </li>
                                         <li class="offcanvas-item btn-style-1 d-flex align-items-center">
-                                            <a href="payment.html" class="text-center">Metodos de pago</a>
+                                            <a href="payments.html" class="text-center">Metodos de pago</a>
                                         </li>
                                     </ul>
                                     <a href="/" onclick="logout()" class="offcanvas-logout text-center btn-style-1" type="button">
@@ -236,13 +236,12 @@ async function totalCart(clientId){
     const response = await fetch(`/cart/total?client_id=${clientId}`);
     if (response.ok) {
         const total = await response.json();
-        console.log(response);
-        console.log(total);
         let totalARS = (total).toLocaleString('es-AR', {
             style: 'currency',
             currency: 'ARS',
             maximumFractionDigits: 0
         });
+
         document.getElementById('cart-total').innerText = `Total: ${totalARS}`;
     }else{
         document.getElementById('cart-total').innerText = "Error al calcular total.";

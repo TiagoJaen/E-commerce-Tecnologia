@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -56,6 +57,7 @@ public class SecurityConfig {
                                 "/admins.html",
                                 "/clients.html",
                                 "/managers.html",
+                                "/payments.html",
 
                                 //Endpoints
                                 "/",
@@ -70,8 +72,6 @@ public class SecurityConfig {
                                 "/cart/total",
                                 "/auth/**",
                                 "/favicon.ico",
-                                "/card",
-                                "/card/id",
                                 "/payment",
                                 "/payment/id",
                                 "/payment/client-historial"
@@ -99,12 +99,18 @@ public class SecurityConfig {
 
                         ).hasRole("ADMIN")
                         .requestMatchers(
-
                                 "/clients/all",
                                 "/clients/id/",
                                 "/clients/paginated",
                                 "/clients/username/"
                         ).hasAnyRole("ADMIN", "MANAGER")
+                        // POST /card permitido a CLIENT, MANAGER, ADMIN
+                        .requestMatchers(HttpMethod.POST, "/card").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
+
+                        // GET /card, /card/id, /card/holder permitido a CLIENT, MANAGER, ADMIN
+                        .requestMatchers(HttpMethod.GET, "/card").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/card/id").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/card/holder").hasAnyRole("CLIENT", "MANAGER", "ADMIN")
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider(service))

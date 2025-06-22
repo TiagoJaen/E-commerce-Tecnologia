@@ -21,13 +21,14 @@ import java.util.Optional;
 public class CardController {
     private final CardService services;
 
+    //@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Obtener listado de tarjetas.", description = "Devuelve una lista de todas las tarjetas.")
     @GetMapping
     public List<Card> listCards() {
         return services.listCards();
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    //@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Agregar una tarjeta.", description = "No incluir id al agregar la tarjeta.")
     @PostMapping
     public ResponseEntity<?> addCard(@RequestBody @Valid CardDTO dto) {
@@ -38,7 +39,7 @@ public class CardController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    //@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Eliminar una tarjeta por id.")
     @DeleteMapping(value = "", params = "id")
     public ResponseEntity<Void> deleteCard(@RequestParam(name = "id") Long id){
@@ -46,7 +47,7 @@ public class CardController {
     }
 
     //BUSCAR POR ID
-    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    //@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     @Operation(summary = "Obtener una tarjeta por id.")
     @GetMapping(value = "/id", params = "id")
     public ResponseEntity<?> getById(@RequestParam(name = "id", required = false) Long id){
@@ -55,5 +56,12 @@ public class CardController {
             return ResponseEntity.ok(card.get());
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN', 'MANAGER')")
+    @Operation(summary = "Obtener una tarjeta por titular.")
+    @GetMapping(value = "/holder", params = "holder")
+    public List<Card> getByHolder(@RequestParam(name = "holder", required = false) String holder){
+        return services.getByHolder(holder);
     }
 }
