@@ -122,7 +122,7 @@ public class SecurityConfig {
                             response.sendRedirect("/");
                         })
                 );
-                // Disable form login
+                // Deshabilita form login
                 http.formLogin(AbstractHttpConfigurer::disable);
                 http.logout(LogoutConfigurer::disable);
         return http.build();

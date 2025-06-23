@@ -1,4 +1,4 @@
-//Manda el token JWT en el header automaticamente.
+//Manda el token JWT en el header automaticamente y lo revisa
 window.authFetch = function(url, options = {}) {
     const token = localStorage.getItem('jwtToken');
 
@@ -18,7 +18,7 @@ window.authFetch = function(url, options = {}) {
         headers
     });
 };
-//Devuelve los datos del token JWT.
+//Devuelve los datos del token JWT
 window.getDecodedToken = function () {
     const token = localStorage.getItem('jwtToken');
     if(!token) return null;
@@ -31,7 +31,7 @@ window.getDecodedToken = function () {
         return null;
     }
 };
-//Checkear si el token esta expirado
+//Revisa si el token esta expirado
 window.isTokenExpired = function(token){
     try{
         const payload = JSON.parse(atob(token.split(".")[1]));
@@ -45,7 +45,7 @@ window.isTokenExpired = function(token){
 window.logout = function(){
     localStorage.removeItem('jwtToken');
 };
-
+//Revisa el token cada vez que se carga una pagina
 (function checkAuthOnPageLoad(){
     const token = localStorage.getItem('jwtToken');
     const decoded = token ? getDecodedToken() : null;
@@ -56,6 +56,7 @@ window.logout = function(){
         {path: '/clients.html', roles: ['ROLE_ADMIN', 'ROLE_MANAGER']},
         {path: '/docs.html', roles: ['ROLE_ADMIN']},
         {path: '/managers.html', roles: ['ROLE_ADMIN']},
+        {path: '/payments.html', roles: ['ROLE_CLIENT']},
         {path: '/products.html', roles: ['ROLE_ADMIN', 'ROLE_MANAGER']},
         {path: '/profile.html', roles: ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_CLIENT']}
     ];
