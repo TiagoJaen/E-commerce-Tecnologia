@@ -65,7 +65,7 @@ addCardForm.addEventListener('submit', async (e) => {
     const formData = new FormData(addCardForm);
     const cardData = {
         holder: formData.get('holder'),
-        number: formData.get('number'),
+        number: formData.get('number').replace(/\s+/g, ''),
         expirationDate: formData.get('expirationDate'),
         cvv: parseInt(formData.get('cvv'))
     };

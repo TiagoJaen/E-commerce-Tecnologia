@@ -13,6 +13,6 @@ public interface CardRepository extends JpaRepository<Card, Long> {
     @Query("SELECT c FROM Card c WHERE c.hashcode = :hashcode")
     Optional<Card> getCard(@Param("hashcode") int hashcode);
 
-    @Query("SELECT c FROM Card c WHERE c.holder = :holder")
+    @Query("SELECT c FROM Card c WHERE LOWER(c.holder) LIKE LOWER(CONCAT('%', :holder, '%'))")
     List<Card> findCardsByHolder(@Param("holder") String holder);
 }

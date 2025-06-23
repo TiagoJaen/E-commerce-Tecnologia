@@ -46,8 +46,7 @@ public class CardService {
         return cardRepository.findById(id);
     }
     public List<Card> getByHolder(String holder){
-        String encodedHolder = encoder.encode(holder);
-        return cardRepository.findCardsByHolder(encodedHolder);
+        return cardRepository.findCardsByHolder(holder);
     }
 
     public Optional<Card> getCard(int hashcode) {
