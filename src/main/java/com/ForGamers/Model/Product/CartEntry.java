@@ -4,6 +4,8 @@ import com.ForGamers.Model.User.Client;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -22,6 +24,7 @@ public class CartEntry {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;
 
     private int cantInCart;
