@@ -34,33 +34,25 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        // Obtenemos el header "Authorization" del request
         final String authHeader = request.getHeader("Authorization");
 
-        // Verificamos si el header es nulo o no empieza con "Bearer "
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
-            return; // No hay token, dejamos que el resto de la cadena siga
+            return;
         }
 
-        // Extraemos el token sin el prefijo "Bearer "
         String token = authHeader.substring(7);
 
-        // Obtenemos el nombre de usuario desde el token
         String username = jwtService.extractUsername(token);
 
-        // Si obtenemos un username y no hay autenticación en contexto, validamos el token
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            // Cargamos los datos del usuario desde base de datos
             UserDetails userDetails = service.loadUserByUsername(username);
 
-            // Verificamos si el token es válido
             if (jwtService.isTokenValid(token, userDetails)) {
 
                 String role = jwtService.extractRole(token);
                 List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
-                // Creamos el token de autenticación de Spring
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,
@@ -68,20 +60,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                 authorities
                         );
 
-                // Cargamos información adicional del request
                 authToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
 
-                // Establecemos el usuario autenticado en el contexto de Spring
                 SecurityContextHolder.getContext().setAuthentication(authToken);
 
-            } else {
-                System.out.println("Token INVALIDO para: " + username);
             }
         }
 
-        // Continuamos la cadena de filtros
         filterChain.doFilter(request, response);
     }
 }

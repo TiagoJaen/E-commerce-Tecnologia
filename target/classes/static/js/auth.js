@@ -4,6 +4,8 @@ window.authFetch = function(url, options = {}) {
 
     if (!token || isTokenExpired(token)) {
         logout();
+        alert("Sesion expirada.");
+        window.location.href = "/";
         return Promise.reject("JWT missing or expired");
     }
 
@@ -67,6 +69,12 @@ window.logout = function(){
                 alert("Sesion expirada.");
             }
             window.location.href = "/";
+        }
+    }else{
+        if(token && isTokenExpired(token)){
+            logout();
+            console.log('Expired token detected and removed on public page.')
+            return;
         }
     }
 })();

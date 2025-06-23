@@ -18,7 +18,7 @@ public class CardDTOService {
     public Card DTOtoCard(CardDTO dto){
         return new Card(
                 null,
-                encoder.encode(dto.getHolder()),
+                dto.getHolder(),
                 encoder.encode(dto.getNumber()),
                 encoder.encode(dto.getExpirationDate().format(DateTimeFormatter.ofPattern("MM/yy"))),
                 encoder.encode(dto.getCvv().toString()),
