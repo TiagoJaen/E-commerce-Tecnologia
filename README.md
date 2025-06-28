@@ -2,7 +2,9 @@
 ## <ins>Tecnologías</ins>  
 [![My Skills](https://skillicons.dev/icons?i=html,css,bootstrap,js,java,spring,mysql)](https://skillicons.dev)  
 ## <ins>Descripción</ins>  
-WEB y API para E-commerce, este proyecto incluye CRUD de los distintos tipos de usuarios(Admin, Clientes y Gestores), productos, carritos, órdenes y metodos de pago los cuales son solamente para simular una compra, su funcionamiento no está trabajado al 100% debido a que es más útil y seguro utilizar alguna tecnología externa enfocada en este sector, por ejemplo mercado pago.
+Lo que buscamos desarollar para este proyecto fue una WEB y API para E-commerce, la cual maneje distintos tipos de sesiones autenticadas con JWT. El usuario cliente solo puede comprar y manejar sus datos personales, los gestores o managers pueden administrar clientes y productos y por útlimo los admins pueden hacer todo lo mencionado anteriormente, además de administrar otros admins, managers y acceder a la documentación de la API.  
+  
+Este proyecto incluye CRUD de los distintos tipos de usuarios(Admin, Clientes y Gestores), productos, carritos, órdenes y metodos de pago los cuales son solamente para simular una compra, su funcionamiento no está trabajado al 100% debido a que es más útil y seguro utilizar alguna tecnología externa enfocada en este sector, por ejemplo mercado pago.
   
 Los endpoints están asegurados mediante Spring según el rol de usuario, la web incluye la navegación de todos los endpoints mediante una interfaz intuitiva orientada a un E-commerce de componentes de PC.  
 
