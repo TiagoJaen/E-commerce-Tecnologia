@@ -7,7 +7,6 @@ const failToast = document.getElementById('fail-product-toast');
 
 const productDisplay = document.getElementById('products-display');
 const paginationContainer = document.querySelector(".pagination-container");
-const addProductButton = document.getElementById("modal-add-cart");
 let timeout = null;
 let pageSize = 8;
 
@@ -136,45 +135,6 @@ function imprimirProducto(p){
                     `;  
 
     productDisplay.appendChild(div);
-}
-
-//Boton de agregar producto
-addProductButton.addEventListener('click', async (e) =>{
-    const name = document.getElementById('modal-product-name').innerText.trim();
-    const productId = await getProductID(name);
-    const clientId = getDecodedToken().id;
-
-    fetch('/cart', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            clientId: clientId,
-            productId: productId,
-            quantity: 1
-        })
-    })
-    .then(res => {
-        if (res.ok) {
-            window.location.reload();
-            toastSuccess("Producto agregado correctamente.")
-        } else {
-            toastFail("Ha ocurrido un error", "No se ha podido agregar el producto.")
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        toastFail("Ha ocurrido un error", "No se ha podido agregar el producto.")
-    });
-});
-
-async function getProductID(name){
-    const response = await fetch(`/products/name/${encodeURIComponent(name)}`);
-    if (response.ok) {
-        const product = await response.json();
-        return product[0].id;
-    } else {
-        throw new Error("Producto no encontrado");
-    }
 }
 
 //Funcion para toast

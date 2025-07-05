@@ -35,6 +35,7 @@ function renderMenu() {
         //Cargo el carrito
         loadCart(user.id);
         totalCart(user.id);
+        addProductButton(user.id);
     } else if (user.role === 'ROLE_ADMIN') {
         adminMenu(user.name, user.lastname);
     } else if (user.role === 'ROLE_MANAGER') {
@@ -199,7 +200,7 @@ async function loadCart(clientId){
         const cart = await response.json();
         
         if (cart.contents.length === 0) {
-            document.getElementById('cart-list').innerHTML = `<li id="empty-cart" class="text-center">El carrito está vacío.</li>`;
+            document.getElementById('cart-list').innerHTML = `<li id="empty-cart" class="d-flex align-items-center justify-content-center">El carrito está vacío</li>`;
             return;
         }else{
             const itemsHTML = await Promise.all(cart.contents.map(async item => {
@@ -283,4 +284,44 @@ function deleteFromCart(){
             }
         });
     })
+}
+
+//Boton de agregar producto
+function addProductButton(clientId){
+    document.getElementById("modal-add-cart").addEventListener('click', async (e) =>{
+        const name = document.getElementById('modal-product-name').innerText.trim();
+        const productId = await getProductID(name);
+        const clientId = getDecodedToken().id;
+
+        fetch('/cart', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                clientId: clientId,
+                productId: productId,
+                quantity: 1
+            })
+        })
+        .then(res => {
+            if (res.ok) {
+                loadCart(clientId);
+                toastSuccess("Producto agregado correctamente.")
+            } else {
+                toastFail("Ha ocurrido un error", "No se ha podido agregar el producto.")
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            toastFail("Ha ocurrido un error", "No se ha podido agregar el producto.")
+        });
+    });
+    async function getProductID(name){
+        const response = await fetch(`/products/name/${encodeURIComponent(name)}`);
+        if (response.ok) {
+            const product = await response.json();
+            return product[0].id;
+        } else {
+            throw new Error("Producto no encontrado");
+        }
+    }
 }

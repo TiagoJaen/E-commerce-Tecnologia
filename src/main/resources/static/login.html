@@ -37,8 +37,8 @@
                 <div id="login-front" class="text-center">
                     <h2>Iniciar Sesión</h2>
                     <form class="needs-validation login-form d-flex row gap-2 justify-content-center" id="sign-in-form" method="post" action="/auth/login">
-                        <input type="text" class="login-form-control" placeholder="Usuario" name="username" required>
-                        <input type="password" class="login-form-control" placeholder="Contraseña" name="password" required>
+                        <input type="text" class="login-form-control" placeholder="Usuario" name="username" required autocomplete="username">
+                        <input type="password" class="login-form-control" placeholder="Contraseña" name="password" required autocomplete="current-password">
                         <div id="login-buttons" class="d-flex flex-row justify-content-around align-items-center">
                             <button id="change-register-button" type="button" class="btn-style-1">Registrarse</button>
                             <button class="btn-style-1" type="submit" id="loginSubmitBtn">Iniciar sesión</button>
@@ -52,33 +52,34 @@
                         <div class="row justify-content-center">
                             <div class="col-md-5">
                                 <label for="validationCustom01" class="form-label">Nombre</label>
-                                <input type="text" class="register-form-control" id="validationCustom01" placeholder="Nombre" name="name" required>
+                                <input type="text" class="register-form-control" id="validationCustom01" placeholder="Nombre" name="name" required autocomplete="given-name">
                             </div>
                             <div class="col-md-5">
                                 <label for="validationCustom02" class="form-label">Apellido</label>
-                                <input type="text" class="register-form-control" id="validationCustom02" placeholder="Apellido" name="lastname" required>
+                                <input type="text" class="register-form-control" id="validationCustom02" placeholder="Apellido" name="lastname" required autocomplete="family-name">
                             </div>
                             <div class="col-md-6">
                                 <label for="validationCustomEmail" class="form-label">Correo electrónico</label>
-                                <input type="email" class="register-form-control" id="validationCustomEmail" placeholder="Email" name="email" aria-describedby="inputGroupPrepend" required>
+                                <input type="email" class="register-form-control" id="validationCustomEmail" placeholder="Email" name="email" aria-describedby="inputGroupPrepend" required autocomplete="email">
                             </div>
                             <div class="col-md-4">
                                 <label for="validationCustom03" class="form-label">Teléfono</label>
                                 <input type="text" class="register-form-control" id="validationCustom03"
                                 pattern="^\d{10}$"
-                                title="El teléfono debe tener el formato de Argentina(10 números)." placeholder="2238452914" name="phone" required>
+                                title="El teléfono debe tener el formato de Argentina(10 números)." placeholder="2238452914" name="phone" required autocomplete="tel">
                             </div>
                             <div class="col-md-4">
                                 <label for="validationCustomUsername" class="form-label">Usuario</label>
                                 <div class="input-group has-validation">
-                                    <input type="text" class="register-form-control" id="validationCustomUsername" placeholder="Usuario" name="username" aria-describedby="inputGroupPrepend" required>
+                                    <input type="text" class="register-form-control" id="validationCustomUsername" placeholder="Usuario" name="username" aria-describedby="inputGroupPrepend" required autocomplete="username">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label for="validationCustom05" class="form-label">Contraseña</label>
                                 <input type="password" class="register-form-control"
                                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+\-\.]).{8,15}$"
-                                title="La contraseña debe tener entre 8 y 15 caracteres, al menos una letra mayúscula, una minúscula y un carácter especial (!@#$%^&*_=+-.)" id="validationCustom05" placeholder="••••••••••••" name="password" required>
+                                title="La contraseña debe tener entre 8 y 15 caracteres, al menos una letra mayúscula, una minúscula y un carácter especial (!@#$%^&*_=+-.)" id="validationCustom05"
+                                placeholder="••••••••••••" name="password" required autocomplete="new-password">
                             </div>
                             <div class="col-12">
                                 <div class="form-check register-form-check">

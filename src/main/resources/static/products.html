@@ -79,27 +79,27 @@
                             <div class="modal-body">
                                 <form class="row g-3 product-form justify-content-center text-center" id="add-product-form">
                                     <div class="col-md-6">
-                                        <label class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" placeholder="Nombre" name="name" required>
+                                        <label class="form-label" for="name-input">Nombre</label>
+                                        <input type="text" class="form-control" id="name-input" placeholder="Nombre" name="name" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label">Imagen</label>
-                                        <input type="text" class="form-control" placeholder="URL" name="image" required>
+                                        <label class="form-label" for="image-input">Imagen</label>
+                                        <input type="text" class="form-control" id="image-input" placeholder="URL" name="image" required>
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="form-label">Stock</label>
-                                        <input type="number" class="form-control" placeholder="Stock" name="stock" required>
+                                        <label class="form-label" for="stock-input">Stock</label>
+                                        <input type="number" class="form-control" id="stock-input" placeholder="Stock" name="stock" required>
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="form-label">Price</label>
+                                        <label class="form-label" for="price-input">Precio</label>
                                         <div class="input-group">
                                             <div class="input-group-text" style="height: 2em;">$</div>
-                                            <input type="number" class="form-control" placeholder="Precio" name="price" required>
+                                            <input type="number" class="form-control" id="price-input" placeholder="Precio" name="price" required>
                                         </div>
                                     </div>
                                     <div class="col-md-10">
-                                        <label class="form-label">Descripción</label>
-                                        <textarea class="form-control textarea-description" placeholder="Descripción" name="description" required></textarea>
+                                        <label class="form-label" for="description-input">Descripción</label>
+                                        <textarea class="form-control textarea-description" id="description-input" placeholder="Descripción" name="description" required></textarea>
                                     </div>
                                     <div class="crud-form-buttons col-12 d-flex flex-row justify-content-around align-items-center ">
                                         <button type="button" class="btn-style-1" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
@@ -120,33 +120,33 @@
                             <div class="modal-body">
                                 <form class="row g-3 product-form justify-content-center text-center" id="modify-product-form">
                                     <div class="col-md-2">
-                                        <label class="form-label">ID</label>
+                                        <label class="form-label" for="product-id-input">ID</label>
                                         <input type="number" class="form-control" id="product-id-input" disabled>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label">Nombre</label>
+                                        <label class="form-label" for="product-name-input">Nombre</label>
                                         <input type="text" class="form-control" id="product-name-input" placeholder="Nombre" name="name" required>
                                     </div>
                                     <div class="col-md-8">
                                         <img class="modal-product-img" id="product-image-source" src="" alt="Imagen">
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label">Imagen</label>
+                                        <label class="form-label" for="product-image-input">Imagen</label>
                                         <input type="text" class="form-control" id="product-image-input" placeholder="URL" name="image" required>
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="form-label">Stock</label>
+                                        <label class="form-label" for="product-stock-input">Stock</label>
                                         <input type="number" class="form-control" id="product-stock-input" placeholder="Stock" name="stock" required>
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="form-label">Price</label>
+                                        <label class="form-label" for="product-price-input">Precio</label>
                                         <div class="input-group">
                                             <div class="input-group-text" style="height: 2em;">$</div>
                                             <input type="number" class="form-control" id="product-price-input" placeholder="Precio" name="price" required>
                                         </div>
                                     </div>
                                     <div class="col-md-10">
-                                        <label class="form-label">Descripción</label>
+                                        <label class="form-label" for="product-description-input">Descripción</label>
                                         <textarea class="form-control textarea-description" id="product-description-input" placeholder="Descripción" name="description" required></textarea>
                                     </div>
                                     <div class="crud-form-buttons col-12 d-flex flex-row justify-content-around align-items-center ">

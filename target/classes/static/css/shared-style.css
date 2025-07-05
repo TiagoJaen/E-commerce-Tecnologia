@@ -230,11 +230,13 @@ input[type="number"]::-webkit-inner-spin-button{
     border-top: solid 1px var(--primary-color);
 }
 #empty-cart{
+    height: 100%;
     font-family: var(--main-font-family);
     color: var(--light-title-color-1);
     font-size: 1.4em;
 }
 #cart-list{
+    height: 100%;
     padding: 0;
     margin: 0;
 }

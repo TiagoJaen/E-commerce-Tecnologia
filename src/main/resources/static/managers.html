@@ -68,32 +68,32 @@
                             <div class="modal-body">
                                 <form class="row g-3 manager-form justify-content-center text-center" id="add-manager-form">
                                     <div class="col-md-5">
-                                        <label class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" placeholder="Nombre" name="name" required>
+                                        <label class="form-label" for="name-input">Nombre</label>
+                                        <input type="text" class="form-control" id="name-input" placeholder="Nombre" name="name" required>
                                     </div>
                                     <div class="col-md-5">
-                                        <label class="form-label">Apellido</label>
-                                        <input type="text" class="form-control" placeholder="Apellido" name="lastname" required>
+                                        <label class="form-label" for="lastname-input">Apellido</label>
+                                        <input type="text" class="form-control" id="lastname-input" placeholder="Apellido" name="lastname" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label">Correo electrónico</label>
-                                        <input type="email" class="form-control" placeholder="Email" name="email" required>
+                                        <label class="form-label" for="email-input">Correo electrónico</label>
+                                        <input type="email" class="form-control" id="email-input" placeholder="Email" name="email" required>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label">Teléfono</label>
+                                        <label class="form-label" for="phone-input">Teléfono</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control" id="phone-input"
                                             pattern="^\d{10}$"
                                             title="El teléfono debe tener el formato de Argentina(10 números)." placeholder="2238452914" name="phone" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label">Usuario</label>
-                                        <input type="text" class="form-control" placeholder="Usuario" name="username" required>
+                                        <label class="form-label" for="username-input">Usuario</label>
+                                        <input type="text" class="form-control" id="username-input" placeholder="Usuario" name="username" required>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label">Contraseña</label>
-                                        <input type="password" class="form-control"
+                                        <label class="form-label" for="password-input">Contraseña</label>
+                                        <input type="password" class="form-control" id="password-input"
                                         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+\-\.]).{8,15}$"
                                         title="La contraseña debe tener entre 8 y 15 caracteres, al menos una letra mayúscula, una minúscula y un carácter especial (!@#$%^&*_=+-.)" placeholder="••••••••••••" name="password" required>
                                     </div>
@@ -116,23 +116,23 @@
                             <div class="modal-body">
                                 <form class="row g-3 manager-form justify-content-center text-center" id="modify-manager-form">
                                     <div class="col-md-2">
-                                        <label class="form-label">ID</label>
+                                        <label class="form-label" for="manager-id-input">ID</label>
                                         <input type="number" class="form-control" id="manager-id-input" disabled>
                                     </div>
                                     <div class="col-md-5">
-                                        <label class="form-label">Nombre</label>
+                                        <label class="form-label" for="manager-name-input">Nombre</label>
                                         <input type="text" class="form-control" id="manager-name-input" placeholder="Nombre" name="name" required>
                                     </div>
                                     <div class="col-md-5">
-                                        <label class="form-label">Apellido</label>
+                                        <label class="form-label" for="manager-lastname-input">Apellido</label>
                                         <input type="text" class="form-control" id="manager-lastname-input" placeholder="Apellido" name="lastname" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label">Correo electrónico</label>
+                                        <label class="form-label" for="manager-email-input">Correo electrónico</label>
                                         <input type="email" class="form-control" id="manager-email-input" placeholder="Email" name="email" required>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label">Teléfono</label>
+                                        <label class="form-label" for="manager-phone-input">Teléfono</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control" id="manager-phone-input"
                                             pattern="^\d{10}$"
@@ -140,11 +140,11 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label">Usuario</label>
+                                        <label class="form-label" for="manager-username-input">Usuario</label>
                                         <input type="text" class="form-control" id="manager-username-input" placeholder="Usuario" name="username" required>
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="form-label">Contraseña</label>
+                                        <label class="form-label" for="manager-password-input">Contraseña</label>
                                         <input type="password" class="form-control" id="manager-password-input"
                                         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+\-\.]).{8,15}$"
                                         title="La contraseña debe tener entre 8 y 15 caracteres, al menos una letra mayúscula, una minúscula y un carácter especial (!@#$%^&*_=+-.)" placeholder="••••••••••••" name="password">

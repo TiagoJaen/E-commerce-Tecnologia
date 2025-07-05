@@ -22,34 +22,34 @@ async function cargarDatos(){
         `<h3 class="title">PERFIL</h3>
             <form class="row g-3 client-form justify-content-center text-center" id="modify-profile-form">
                 <div class="col-md-5">
-                    <label class="form-label">Nombre</label>
-                    <input type="text" value="${user.name}" class="form-control profile-input" id="profile-name-input" placeholder="Nombre" name="name" required>
+                    <label class="form-label" for="profile-name-input">Nombre</label>
+                    <input type="text" value="${user.name}" class="form-control profile-input" id="profile-name-input" placeholder="Nombre" name="name" required autocomplete="given-name">
                 </div>
                 <div class="col-md-5">
-                    <label class="form-label">Apellido</label>
-                    <input type="text" value="${user.lastname}" class="form-control profile-input" id="profile-lastname-input" placeholder="Apellido" name="lastname" required>
+                    <label class="form-label" for="profile-lastname-input">Apellido</label>
+                    <input type="text" value="${user.lastname}" class="form-control profile-input" id="profile-lastname-input" placeholder="Apellido" name="lastname" required autocomplete="family-name">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">Correo electrónico</label>
-                    <input type="email" value="${user.email}" class="form-control profile-input" id="profile-email-input" placeholder="Email" name="email" required>
+                    <label class="form-label" for="profile-email-input">Correo electrónico</label>
+                    <input type="email" value="${user.email}" class="form-control profile-input" id="profile-email-input" placeholder="Email" name="email" required autocomplete="email">
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Teléfono</label>
+                    <label class="form-label" for="profile-phone-input">Teléfono</label>
                     <div class="input-group">
                         <input type="text" value="${user.phone}" class="form-control profile-input" id="profile-phone-input"
                         pattern="[0-9]{10}"
-                        title="El teléfono debe tener el formato de Argentina(10 números)." placeholder="2238452914" name="phone" required>
+                        title="El teléfono debe tener el formato de Argentina(10 números)." placeholder="2238452914" name="phone" required autocomplete="tel">
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Usuario</label>
-                    <input type="text" value="${user.username}" class="form-control profile-input" id="profile-username-input" placeholder="Usuario" name="username" required>
+                    <label class="form-label" for="profile-username-input">Usuario</label>
+                    <input type="text" value="${user.username}" class="form-control profile-input" id="profile-username-input" placeholder="Usuario" name="username" required autocomplete="username">
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Contraseña</label>
+                    <label class="form-label" for="profile-password-input">Contraseña</label>
                     <input type="password" class="form-control profile-input" id="profile-password-input"
                     pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+\-\.]).{8,15}$"
-                    title="La contraseña debe tener entre 8 y 15 caracteres, al menos una letra mayúscula, una minúscula y un carácter especial (!@#$%^&*_=+-.)" placeholder="••••••••••••" name="password">
+                    title="La contraseña debe tener entre 8 y 15 caracteres, al menos una letra mayúscula, una minúscula y un carácter especial (!@#$%^&*_=+-.)" placeholder="••••••••••••" name="password" autocomplete="off">
                 </div>
                 <div class="col-md-12">
                     <p style="color: #bffff6;">Dejar la contraseña vacía si no se quiere cambiar.</p>
@@ -59,7 +59,7 @@ async function cargarDatos(){
                 </div>
             </form>
             <div id="delete-account-control" class="col-md-12 text-center">
-                <input type="password" class="hidden form-control profile-input m-auto" id="delete-account-password" placeholder="••••••••••••" required>
+                <input type="password" class="hidden form-control profile-input m-auto" id="delete-account-password" placeholder="••••••••••••" required autocomplete="off">
                 <p style="color: #bffff6;" class="hidden mt-2 mb-0" id="delete-account-advice">Por favor, confirme su contraseña para continuar.</p>
                 <button id="delete-user-btn" class="mt-2">Darse de baja</button>
             </div>`;

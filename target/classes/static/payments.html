@@ -56,23 +56,23 @@
                                 <form class="row g-3 card-form justify-content-center text-center" id="add-card-form">
                                     <img src="Media/card svg.png" class="col-md-12" alt="" style="height: 10em; object-fit: contain;">
                                     <div class="col-md-6">
-                                        <label class="form-label">Titular</label>
-                                        <input type="text" class="form-control" maxlength="20"
+                                        <label class="form-label" for="holder-input">Titular</label>
+                                        <input type="text" class="form-control" id="holder-input" maxlength="20"
                                         pattern=".{1,20}" title="Máximo 20 caracteres permitidos"
                                         title="El numero de tarjeta debe ser de 16 numeros." placeholder="Nombre completo" name="holder" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label">Expira</label>
-                                        <input type="month" min="2024-07" class="form-control" placeholder="Expira" name="expirationDate" required>
+                                        <label class="form-label" for="expires-input">Expira</label>
+                                        <input type="month" min="2024-07" class="form-control" id="expires-input" placeholder="Expira" name="expirationDate" required>
                                     </div>
                                     <div class="col-md-8">
-                                        <label class="form-label">Número de tarjeta</label>
+                                        <label class="form-label" for="card-number">Número de tarjeta</label>
                                         <input type="text" class="form-control" id="card-number" placeholder="xxxx xxxx xxxx xxxx" name="number" required>
                                     </div>
                                     <div class="col-md-2">
-                                        <label class="form-label">CVV</label>
+                                        <label class="form-label" for="cvv-input">CVV</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control" id="cvv-input" maxlength="3"
                                             pattern="^\d{3}$"
                                             title="El CVV debe ser de 3 números." placeholder="999" name="cvv" required>
                                         </div>
