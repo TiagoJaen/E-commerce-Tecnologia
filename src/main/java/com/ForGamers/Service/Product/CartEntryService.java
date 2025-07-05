@@ -1,6 +1,5 @@
 package com.ForGamers.Service.Product;
 
-import com.ForGamers.Model.Product.Cart;
 import com.ForGamers.Model.Product.CartEntry;
 import com.ForGamers.Model.Product.Product;
 import com.ForGamers.Repository.Product.CartRepository;
@@ -61,6 +60,10 @@ public class CartEntryService {
 
     public List<CartEntry> getCartEntriesByClient(Long clientId) {
         return cartRepository.findEntriesByClientId(clientId);
+    }
+
+    public CartEntry getCartEntryByClient(Long clientId, Long productId){
+        return  cartRepository.findById(clientId, productId).orElse(null);
     }
 
     public List<Product> getProductsByClient(Long clientId) {

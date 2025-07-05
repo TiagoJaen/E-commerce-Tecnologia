@@ -70,6 +70,7 @@ public class SecurityConfig {
                                 "/logout",
                                 "/cart",
                                 "/cart/total",
+                                "/cart/entry",
                                 "/auth/**",
                                 "/favicon.ico",
                                 "/payment",

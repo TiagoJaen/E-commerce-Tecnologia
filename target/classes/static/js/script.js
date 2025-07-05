@@ -143,8 +143,6 @@ addProductButton.addEventListener('click', async (e) =>{
     const name = document.getElementById('modal-product-name').innerText.trim();
     const productId = await getProductID(name);
     const clientId = getDecodedToken().id;
-    console.log(productId)
-    console.log(clientId)
 
     fetch('/cart', {
         method: 'POST',
@@ -157,6 +155,7 @@ addProductButton.addEventListener('click', async (e) =>{
     })
     .then(res => {
         if (res.ok) {
+            window.location.reload();
             toastSuccess("Producto agregado correctamente.")
         } else {
             toastFail("Ha ocurrido un error", "No se ha podido agregar el producto.")

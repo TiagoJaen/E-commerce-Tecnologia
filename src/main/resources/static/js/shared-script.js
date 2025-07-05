@@ -143,11 +143,11 @@ function clientMenu(name, lastname, id){
                     </button>
                     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCartLabel">
                         <div class="offcanvas-header justify-content-center logged">
-                                    <button type="button" class="btn-offcanvas-close" style="left: .5em;" data-bs-dismiss="offcanvas" aria-label="Close">
-                                        <i class="fa-solid fa-xmark"></i>
-                                    </button>
-                                    <h2 class="text-center m-0">CARRITO</h2>
-                                </div>
+                            <button type="button" class="btn-offcanvas-close" style="left: .5em;" data-bs-dismiss="offcanvas" aria-label="Close">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                            <h2 class="text-center m-0">CARRITO</h2>
+                        </div>
                         <div class="offcanvas-cart-body">
                             <ul id="cart-list"></ul>
                         </div>
@@ -197,36 +197,42 @@ async function loadCart(clientId){
     const response = await fetch(`/cart?client_id=${clientId}`);
     if (response.ok) {
         const cart = await response.json();
-        const html = ``;
-        const itemsHTML = await Promise.all(cart.contents.map(async item => {
-            const prodRes = await fetch(`/products/id/${item.productId}`);
-            if (prodRes.ok) {
-                const product = await prodRes.json();
-                let priceARS = (product.price).toLocaleString('es-AR', {
-                    style: 'currency',
-                    currency: 'ARS',
-                    maximumFractionDigits: 0
-                });
-                return `
-                    <li class="cart-item d-flex">
-                        <img src="${product.image}" alt="${product.name}" style="max-width:4em; max-height:4em; object-fit:cover; margin-right: 10px;">
-                       <div class="d-flex flex-column align-items-center">
-                            <span>${product.name}</span>
-                            <div class="w-100 d-flex justify-content-between align-items-center mt-3 pe-2">
-                                <span>Cantidad: ${item.quantity} - ${priceARS}</span>
-                                <button class="btn btn-sm btn-danger remove-from-cart ms-2" data-product-id="${item.productId}" data-client-id="${clientId}">
-                                <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </li>
-                `;
-            } else {
-                return `<li>Producto ID ${item.productId} (no encontrado) - Cantidad: ${item.quantity}</li>`;
-            }
-        }));
         
-        document.getElementById('cart-list').innerHTML = itemsHTML.join('');
+        if (cart.contents.length === 0) {
+            document.getElementById('cart-list').innerHTML = `<li id="empty-cart" class="text-center">El carrito está vacío.</li>`;
+            return;
+        }else{
+            const itemsHTML = await Promise.all(cart.contents.map(async item => {
+                const prodRes = await fetch(`/products/id/${item.productId}`);
+                if (prodRes.ok) {
+                    const product = await prodRes.json();
+                    let priceARS = (product.price).toLocaleString('es-AR', {
+                        style: 'currency',
+                        currency: 'ARS',
+                        maximumFractionDigits: 0
+                    });
+                    return `
+                        <li class="cart-item d-flex">
+                            <img src="${product.image}" alt="${product.name}">
+                        <div class="d-flex flex-column align-items-center">
+                                <span>${product.name}</span>
+                                <div class="w-100 d-flex justify-content-between align-items-center mt-3 pe-2">
+                                    <span>Cantidad: ${item.quantity} - ${priceARS}</span>
+                                    <button class="btn btn-sm btn-danger remove-from-cart ms-2" data-product-id="${item.productId}" data-client-id="${clientId}">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                    `;
+                } else {
+                    return `<li>Producto ID ${item.productId} (no encontrado) - Cantidad: ${item.quantity}</li>`;
+                }
+            }));
+            
+            document.getElementById('cart-list').innerHTML = itemsHTML.join('');
+            deleteFromCart();
+        }
     } else {
         throw new Error("Producto no encontrado");
     }
@@ -246,4 +252,35 @@ async function totalCart(clientId){
     }else{
         document.getElementById('cart-total').innerText = "Error al calcular total.";
     }
+}
+
+//Botones de eliminar producto
+function deleteFromCart(){
+    document.querySelectorAll('.remove-from-cart').forEach((b) =>{
+        b.addEventListener('click', async (e) =>{
+            e.preventDefault();
+            const productId = e.currentTarget.getAttribute('data-product-id');
+            const clientId = e.currentTarget.getAttribute('data-client-id');
+            try {
+                const entryResponse = await fetch(`/cart/entry?client_id=${clientId}&product_id=${productId}`);
+                if (entryResponse.ok) {
+                    const entry = await entryResponse.json();
+                    
+                    const response = await fetch(`/cart?id=${entry.id}`, {
+                        method: 'DELETE'});
+                    
+                    if (response.ok) {
+                        toastSuccess("Producto eliminado correctamente.");
+                        loadCart(clientId);
+                        totalCart(clientId);
+                    }
+                } else {
+                    toastFail("Error al eliminar el producto del carrito.");
+                }
+            } catch (error) {
+                console.log(error);
+                toastFail("Error al eliminar el producto del carrito.");
+            }
+        });
+    })
 }

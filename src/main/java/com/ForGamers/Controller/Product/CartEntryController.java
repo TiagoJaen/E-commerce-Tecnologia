@@ -42,6 +42,21 @@ public class CartEntryController {
         }
     }
 
+    @Operation(summary = "Obtener la entrada de carrito de un cliente")
+    @GetMapping("/entry")
+    public ResponseEntity<?> getCartEntryByClient(@RequestParam(name = "client_id") Long clientId,
+                                                  @RequestParam(name = "product_id") Long productId) {
+        if (clientService.getById(clientId).isEmpty())
+            return ResponseEntity.notFound().build();
+
+        try {
+            CartEntry cartEntry = cartEntryService.getCartEntryByClient(clientId, productId);
+            return ResponseEntity.ok(cartEntry);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.ok(new Cart(clientId));
+        }
+    }
+
     @Operation(summary = "Obtener todos los carritos.")
     @GetMapping("/all")
     public List<Cart> listCarts() {
