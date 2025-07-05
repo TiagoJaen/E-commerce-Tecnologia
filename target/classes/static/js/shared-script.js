@@ -316,7 +316,7 @@ function addProductButton(clientId){
         });
     });
     async function getProductID(name){
-        const response = await fetch(`/products/name/${encodeURIComponent(name)}`);
+        const response = await fetch(`/products?name=${encodeURIComponent(name)}`);
         if (response.ok) {
             const product = await response.json();
             return product[0].id;

@@ -21,7 +21,7 @@
         </nav>
     </header>
     <main>
-        <section id="carousel">
+        <div id="carousel">
             <div id="carousel-container" class="carousel slide h-80 p-0" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="5000">
@@ -48,13 +48,118 @@
                     <button type="button" data-bs-target="#carousel-container" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
                 </div>
             </div>
-        </section>
+        </div>
         <section id="products">
             <h2 class="title">PRODUCTOS</h2>
-            <div id="products-display" class="m-0">
+            <nav id="products-nav">
+                <input type="text" id="products-search-bar" class="crud-search-bar" placeholder="Buscar producto...">
                 
-                
-            </div>
+            </nav>
+            <ul id="products-display" class="m-0"><li class="product-item d-flex flex-column align-items-center"><img src="https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg" class="product-img mt-2">
+                        <div class="product-body">
+                            <h5 class="product-title text-center mb-3">SanDisk SSD PLUS 1TB Internal SSD - SATA III 6 Gb/s</h5>
+                            <div class="product-price-stock d-flex justify-content-between align-items-center">
+                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;130.800</h3>
+                                <i class="fa-solid fa-circle-xmark me-2" style="color: #ff4444; font-size: .9em;">  Sin stock</i>
+                            </div>
+                            <div class="product-buttons d-flex justify-content-around">
+                                <button type="button" class="btn-style-1 btn-details" data-bs-toggle="modal" data-bs-target="#modal-product" data-id="2">
+                                    Ver detalles
+                                </button>
+                            </div>
+                        </div>
+                    </li><li class="product-item d-flex flex-column align-items-center"><img src="https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg" class="product-img mt-2">
+                        <div class="product-body">
+                            <h5 class="product-title text-center mb-3">Silicon Power 256GB SSD 3D NAND A55 SLC Cache Performance Boost SATA III 2.5</h5>
+                            <div class="product-price-stock d-flex justify-content-between align-items-center">
+                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;130.800</h3>
+                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
+                            </div>
+                            <div class="product-buttons d-flex justify-content-around">
+                                <button type="button" class="btn-style-1 btn-details" data-bs-toggle="modal" data-bs-target="#modal-product" data-id="3">
+                                    Ver detalles
+                                </button>
+                            </div>
+                        </div>
+                    </li><li class="product-item d-flex flex-column align-items-center"><img src="https://fakestoreapi.com/img/61mtL65D4cL._AC_SX679_.jpg" class="product-img mt-2">
+                        <div class="product-body">
+                            <h5 class="product-title text-center mb-3">WD 4TB Gaming Drive Works with Playstation 4 Portable External Hard Drive</h5>
+                            <div class="product-price-stock d-flex justify-content-between align-items-center">
+                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;136.800</h3>
+                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
+                            </div>
+                            <div class="product-buttons d-flex justify-content-around">
+                                <button type="button" class="btn-style-1 btn-details" data-bs-toggle="modal" data-bs-target="#modal-product" data-id="4">
+                                    Ver detalles
+                                </button>
+                            </div>
+                        </div>
+                    </li><li class="product-item d-flex flex-column align-items-center"><img src="https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_.jpg" class="product-img mt-2">
+                        <div class="product-body">
+                            <h5 class="product-title text-center mb-3">Acer SB220Q bi 21.5 inches Full HD (1920 x 1080) IPS Ultra-Thin</h5>
+                            <div class="product-price-stock d-flex justify-content-between align-items-center">
+                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;718.800</h3>
+                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
+                            </div>
+                            <div class="product-buttons d-flex justify-content-around">
+                                <button type="button" class="btn-style-1 btn-details" data-bs-toggle="modal" data-bs-target="#modal-product" data-id="5">
+                                    Ver detalles
+                                </button>
+                            </div>
+                        </div>
+                    </li><li class="product-item d-flex flex-column align-items-center"><img src="https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg" class="product-img mt-2">
+                        <div class="product-body">
+                            <h5 class="product-title text-center mb-3">Samsung 49-Inch CHG90 144Hz Curved Gaming Monitor (LC49HG90DMNXZA) – Super Ultrawide Screen QLED </h5>
+                            <div class="product-price-stock d-flex justify-content-between align-items-center">
+                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;1.199.988</h3>
+                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
+                            </div>
+                            <div class="product-buttons d-flex justify-content-around">
+                                <button type="button" class="btn-style-1 btn-details" data-bs-toggle="modal" data-bs-target="#modal-product" data-id="6">
+                                    Ver detalles
+                                </button>
+                            </div>
+                        </div>
+                    </li><li class="product-item d-flex flex-column align-items-center"><img src="asf" class="product-img mt-2">
+                        <div class="product-body">
+                            <h5 class="product-title text-center mb-3">asf</h5>
+                            <div class="product-price-stock d-flex justify-content-between align-items-center">
+                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;123</h3>
+                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
+                            </div>
+                            <div class="product-buttons d-flex justify-content-around">
+                                <button type="button" class="btn-style-1 btn-details" data-bs-toggle="modal" data-bs-target="#modal-product" data-id="7">
+                                    Ver detalles
+                                </button>
+                            </div>
+                        </div>
+                    </li><li class="product-item d-flex flex-column align-items-center"><img src="https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg" class="product-img mt-2">
+                        <div class="product-body">
+                            <h5 class="product-title text-center mb-3">WD 2TB Elements Portable External Hard Drive - USB 3.0 </h5>
+                            <div class="product-price-stock d-flex justify-content-between align-items-center">
+                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;76.800</h3>
+                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
+                            </div>
+                            <div class="product-buttons d-flex justify-content-around">
+                                <button type="button" class="btn-style-1 btn-details" data-bs-toggle="modal" data-bs-target="#modal-product" data-id="8">
+                                    Ver detalles
+                                </button>
+                            </div>
+                        </div>
+                    </li><li class="product-item d-flex flex-column align-items-center"><img src="asd" class="product-img mt-2">
+                        <div class="product-body">
+                            <h5 class="product-title text-center mb-3">asd</h5>
+                            <div class="product-price-stock d-flex justify-content-between align-items-center">
+                                <h3 class="product-price fs-5 ms-2 mb-0">$&nbsp;123</h3>
+                                <i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>
+                            </div>
+                            <div class="product-buttons d-flex justify-content-around">
+                                <button type="button" class="btn-style-1 btn-details" data-bs-toggle="modal" data-bs-target="#modal-product" data-id="9">
+                                    Ver detalles
+                                </button>
+                            </div>
+                        </div>
+                    </li></ul>
             <div class="product-modal">
                 <div class="modal fade" id="modal-product" tabindex="-1" aria-labelledby="modal-product-label" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog">
@@ -85,11 +190,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
             <!-- Paginación -->
-            <ul class="pagination-container">
-            </ul>
+            <ul class="pagination-container"><li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li><li class="page-item active"><a class="page-link" href="#">1</a></li><li class="page-item disabled"><a class="page-link" href="#">Siguiente</a></li></ul>
             <!-- TOAST -->
             <!-- Error -->
             <div class="toast position-fixed bottom-0 end-0 m-4" style="box-shadow: 0 0 5px 1px #004346;" id="fail-product-toast" role="alert" aria-live="assertive" aria-atomic="true">

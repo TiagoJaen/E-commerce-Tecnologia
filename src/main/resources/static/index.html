@@ -21,7 +21,7 @@
         </nav>
     </header>
     <main>
-        <section id="carousel">
+        <div id="carousel">
             <div id="carousel-container" class="carousel slide h-80 p-0" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active" data-bs-interval="5000">
@@ -48,13 +48,16 @@
                     <button type="button" data-bs-target="#carousel-container" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
                 </div>
             </div>
-        </section>
+        </div>
         <section id="products">
             <h2 class="title">PRODUCTOS</h2>
-            <div id="products-display" class="m-0">
+            <nav id="products-nav">
+                <input type="text" id="products-search-bar" class="crud-search-bar" placeholder="Buscar producto...">
                 
-                
-            </div>
+            </nav>
+            <ul id="products-display" class="m-0"><li class="product-item d-flex flex-column align-items-center">
+
+            </ul>
             <div class="product-modal">
                 <div class="modal fade" id="modal-product" tabindex="-1" aria-labelledby="modal-product-label" style="display: none;" aria-hidden="true">
                     <div class="modal-dialog">
@@ -85,7 +88,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
             <!-- Paginación -->
             <ul class="pagination-container">

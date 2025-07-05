@@ -64,7 +64,7 @@ public class SecurityConfig {
                                 "/user",
                                 "/products/all",
                                 "/products/paginated",
-                                "/products/name/**",
+                                "/products",
                                 "/products/id/**",
                                 "/clients",
                                 "/logout",
@@ -101,9 +101,9 @@ public class SecurityConfig {
                         ).hasRole("ADMIN")
                         .requestMatchers(
                                 "/clients/all",
-                                "/clients/id/",
+                                "/clients/id/**",
                                 "/clients/paginated",
-                                "/clients/username/"
+                                "/clients/username/**"
                         ).hasAnyRole("ADMIN", "MANAGER")
                         // POST /card permitido a CLIENT, MANAGER, ADMIN
                         .requestMatchers(HttpMethod.POST, "/card").hasAnyRole("CLIENT", "MANAGER", "ADMIN")

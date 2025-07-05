@@ -102,6 +102,34 @@ function cargarProductos(page = 0) {
     });
 }
 
+//Barra de busqueda
+document.getElementById('products-search-bar').addEventListener('input', function(){
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+        const name = this.value.trim();
+         // Regex: solo letras, números, espacios, tildes y ñ
+        const validName = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$/;
+        if (name.length === 0 || !validName.test(name)) {
+          cargarProductos();
+          return
+        }
+        authFetch(`/products/name/${encodeURIComponent(name)}`)
+        .then(response => response.json())
+        .then(products => {
+            if (!products || products.length === 0) {
+                productDisplay.innerHTML = `<tr><td class="text-center" colspan="6">No se ha encontrado ningun producto.</td></tr>`;
+            }else{
+                productDisplay.innerHTML = '';
+
+                products.forEach(p => {
+                    imprimirProducto(p);
+                });
+            }
+        });
+    }, 800);
+});
+
+
 //Funcion para imprimir producto
 function imprimirProducto(p){
     let priceARS = (p.price).toLocaleString('es-AR', {style: 'currency',
@@ -111,9 +139,9 @@ function imprimirProducto(p){
         const stockHtml = p.stock > 0
         ? `<i class="fa-solid fa-circle-check me-2" style="color: #59ef68; font-size: .9em;">  En stock</i>`
         : `<i class="fa-solid fa-circle-xmark me-2" style="color: #ff4444; font-size: .9em;">  Sin stock</i>`;
-        const div = document.createElement('div');
-        div.classList.add('product-item', 'd-flex', 'flex-column', 'align-items-center');
-        div.innerHTML += `<img src="${p.image}" class="product-img mt-2">
+        const li = document.createElement('li');
+        li.classList.add('product-item', 'd-flex', 'flex-column', 'align-items-center');
+        li.innerHTML += `<img src="${p.image}" class="product-img mt-2">
                         <div class="product-body">
                             <h5 class="product-title text-center mb-3">${p.name}</h5>
                             <div class="product-price-stock d-flex justify-content-between align-items-center">
@@ -134,7 +162,7 @@ function imprimirProducto(p){
                         </div>
                     `;  
 
-    productDisplay.appendChild(div);
+    productDisplay.appendChild(li);
 }
 
 //Funcion para toast
