@@ -24,9 +24,6 @@
     color: var(--light-title-color-1);
     font-family: var(--main-font-family);
 }
-.crud-search-bar:focus + .crud-search-bar::placeholder{
-    opacity: 1;
-}
 .add-crud-btn{
     font-family: var(--main-font-family);
     border: none;

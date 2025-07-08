@@ -90,7 +90,7 @@ document.getElementById('products-search-bar').addEventListener('input', functio
           cargarProductos();
           return
         }
-        authFetch(`/products/name/${encodeURIComponent(name)}`)
+        authFetch(`/products?name=${encodeURIComponent(name)}`)
         .then(response => response.json())
         .then(products => {
             if (!products || products.length === 0) {

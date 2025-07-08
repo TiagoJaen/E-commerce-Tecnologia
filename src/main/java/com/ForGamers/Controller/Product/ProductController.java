@@ -50,7 +50,7 @@ public class ProductController {
         }
     }
     //BUSCAR POR NOMBRE
-    @Operation(summary = "Obtener un producto por nombre.")
+    @Operation(summary = "Obtener un producto por nombre. Se utiliza RequestParam para no tener problemas con caracteres especiales en los nombres.")
     @GetMapping
     public List<Product> getByNameIgnoringCase(@RequestParam(name = "name", required = false) String name) {
         if (name == null || name.isEmpty()) {
